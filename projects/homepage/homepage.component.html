@@ -1,0 +1,29 @@
+<app-carousel [images]="images"></app-carousel>
+
+<h3>Principais Rádios</h3>
+
+
+<h3>Descubra Novas Rádios</h3>
+<div class="row">
+    <div class="col" *ngFor="let c of cards">
+        <app-card [contentName]="c.contentName"
+        [description]="c.description"
+        [image]="c.image"
+        [likes]="c.likes"
+        ></app-card>
+    </div>
+</div>
+
+<h3>Principais Podcasts</h3>
+
+
+<h3>Descubra Novos Podcasts</h3>
+<div class="row">
+    <div class="col" *ngFor="let c of cards">
+        <app-card [contentName]="c.contentName"
+        [description]="c.description"
+        [image]="c.image"
+        [likes]="c.likes"
+        ></app-card>
+    </div>
+</div>

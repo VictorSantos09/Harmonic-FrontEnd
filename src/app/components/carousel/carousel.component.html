@@ -1,0 +1,7 @@
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+  <div class="carousel-inner" *ngFor="let i of images">
+    <div class="carousel-item active">
+      <img [src]="i.src" class="d-block w-100" [alt]="i.alt" />
+    </div>
+  </div>
+</div>
