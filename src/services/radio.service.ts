@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RadioModel } from '../models/RadioModel'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RadioModel } from '../models/RadioModel';
 
 
 @Injectable({
@@ -18,5 +18,4 @@ export class RadioService {
       map(response => Object.values(response))
     );
   }
-  
 }

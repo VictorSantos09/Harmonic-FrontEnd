@@ -30,7 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeng/resources/themes/lara-dark-purple/theme.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
