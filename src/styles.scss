@@ -1,5 +1,8 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 
 $primary:       #2b4c7e;
 $secondary:     #567ebb;
@@ -25,3 +28,15 @@ $theme-colors: (
 
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+a {
+  text-decoration: none;
+}
+
+* {
+  color: $light;
+}
+
+body{
+  background-color: $dark;
+}

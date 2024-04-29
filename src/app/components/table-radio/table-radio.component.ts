@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { RadioModel } from '../../../models/RadioModel';
 import { RadioService } from '../../../services/radio.service';
-import { TableModule } from 'primeng/table';
-import { MessageService, SelectItem } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-table-radio',
@@ -26,7 +26,7 @@ export class TableRadioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.radioService.getDados().subscribe((data) => this.radios = data);
+    // this.radioService.getDados().subscribe((data) => this.radios = data);
   }
 
   onRowEditInit(radio: RadioModel) {

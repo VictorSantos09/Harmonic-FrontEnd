@@ -1,0 +1,2 @@
+export * from './carousel.component';
+
