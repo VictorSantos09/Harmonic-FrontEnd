@@ -1,12 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FooterComponent, HeaderComponent } from './components';
+import { ButtonModule } from 'primeng/button';
+import { FooterComponent, HeaderComponent, NavbarComponent, TableRadioComponent } from './components';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    NavbarComponent,
+    TableRadioComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
