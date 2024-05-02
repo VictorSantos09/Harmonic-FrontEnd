@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { ROUTES_CNT } from '../../../consts';
 
 @Component({
   selector: 'app-navbar',
@@ -34,6 +35,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
+        label: 'Inicio',
+        icon: 'pi pi-fw pi-home',
+        routerLink: [ROUTES_CNT.HOMEPAGE]
+      },
+      {
         label: 'Conteúdo',
         icon: 'pi pi-fw pi-pencil',
         items: [
@@ -44,10 +50,12 @@ export class NavbarComponent implements OnInit {
               {
                 label: 'Radio',
                 icon: 'pi pi-fw pi-bookmark',
+                routerLink: [ROUTES_CNT.RADIO]
               },
               {
                 label: 'Podcast',
                 icon: 'pi pi-fw pi-video',
+                routerLink: [ROUTES_CNT.PODCAST]
               },
             ],
           }

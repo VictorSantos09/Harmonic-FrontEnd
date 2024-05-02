@@ -32,15 +32,10 @@ import { RadioModel } from '../models';
 })
 export class TableRadioComponent implements OnInit {
   radioDialog: boolean = false;
-
   radios!: RadioModel[];
-
   radio!: RadioModel;
-
   selectedRadios!: RadioModel[] | null;
-
   submitted: boolean = false;
-
   Delete: any;
 
   constructor(

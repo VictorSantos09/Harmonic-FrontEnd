@@ -5,7 +5,7 @@ import { TableRadioComponent } from '../../src/app/components/table-radio';
 @Component({
     selector: 'app-pageCrudRadio',
     standalone: true,
-    imports: [HeaderComponent, TableRadioComponent],
+    imports: [TableRadioComponent],
     templateUrl: './page-crud-radio.component.html',
     styleUrl: './page-crud-radio.component.scss'
   })
