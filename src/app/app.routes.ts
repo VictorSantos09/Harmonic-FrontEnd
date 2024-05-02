@@ -3,6 +3,6 @@ import { PageCrudRadioComponent } from '../../projects/page-crud-radio/page-crud
 import { HomepageComponent } from './homepage/homepage.component';
 
 export const routes: Routes = [
-  { path: 'homepage', component: HomepageComponent },
-  { path: 'page-crud-radio', component: PageCrudRadioComponent },
+  { path: '', component: HomepageComponent },
+  { path: 'radio', component: PageCrudRadioComponent },
 ];

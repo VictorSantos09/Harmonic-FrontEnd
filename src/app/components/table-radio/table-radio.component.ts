@@ -9,13 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  FeedbackModel,
-  PaisModel,
-  RadioModel,
-  TipoConteudoModel,
-} from '../../../models';
 import { RadioService } from '../../../services/radio.service';
+import { RadioModel } from '../models';
 
 @Component({
   selector: 'app-table-radio',

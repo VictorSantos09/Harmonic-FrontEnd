@@ -1,29 +1,17 @@
-<p-carousel
-  [value]="products"
-  [numVisible]="3"
-  [numScroll]="1"
-  [responsiveOptions]="responsiveOptions"
+<p-carousel *ngIf="options.images"
+  [value]="options.images"
+  [numVisible]="options.numVisible"
+  [numScroll]="options.numScroll"
+  [responsiveOptions]="options.responsiveOptions"
 >
   <ng-template let-product pTemplate="item">
-    <div class="product-item">
-      <div class="product-item-content">
-        <div class="mb-3">
-          <img class="image-carrousel"
-            src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600"
-          />
+    <div>
+      <div>
+        <div class="mb-3" *ngFor="let i of options.images">
+          <img [src]="i.url" [alt]="i.alt" />
         </div>
         <div>
-          <h4 class="mb-1">{{ product.name }}</h4>
-          <div
-            class="mt-5 flex align-items-center justify-content-center gap-2"
-          >
-            <p-button icon="pi pi-search" [rounded]="true" />
-            <p-button
-              icon="pi pi-star-fill"
-              [rounded]="true"
-              severity="secondary"
-            />
-          </div>
+          <h4 class="mb-1" *ngIf="options.title">{{ options.title }}</h4>
         </div>
       </div>
     </div>
