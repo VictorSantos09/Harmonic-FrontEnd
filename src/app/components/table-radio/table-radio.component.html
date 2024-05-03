@@ -1,86 +1,213 @@
 <div class="card">
-    <p-toast></p-toast>
-    <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedRadios || !selectedRadios.length"></button>
-        </ng-template>
-    </p-toolbar>
-  
-    <p-table
-        #dt
-        [value]="radios"
-        [rows]="10"
-        [paginator]="true"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [(selection)]="selectedRadios"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-    >
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Radios</h5>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Search keyword" />
+  <p-toast></p-toast>
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="openNew()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        [label]="Delete"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteSelectedProducts()"
+        [disabled]="!selectedRadios || !selectedRadios.length"
+      ></button>
+    </ng-template>
+  </p-toolbar>
 
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 4rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                
-                <th pSortableColumn="image">Image <p-sortIcon field="image"></p-sortIcon></th>
-                <th pSortableColumn="name" style="min-width:10rem">Name <p-sortIcon field="name"></p-sortIcon></th>
-                
-                
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-radio>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="radio"></p-tableCheckbox>
-                </td>
-                <td><img [src]="'https://i.ytimg.com/vi/i-2J4mpUT_o/maxresdefault.jpg' + radio.image" [alt]="radio.titulo" width="50" class="shadow-4" /></td>
-                <td>{{ radio.titulo }}</td>
-                <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(radio)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(radio)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">In total there are {{ radios ? radios.length : 0 }} radios.</div>
-        </ng-template>
-    </p-table>
-  </div>
-  <p-dialog [(visible)]="radioDialog" [style]="{ width: '450px' }" header="Radio Details" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <img [src]="'https://i.ytimg.com/vi/i-2J4mpUT_o/maxresdefault.jpg' + radio.image" [alt]="radio.image" class="block m-auto pb-3" *ngIf="radio.image" />
-        <div class="field">
-            <label for="name">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="radio.titulo" required autofocus />
-            <small class="p-error" *ngIf="submitted && !radio.titulo">Name is required.</small>
-        </div>
-        <div class="field">
-            <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="radio.descricao" required rows="3" cols="20"></textarea>
-        </div>
+  <p-table
+    #dt
+    [value]="radios"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'name',
+      'country.name',
+      'representative.name',
+      'status'
+    ]"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selectedRadios"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage Radios</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Search keyword"
+          />
+        </span>
+      </div>
     </ng-template>
-  
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+
+        <th pSortableColumn="image">
+          Image <p-sortIcon field="image"></p-sortIcon>
+        </th>
+        <th pSortableColumn="name" style="min-width: 10rem">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+
+        <th></th>
+      </tr>
     </ng-template>
-  </p-dialog>
-  
-  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
-  
-  
+    <ng-template pTemplate="body" let-radio>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="radio"></p-tableCheckbox>
+        </td>
+        <td>
+          <img
+            [src]="
+              'https://i.ytimg.com/vi/i-2J4mpUT_o/maxresdefault.jpg' +
+              radio.image
+            "
+            [alt]="radio.titulo"
+            width="50"
+            class="shadow-4"
+          />
+        </td>
+        <td>{{ radio.titulo }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="editProduct(radio)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            (click)="deleteProduct(radio)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ radios ? radios.length : 0 }} radios.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog
+  [(visible)]="radioDialog"
+  [style]="{ width: '450px' }"
+  header="Radio Details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <img
+      [src]="
+        'https://i.ytimg.com/vi/i-2J4mpUT_o/maxresdefault.jpg' + radio.image
+      "
+      [alt]="radio.image"
+      class="block m-auto pb-3"
+      *ngIf="radio.image"
+    />
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="radio.titulo"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !radio.titulo"
+        >Name is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        pInputTextarea
+        [(ngModel)]="radio.descricao"
+        required
+        rows="3"
+        cols="20"
+      ></textarea>
+    </div>
+    <div class="field">
+      <label for="url">URL Plataforma</label>
+      <textarea
+        id="url"
+        pInputTextarea
+        [(ngModel)]="radio.url"
+        required
+        rows="1"
+        cols="1"
+      ></textarea>
+    </div>
+
+    <div class="field">
+      <label class="mb-3">Category</label>
+      <div class="formgrid grid">
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+            id=""
+            name="category"
+            value="Accessories"
+            [(ngModel)]="tipoConteudo"
+          ></p-radioButton>
+          <label for="category1">Rádio</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+            id="category2"
+            name="category"
+            value="Clothing"
+            [(ngModel)]="tipoConteudo"
+          ></p-radioButton>
+          <label for="category2">Podcast</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveProduct()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

@@ -3,3 +3,4 @@ export * from './header';
 export * from './navbar';
 export * from './table-radio';
 export * from './background-image';
+export * from './table';

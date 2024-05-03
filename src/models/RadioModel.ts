@@ -10,6 +10,7 @@ export class RadioModel {
     public titulo?: string,
     public dataCadastro?: Date,
     public descricao?: string,
+    public url?: string,
     public tipoConteudo?: TipoConteudoModel,
     public pais?: PaisModel,
     public feedback?: FeedbackModel

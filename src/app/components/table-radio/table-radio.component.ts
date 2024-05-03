@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +12,9 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RadioService } from '../../../services/radio.service';
 import { RadioModel } from '../models';
+import { TipoConteudoModel } from '../models';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 
 @Component({
   selector: 'app-table-radio',
@@ -25,6 +29,7 @@ import { RadioModel } from '../models';
     DialogModule,
     ConfirmDialogModule,
     InputTextModule,
+    RadioButtonModule,
   ],
   templateUrl: './table-radio.component.html',
   styleUrl: './table-radio.component.scss',
@@ -34,6 +39,7 @@ export class TableRadioComponent implements OnInit {
   radioDialog: boolean = false;
   radios!: RadioModel[];
   radio!: RadioModel;
+  tipoConteudo!: TipoConteudoModel;
   selectedRadios!: RadioModel[] | null;
   submitted: boolean = false;
   Delete: any;
@@ -41,7 +47,8 @@ export class TableRadioComponent implements OnInit {
   constructor(
     private radioService: RadioService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private HttpClient: HttpClient,
   ) {}
 
   ngOnInit() {
@@ -49,6 +56,11 @@ export class TableRadioComponent implements OnInit {
       this.radios = data.filter((item) => item.tipoConteudo?.nome === 'Radio');
     });
   }
+
+  // buscarTipos() {
+  //   return this.HttpClient.get('');
+  // }
+
 
   openNew() {
     this.radio = {};

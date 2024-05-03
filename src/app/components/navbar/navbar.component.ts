@@ -1,25 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { ROUTES_CNT } from '../../../consts';
 
 @Component({
   selector: 'app-navbar',
-  template: `
-    <span (click)="navigateToHome()">Explorar</span>
-    <span (click)="navigateToPageCrudRadio()">Login</span>
-  `,
   standalone: true,
-  imports: [MenubarModule, CommonModule],
+  imports: [CommonModule, MenubarModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
-
-  constructor(private router: Router) {}
 
   myStyle(): object {
     if (typeof window !== 'undefined') {

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [AvatarModule, CommonModule],
+  imports: [CommonModule, AvatarModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
