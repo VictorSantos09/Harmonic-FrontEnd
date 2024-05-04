@@ -1,0 +1,152 @@
+<div class="card">
+  <p-toast />
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <p-button
+        pRipple
+        severity="success"
+        label="Novo"
+        icon="pi pi-plus"
+        class="mr-2"
+        (click)="openNew()"
+      />
+      <p-button
+        pRipple
+        severity="danger"
+        label="Deletar"
+        icon="pi pi-trash"
+        (click)="deleteSelectedProducts()"
+        [disabled]="!selectedItems || !selectedItems.length"
+      />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="items"
+    [columns]="columns"
+    [rows]="options.rowsNumber"
+    [paginator]="options.usePaginator"
+    [globalFilterFields]="options.globalFilterFields"
+    [tableStyle]="{ 'min-width': '10rem' }"
+    styleClass="p-datatable-striped"
+    responsiveLayout="stack"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [(selection)]="selectedItems"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">{{ options.title }}</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+          />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox />
+        </th>
+
+        <th
+          *ngFor="let c of columns"
+          [pSortableColumn]="c.sortableColumn ? c.name : undefined"
+          style="min-width: 15rem"
+        >
+          {{ c.title }}
+          <p-sortIcon *ngIf="c.sortableColumn" [field]="c.name" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="rowData" />
+        </td>
+
+        <td *ngFor="let col of columns">
+          <img
+            *ngIf="col.isImage"
+            [src]="col.image.url"
+            [alt]="col.image.alt"
+            [width]="col.image.width"
+            [height]="col.image.height"
+          />
+
+          <span *ngIf="!col.isImage">
+            {{ rowData[col.name] }}
+          </span>
+        </td>
+
+        <!--Edit and Delete Button-->
+        <td>
+          <p-button
+            pRipple
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            [outlined]="true"
+            severity="success"
+            (click)="editProduct(rowData)"
+          />
+          <p-button
+            pRipple
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [outlined]="true"
+            (click)="deleteProduct(rowData)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        No total há {{ items ? items.length : 0 }} itens.
+      </div>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [(visible)]="itemDialog"
+    [style]="{ width: '450px' }"
+    [header]="formOptions?.title"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <app-form [fields]="formOptions?.formFields!"></app-form>
+    </ng-template>
+
+    <!--Cancel and save Buttons-->
+    <ng-template pTemplate="footer">
+      <p-button
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        [text]="true"
+        (click)="hideDialog()"
+      />
+      <p-button
+        pRipple
+        label="Salvar"
+        icon="pi pi-check"
+        [text]="true"
+        (click)="saveProduct()"
+      />
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }" />
+</div>
