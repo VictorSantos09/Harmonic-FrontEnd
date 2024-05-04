@@ -21,6 +21,7 @@ import { ProductService } from '../../../services/product.service';
 import { FormComponent } from '../form';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
+import { Product } from '../../../models/product';
 
 @Component({
   selector: 'app-table',
@@ -167,7 +168,7 @@ export class TableComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.items = this.items.filter((val) => val.id !== product.id);
+        this.items = this.items.filter((val) => val.id !== this.item.id);
         this.item = {};
         this.messageService.add({
           severity: 'success',

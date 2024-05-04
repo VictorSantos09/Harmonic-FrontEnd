@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { HomepageComponent } from '../../projects/homepage/homepage.component';
-import {
-  FooterComponent,
-  HeaderComponent,
-  NavbarComponent,
-} from './components';
+import { FooterComponent, HeaderComponent, NavbarComponent } from './components';
+import { HomepageComponent } from '../../projects';
+
 
 @Component({
   selector: 'app-root',

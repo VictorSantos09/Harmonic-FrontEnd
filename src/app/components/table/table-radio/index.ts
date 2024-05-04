@@ -1,1 +1,1 @@
-export * from './table-radio.component'
+export * from './table-radio.component';
