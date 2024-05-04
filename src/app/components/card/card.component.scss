@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .left-section {
+    width: 50%;
+  }
+  
+  .left-section h2,
+  .left-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .left-section img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+  }
+  
+  .right-section .pais,
+  .right-section .feedback {
+    margin-bottom: 20px;
+  }
+  
+  .right-section .pais p,
+  .right-section .feedback p {
+    margin-bottom: 10px;
+  }
+  
+  .right-section .pais div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .right-section .pais div img {
+    margin-right: 10px;
+  }
+  
+  .right-section .feedback button {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .right-section .feedback ng-icon {
+    margin-right: 10px;
+  }
+  

@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { HomepageComponent } from '../../projects/homepage/homepage.component';
-import { BackgroundImageComponent } from '../app/components/background-image';
+import { BackgroundImageComponent } from '../app/components/background-image/background-image.component';
 import {
   FooterComponent,
   HeaderComponent,
   NavbarComponent,
-  TableRadioComponent,
-} from './components';
-import { CarouselComponent } from './components/carousel';
-import { TestComponent } from './components/table/test/test.component';
+} from '../app/components';
+import { TableRadioComponent, } from "../app/components/table/table-radio/table-radio.component";
+import { CarouselComponent } from '../app/components/carousel/carousel.component';
+import { TestComponent } from '../app/components/table/test/test.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     ButtonModule,
-    RouterOutlet,
+    RouterModule,
     HeaderComponent,
     FooterComponent,
     NavbarComponent,
@@ -25,10 +25,7 @@ import { TestComponent } from './components/table/test/test.component';
     CarouselComponent,
     HomepageComponent,
     BackgroundImageComponent,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    TestComponent
+    TestComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
