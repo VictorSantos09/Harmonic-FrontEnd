@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -19,6 +19,8 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
+import { FormOptions } from '../form/options';
+import { TableColumn, TableOptions } from './options';
 
 @Component({
   selector: 'app-table',
@@ -47,30 +49,48 @@ import { ProductService } from '../../../services/product.service';
   providers: [ProductService, MessageService, ConfirmationService],
 })
 export class TableComponent implements OnInit {
-  productDialog: boolean = false;
-
-  products: Product[] = [
+  @Input() options: TableOptions = new TableOptions('Gerenciar');
+  @Input() columns: TableColumn[] = [
     {
-      category: 'dawd',
-      code: '465',
-      description: '456',
-      id: '1',
-      image: '',
-      inventoryStatus: 'cwd',
-      price: 46,
-      name: '465',
-      quantity: 400,
-      rating: 4,
+      name: 'name',
+      sortableColumn: true,
+    },
+    {
+      name: 'image',
+      sortableColumn: false,
+      isImage: true,
+      image: {
+        url: 'https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png',
+        alt: 'product',
+        height: 50,
+        width: 50,
+      },
+    },
+    {
+      name: 'price',
+      sortableColumn: true,
+    },
+    {
+      name: 'category',
+      sortableColumn: true,
+    },
+    {
+      name: 'review',
+      sortableColumn: true,
+    },
+    {
+      name: 'status',
+      sortableColumn: true,
     },
   ];
 
-  product!: Product;
+  @Input() formOptions?: FormOptions;
 
-  selectedProducts!: Product[] | null;
-
+  items: Product[] = [];
+  item!: Product;
+  selectedItems!: Product[] | null;
   submitted: boolean = false;
-
-  statuses!: any[];
+  itemDialog: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -79,19 +99,13 @@ export class TableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.productService.getProducts().then((data) => (this.products = data));
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' },
-    ];
+    this.productService.getProducts().then((data) => (this.items = data));
   }
 
   openNew() {
-    this.product = {};
+    this.item = {};
     this.submitted = false;
-    this.productDialog = true;
+    this.itemDialog = true;
   }
 
   deleteSelectedProducts() {
@@ -100,10 +114,10 @@ export class TableComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts?.includes(val)
+        this.items = this.items.filter(
+          (val) => !this.selectedItems?.includes(val)
         );
-        this.selectedProducts = null;
+        this.selectedItems = null;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -114,9 +128,9 @@ export class TableComponent implements OnInit {
     });
   }
 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
+  editProduct(item: Product) {
+    this.item = { ...item };
+    this.itemDialog = true;
   }
 
   deleteProduct(product: Product) {
@@ -125,8 +139,8 @@ export class TableComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
+        this.items = this.items.filter((val) => val.id !== product.id);
+        this.item = {};
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -138,16 +152,16 @@ export class TableComponent implements OnInit {
   }
 
   hideDialog() {
-    this.productDialog = false;
+    this.itemDialog = false;
     this.submitted = false;
   }
 
   saveProduct() {
     this.submitted = true;
 
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
+    if (this.item.name?.trim()) {
+      if (this.item.id) {
+        this.items[this.findIndexById(this.item.id)] = this.item;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -155,9 +169,9 @@ export class TableComponent implements OnInit {
           life: 3000,
         });
       } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
+        this.item.id = this.createId();
+        this.item.image = 'product-placeholder.svg';
+        this.items.push(this.item);
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -166,16 +180,16 @@ export class TableComponent implements OnInit {
         });
       }
 
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
+      this.items = [...this.items];
+      this.itemDialog = false;
+      this.item = {};
     }
   }
 
   findIndexById(id: string): number {
     let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].id === id) {
         index = i;
         break;
       }
@@ -192,19 +206,6 @@ export class TableComponent implements OnInit {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return '';
-    }
   }
 
   getEventValue($event: any): string {

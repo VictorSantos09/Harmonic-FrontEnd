@@ -6,6 +6,7 @@ import {
   FooterComponent,
   HeaderComponent,
   NavbarComponent,
+  TableComponent,
   TableRadioComponent,
 } from './components';
 import { CarouselComponent } from './components/carousel';
@@ -27,6 +28,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
+    TableComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
