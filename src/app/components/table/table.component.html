@@ -84,8 +84,12 @@
             [height]="col.image.height"
           />
 
-          <span *ngIf="!col.isImage">
-            {{ rowData[col.name] }}
+          <span *ngIf="!col.isImage && !col.isDate">
+            {{ rowData[col.name] || "N/A" }}
+          </span>
+
+          <span *ngIf="!col.isImage && col.isDate">
+            {{ rowData[col.name] | date : "dd/MM/yyyy" || "N/A" }}
           </span>
         </td>
 

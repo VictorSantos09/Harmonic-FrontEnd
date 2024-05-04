@@ -7,18 +7,21 @@ export class TableColumn {
   name: string;
   isImage?: boolean = false;
   image?: ImageModel | undefined;
+  isDate?: boolean = false;
 
   constructor(
     title: string,
     name: string,
     sortableColumn: boolean = true,
     isImage?: boolean,
-    image?: ImageModel | undefined
+    image?: ImageModel | undefined,
+    isDate?: boolean
   ) {
     this.title = title;
     this.name = name;
     this.sortableColumn = sortableColumn ?? true;
     this.isImage = isImage ?? false;
     this.image = image ?? undefined;
+    this.isDate = isDate ?? false;
   }
 }

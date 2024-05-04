@@ -53,6 +53,7 @@ export class PageCrudRadioComponent implements OnInit {
       title: 'Data Cadastro',
       name: 'dataCadastro',
       sortableColumn: true,
+      isDate: true,
     },
   ];
 
