@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>CADASTRO</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="user">Usuário</label>
+        <input type="text" id="user" formControlName="user" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-control">
+        <div *ngIf="registerForm.controls['email'].errors?.['emailDomain']">O e-mail deve ser do domínio gmail.com, hotmail.com ou outlook.com.</div>
+      </div>
+      <div class="form-group">
+        <label for="confirmEmail">Confirmar Email</label>
+        <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control">
+        <div *ngIf="registerForm.controls['confirmEmail'].errors?.['notMatching']">Os e-mails não correspondem.</div>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" formControlName="password" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Senha</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+        <div *ngIf="registerForm.controls['confirmPassword'].errors?.['notMatching']">As senhas não correspondem.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+  </div>
+  
