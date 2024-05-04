@@ -19,6 +19,7 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
+import { FormComponent } from '../form';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
 
@@ -45,6 +46,7 @@ import { TableColumn, TableOptions } from './options';
     InputTextModule,
     FormsModule,
     InputNumberModule,
+    FormComponent,
   ],
   providers: [ProductService, MessageService, ConfirmationService],
 })
@@ -84,7 +86,61 @@ export class TableComponent implements OnInit {
     },
   ];
 
-  @Input() formOptions?: FormOptions;
+  @Input() formOptions?: FormOptions = {
+    cancelText: 'cancelado com sucesso',
+    submitText: 'enviado com sucesso',
+    title: 'Formulário',
+    formFields: [
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+    ],
+  };
 
   items: Product[] = [];
   item!: Product;

@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { BackgroundImageComponent } from '../app/components/background-image';
 import {
   FooterComponent,
+  FormComponent,
   HeaderComponent,
   NavbarComponent,
   TableComponent,
@@ -29,6 +30,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     RouterLink,
     RouterLinkActive,
     TableComponent,
+    FormComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

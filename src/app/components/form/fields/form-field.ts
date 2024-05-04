@@ -1,15 +1,16 @@
+import { INPUT_TYPES } from '../../shared';
+
 export class FormField {
   constructor(
     public name: string,
     public label: string,
-    public type: string,
+    public type: INPUT_TYPES,
     public placeholder: string,
-    public options: any,
     public required: boolean,
     public hidden: boolean,
     public disabled: boolean,
     public readonly: boolean,
-    public value: any,
+    public value: string,
     public errorMessage: string
   ) {}
 }
