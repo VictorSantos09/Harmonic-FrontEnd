@@ -15,7 +15,7 @@
         severity="danger"
         label="Deletar"
         icon="pi pi-trash"
-        (click)="deleteSelectedProducts()"
+        (click)="deleteSelectedItems()"
         [disabled]="!selectedItems || !selectedItems.length"
       />
     </ng-template>
@@ -98,7 +98,7 @@
             [rounded]="true"
             [outlined]="true"
             severity="success"
-            (click)="editProduct(rowData)"
+            (click)="edit(rowData)"
           />
           <p-button
             pRipple
@@ -106,7 +106,7 @@
             severity="danger"
             [rounded]="true"
             [outlined]="true"
-            (click)="deleteProduct(rowData)"
+            (click)="delete(rowData)"
           />
         </td>
       </tr>
@@ -143,7 +143,7 @@
         label="Salvar"
         icon="pi pi-check"
         [text]="true"
-        (click)="saveProduct()"
+        (click)="save()"
       />
     </ng-template>
   </p-dialog>

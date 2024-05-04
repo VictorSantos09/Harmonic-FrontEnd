@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,11 +17,12 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { EventEmitter } from 'stream';
+import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
 import { FormComponent } from '../form';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
-import { Product } from '../../../models/product';
 
 @Component({
   selector: 'app-table',
@@ -51,70 +52,21 @@ import { Product } from '../../../models/product';
   providers: [ProductService, MessageService, ConfirmationService],
 })
 export class TableComponent implements OnInit {
-  @Input() options: TableOptions = new TableOptions('Gerenciar');
+  @Input() options!: TableOptions;
   @Input() columns!: TableColumn[];
-
-  @Input() formOptions?: FormOptions = {
-    cancelText: 'cancelado com sucesso',
-    submitText: 'enviado com sucesso',
-    title: 'Formulário',
-    formFields: [
-      {
-        disabled: false,
-        name: 'name',
-        readonly: false,
-        errorMessage: 'Name is required',
-        hidden: false,
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: true,
-        type: 'text',
-        value: '',
-      },
-      {
-        disabled: false,
-        name: 'name',
-        readonly: false,
-        errorMessage: 'Name is required',
-        hidden: false,
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: true,
-        type: 'text',
-        value: '',
-      },
-      {
-        disabled: false,
-        name: 'name',
-        readonly: false,
-        errorMessage: 'Name is required',
-        hidden: false,
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: true,
-        type: 'text',
-        value: '',
-      },
-      {
-        disabled: false,
-        name: 'name',
-        readonly: false,
-        errorMessage: 'Name is required',
-        hidden: false,
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: true,
-        type: 'text',
-        value: '',
-      },
-    ],
-  };
-
+  @Input() formOptions?: FormOptions;
   @Input() items!: any[];
+
+  @Output() onSave?: EventEmitter<any>;
+  @Output() onDelete?: EventEmitter<any>;
+  @Output() onEdit?: EventEmitter<any>;
+
   item!: any;
   selectedItems!: any[] | null;
   submitted: boolean = false;
   itemDialog: boolean = false;
+
+  private _defaultLife = 3000;
 
   constructor(
     private messageService: MessageService,
@@ -129,7 +81,7 @@ export class TableComponent implements OnInit {
     this.itemDialog = true;
   }
 
-  deleteSelectedProducts() {
+  deleteSelectedItems() {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar esses registros?',
       header: 'Confirmar',
@@ -141,40 +93,32 @@ export class TableComponent implements OnInit {
         this.selectedItems = null;
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000,
+          summary: 'Sucesso',
+          detail: 'Registros deletados',
+          life: this._defaultLife,
         });
       },
     });
-
-    this.selectedItems = null;
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Successful',
-      detail: 'Itens deletados',
-      life: 3000,
-    });
   }
 
-  editProduct(item: Product) {
-    this.item = { ...item };
+  edit(product: Product) {
+    this.item = { ...product };
     this.itemDialog = true;
   }
 
-  deleteProduct(value: any) {
+  delete(product: Product) {
     this.confirmationService.confirm({
-      message: 'Você tem certeza que deseja deletar ?',
+      message: 'Tem certeza que deseja deletar?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.items = this.items.filter((val) => val.id !== this.item.id);
+        this.items = this.items.filter((val) => val.id !== product.id);
         this.item = {};
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
-          detail: 'Deletado com sucesso',
-          life: 3000,
+          summary: 'Sucesso',
+          detail: 'Registro deletado',
+          life: this._defaultLife,
         });
       },
     });
@@ -185,7 +129,7 @@ export class TableComponent implements OnInit {
     this.submitted = false;
   }
 
-  saveProduct() {
+  save() {
     this.submitted = true;
 
     if (this.item.name?.trim()) {
@@ -193,9 +137,9 @@ export class TableComponent implements OnInit {
         this.items[this.findIndexById(this.item.id)] = this.item;
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Updated',
-          life: 3000,
+          summary: 'Sucesso',
+          detail: 'Registro atualizado',
+          life: this._defaultLife,
         });
       } else {
         this.item.id = this.createId();
@@ -203,9 +147,9 @@ export class TableComponent implements OnInit {
         this.items.push(this.item);
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
+          summary: 'Sucesso',
+          detail: 'Registro criado',
+          life: this._defaultLife,
         });
       }
 
