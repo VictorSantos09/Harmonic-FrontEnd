@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -18,14 +18,9 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ProductService } from '../../../services/product.service';
-import {
-  TableAddOptions,
-  TableFieldColumnOption,
-  TableFieldRowOption,
-  TableOptions,
-} from '../models/table';
-import { FormField } from '../models/formField';
-import { Product } from '../../../models/product';
+import { FormComponent } from '../form';
+import { FormOptions } from '../form/options';
+import { TableColumn, TableOptions } from './options';
 
 @Component({
   selector: 'app-table',
@@ -50,61 +45,105 @@ import { Product } from '../../../models/product';
     InputTextModule,
     FormsModule,
     InputNumberModule,
+    FormComponent,
   ],
   providers: [ProductService, MessageService, ConfirmationService],
 })
-export class TableComponent  implements OnInit{
-  @Input() AddOptions!: TableAddOptions;
-  @Input() columns!: TableFieldColumnOption[];
-  @Input() rows: number = 10;
-  @Input() rowsData: TableFieldRowOption[] = [];
-  @Input() options!: TableOptions;
-  @Input() fields?: FormField[];
+export class TableComponent implements OnInit {
+  @Input() options: TableOptions = new TableOptions('Gerenciar');
+  @Input() columns!: TableColumn[];
 
-  @Output() onSave?: EventEmitter<any>;
-  @Output() onDelete?: EventEmitter<any>;
+  @Input() formOptions?: FormOptions = {
+    cancelText: 'cancelado com sucesso',
+    submitText: 'enviado com sucesso',
+    title: 'Formulário',
+    formFields: [
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+      {
+        disabled: false,
+        name: 'name',
+        readonly: false,
+        errorMessage: 'Name is required',
+        hidden: false,
+        label: 'Name',
+        placeholder: 'Enter your name',
+        required: true,
+        type: 'text',
+        value: '',
+      },
+    ],
+  };
 
-  dialog: boolean = false;
+  @Input() items!: any[];
+  item!: any;
   selectedItems!: any[] | null;
   submitted: boolean = false;
+  itemDialog: boolean = false;
 
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
-  ngOnInit(): void {
-    console.log('omo');
-    
-  }
 
-  products: Product[] = [
-    {
-      category: 'dawd',
-      code: '465',
-      description: '456',
-      id: '1',
-      image: '',
-      inventoryStatus: 'cwd',
-      price: 46,
-      name: '465',
-      quantity: 400,
-      rating: 4,
-    },
-  ];
+  ngOnInit() {}
 
   openNew() {
-    this.options.value = [];
+    this.item = {};
     this.submitted = false;
-    this.dialog = true;
+    this.itemDialog = true;
   }
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({
-      message: 'Você tem certeza que deseja deletar os itens selecionados?',
-      header: 'COnfirmar',
+      message: 'Tem certeza que deseja deletar esses registros?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // o que fazer
+        this.items = this.items.filter(
+          (val) => !this.selectedItems?.includes(val)
+        );
+        this.selectedItems = null;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Products Deleted',
+          life: 3000,
+        });
       },
     });
 
@@ -117,9 +156,9 @@ export class TableComponent  implements OnInit{
     });
   }
 
-  editProduct(value: any) {
-    this.options.value = { ...value };
-    this.dialog = true;
+  editProduct(item: Product) {
+    this.item = { ...item };
+    this.itemDialog = true;
   }
 
   deleteProduct(value: any) {
@@ -128,8 +167,8 @@ export class TableComponent  implements OnInit{
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.onDelete?.emit(value);
-        this.options.value = [];
+        this.items = this.items.filter((val) => val.id !== product.id);
+        this.item = {};
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -141,19 +180,44 @@ export class TableComponent  implements OnInit{
   }
 
   hideDialog() {
-    this.dialog = false;
+    this.itemDialog = false;
     this.submitted = false;
   }
 
   saveProduct() {
     this.submitted = true;
-    this.onSave?.emit();
+
+    if (this.item.name?.trim()) {
+      if (this.item.id) {
+        this.items[this.findIndexById(this.item.id)] = this.item;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Updated',
+          life: 3000,
+        });
+      } else {
+        this.item.id = this.createId();
+        this.item.image = 'product-placeholder.svg';
+        this.items.push(this.item);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Created',
+          life: 3000,
+        });
+      }
+
+      this.items = [...this.items];
+      this.itemDialog = false;
+      this.item = {};
+    }
   }
 
   findIndexById(id: string): number {
     let index = -1;
-    for (let i = 0; i < this.options.value.length; i++) {
-      if (this.options.value[i].id === id) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].id === id) {
         index = i;
         break;
       }

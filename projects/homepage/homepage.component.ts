@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { BackgroundImageComponent } from '../../src/app/components/background-image/background-image.component';
+import { BackgroundImageComponent } from '../../src/app/components/background-image';
 import { CardComponent } from '../../src/app/components/card/card.component';
-import { CarouselComponent } from '../../src/app/components/carousel/carousel.component';
+import { CarouselComponent } from '../../src/app/components/carousel';
 import { CardModel, CarrouselOptions } from '../../src/app/components/models';
 
 @Component({

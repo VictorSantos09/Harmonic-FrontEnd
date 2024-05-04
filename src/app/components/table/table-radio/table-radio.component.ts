@@ -11,8 +11,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { RadioService } from '../../../../services/radio.service';
-import { RadioModel, TipoConteudoModel } from '../../models';
+import { RadioService } from '../../../services/radio.service';
+import { RadioModel, TipoConteudoModel } from '../models';
 
 @Component({
   selector: 'app-table-radio',
@@ -50,8 +50,8 @@ export class TableRadioComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.radioService.getDados().subscribe((data) => {
-      this.radios = data.filter((item) => item.tipoConteudo?.nome === 'Radio');
+    this.radioService.getAll().subscribe((data) => {
+      // this.radios = data.filter((item) => item.tipoConteudo?.nome === 'Radio');
     });
   }
 
