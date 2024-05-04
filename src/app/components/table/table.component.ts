@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,8 +17,15 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
+import {
+  TableAddOptions,
+  TableFieldColumnOption,
+  TableFieldRowOption,
+  TableOptions,
+} from '../models/table';
+import { FormField } from '../models/formField';
+import { Product } from '../../../models/product';
 
 @Component({
   selector: 'app-table',
@@ -46,8 +53,29 @@ import { ProductService } from '../../../services/product.service';
   ],
   providers: [ProductService, MessageService, ConfirmationService],
 })
-export class TableComponent implements OnInit {
-  productDialog: boolean = false;
+export class TableComponent  implements OnInit{
+  @Input() AddOptions!: TableAddOptions;
+  @Input() columns!: TableFieldColumnOption[];
+  @Input() rows: number = 10;
+  @Input() rowsData: TableFieldRowOption[] = [];
+  @Input() options!: TableOptions;
+  @Input() fields?: FormField[];
+
+  @Output() onSave?: EventEmitter<any>;
+  @Output() onDelete?: EventEmitter<any>;
+
+  dialog: boolean = false;
+  selectedItems!: any[] | null;
+  submitted: boolean = false;
+
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
+  ngOnInit(): void {
+    console.log('omo');
+    
+  }
 
   products: Product[] = [
     {
@@ -64,73 +92,48 @@ export class TableComponent implements OnInit {
     },
   ];
 
-  product!: Product;
-
-  selectedProducts!: Product[] | null;
-
-  submitted: boolean = false;
-
-  statuses!: any[];
-
-  constructor(
-    private productService: ProductService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
-
-  ngOnInit() {
-    this.productService.getProducts().then((data) => (this.products = data));
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' },
-    ];
-  }
-
   openNew() {
-    this.product = {};
+    this.options.value = [];
     this.submitted = false;
-    this.productDialog = true;
+    this.dialog = true;
   }
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
+      message: 'Você tem certeza que deseja deletar os itens selecionados?',
+      header: 'COnfirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts?.includes(val)
-        );
-        this.selectedProducts = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000,
-        });
+        // o que fazer
       },
+    });
+
+    this.selectedItems = null;
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Successful',
+      detail: 'Itens deletados',
+      life: 3000,
     });
   }
 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
+  editProduct(value: any) {
+    this.options.value = { ...value };
+    this.dialog = true;
   }
 
-  deleteProduct(product: Product) {
+  deleteProduct(value: any) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
-      header: 'Confirm',
+      message: 'Você tem certeza que deseja deletar ?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
+        this.onDelete?.emit(value);
+        this.options.value = [];
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Deleted',
+          detail: 'Deletado com sucesso',
           life: 3000,
         });
       },
@@ -138,44 +141,19 @@ export class TableComponent implements OnInit {
   }
 
   hideDialog() {
-    this.productDialog = false;
+    this.dialog = false;
     this.submitted = false;
   }
 
   saveProduct() {
     this.submitted = true;
-
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Updated',
-          life: 3000,
-        });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
-        });
-      }
-
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
-    }
+    this.onSave?.emit();
   }
 
   findIndexById(id: string): number {
     let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
+    for (let i = 0; i < this.options.value.length; i++) {
+      if (this.options.value[i].id === id) {
         index = i;
         break;
       }
@@ -192,19 +170,6 @@ export class TableComponent implements OnInit {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return '';
-    }
   }
 
   getEventValue($event: any): string {

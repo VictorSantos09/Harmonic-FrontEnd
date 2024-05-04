@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { HomepageComponent } from '../../projects/homepage/homepage.component';
 import { BackgroundImageComponent } from '../app/components/background-image';
 import {
   FooterComponent,
@@ -9,7 +10,7 @@ import {
   TableRadioComponent,
 } from './components';
 import { CarouselComponent } from './components/carousel';
-import { HomepageComponent } from './homepage/homepage.component';
+import { TestComponent } from './components/table/test/test.component';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
+    TestComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
