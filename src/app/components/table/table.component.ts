@@ -52,39 +52,7 @@ import { TableColumn, TableOptions } from './options';
 })
 export class TableComponent implements OnInit {
   @Input() options: TableOptions = new TableOptions('Gerenciar');
-  @Input() columns: TableColumn[] = [
-    {
-      name: 'name',
-      sortableColumn: true,
-    },
-    {
-      name: 'image',
-      sortableColumn: false,
-      isImage: true,
-      image: {
-        url: 'https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png',
-        alt: 'product',
-        height: 50,
-        width: 50,
-      },
-    },
-    {
-      name: 'price',
-      sortableColumn: true,
-    },
-    {
-      name: 'category',
-      sortableColumn: true,
-    },
-    {
-      name: 'review',
-      sortableColumn: true,
-    },
-    {
-      name: 'status',
-      sortableColumn: true,
-    },
-  ];
+  @Input() columns!: TableColumn[];
 
   @Input() formOptions?: FormOptions = {
     cancelText: 'cancelado com sucesso',
@@ -142,21 +110,18 @@ export class TableComponent implements OnInit {
     ],
   };
 
-  items: Product[] = [];
-  item!: Product;
-  selectedItems!: Product[] | null;
+  @Input() items!: any[];
+  item!: any;
+  selectedItems!: any[] | null;
   submitted: boolean = false;
   itemDialog: boolean = false;
 
   constructor(
-    private productService: ProductService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
 
-  ngOnInit() {
-    this.productService.getProducts().then((data) => (this.items = data));
-  }
+  ngOnInit() {}
 
   openNew() {
     this.item = {};
@@ -166,8 +131,8 @@ export class TableComponent implements OnInit {
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
+      message: 'Tem certeza que deseja deletar esses registros?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.items = this.items.filter(

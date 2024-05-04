@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { BackgroundImageComponent } from '../components/background-image';
-import { CardComponent } from '../components/card/card.component';
-import { CarouselComponent } from '../components/carousel';
-import { CardModel, CarrouselOptions } from '../components/models';
+import { BackgroundImageComponent } from '../../src/app/components/background-image';
+import { CardComponent } from '../../src/app/components/card/card.component';
+import { CarouselComponent } from '../../src/app/components/carousel';
+import { CardModel, CarrouselOptions } from '../../src/app/components/models';
 
 @Component({
   selector: 'app-homepage',
@@ -24,13 +24,13 @@ export class HomepageComponent implements OnInit {
       contentName: 'teste',
       image: {
         url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-        alt: 'awd'
+        alt: 'awd',
       },
       description: '',
       likes: 323,
-      title: 'dawd'
-    }
-  ]
+      title: 'dawd',
+    },
+  ];
 
   ngOnInit(): void {
     this.carrouselOptions = {

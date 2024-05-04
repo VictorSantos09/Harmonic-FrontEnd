@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -7,14 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RadioService } from '../../../services/radio.service';
-import { RadioModel } from '../models';
-import { TipoConteudoModel } from '../models';
-import { RadioButtonModule } from 'primeng/radiobutton';
-
+import { RadioModel, TipoConteudoModel } from '../models';
 
 @Component({
   selector: 'app-table-radio',
@@ -48,19 +46,18 @@ export class TableRadioComponent implements OnInit {
     private radioService: RadioService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private HttpClient: HttpClient,
+    private HttpClient: HttpClient
   ) {}
 
   ngOnInit() {
-    this.radioService.getDados().subscribe((data) => {
-      this.radios = data.filter((item) => item.tipoConteudo?.nome === 'Radio');
+    this.radioService.getAll().subscribe((data) => {
+      // this.radios = data.filter((item) => item.tipoConteudo?.nome === 'Radio');
     });
   }
 
   // buscarTipos() {
   //   return this.HttpClient.get('');
   // }
-
 
   openNew() {
     this.radio = {};
@@ -167,7 +164,7 @@ export class TableRadioComponent implements OnInit {
     return id;
   }
 
-  getEventValue($event:any) :string {
+  getEventValue($event: any): string {
     return $event.target.value;
-  } 
+  }
 }

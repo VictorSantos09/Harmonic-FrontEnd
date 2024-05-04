@@ -28,7 +28,7 @@
     [rows]="options.rowsNumber"
     [paginator]="options.usePaginator"
     [globalFilterFields]="options.globalFilterFields"
-    [tableStyle]="{ 'min-width': '75rem' }"
+    [tableStyle]="{ 'min-width': '10rem' }"
     styleClass="p-datatable-striped"
     responsiveLayout="stack"
     [rowsPerPageOptions]="[5, 10, 20]"
@@ -64,7 +64,7 @@
           [pSortableColumn]="c.sortableColumn ? c.name : undefined"
           style="min-width: 15rem"
         >
-          {{ c.name }}
+          {{ c.title }}
           <p-sortIcon *ngIf="c.sortableColumn" [field]="c.name" />
         </th>
       </tr>

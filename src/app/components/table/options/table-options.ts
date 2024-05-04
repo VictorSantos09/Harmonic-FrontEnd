@@ -8,11 +8,21 @@ export class TableOptions {
     'status',
     'id',
   ];
-  dataKey?: string = 'id';
+  dataKey: string = 'id';
 
   title: string;
 
-  constructor(title: string) {
+  constructor(
+    title: string,
+    rowsNumber?: number,
+    usePaginator?: boolean,
+    globalFilterFields?: string[],
+    dataKey?: string
+  ) {
     this.title = title;
+    this.rowsNumber = rowsNumber || this.rowsNumber;
+    this.usePaginator = usePaginator || this.usePaginator;
+    this.globalFilterFields = globalFilterFields || this.globalFilterFields;
+    this.dataKey = dataKey || this.dataKey;
   }
 }
