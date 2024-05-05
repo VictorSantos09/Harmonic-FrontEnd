@@ -8,4 +8,3 @@ export * from './models';
 export * from './navbar';
 export * from './shared';
 export * from './table';
-export * from './table-radio';

@@ -11,8 +11,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { RadioService } from '../../../services/radio.service';
-import { RadioModel, TipoConteudoModel } from '../models';
+import { RadioModel, TipoConteudoModel } from '../../models';
+import { RadioService } from '../../../../services';
 
 @Component({
   selector: 'app-table-radio',
