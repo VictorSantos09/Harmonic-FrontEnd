@@ -1,21 +1,13 @@
 <app-background-image></app-background-image>
 
 <app-carousel [options]="carrouselOptions"></app-carousel>
-<!-- 
+
 <h3>Rádios mais ouvidas</h3>
-<div *ngFor="let c of cards">
-    <app-card
-    [image]="c.image"
-    [description]="c.description"
-    [likes]="c.likes"
-    ></app-card>
+<div *ngFor="let avatarImage of avatars">
+  <app-avatar [image]="avatarImage" [size]="'xlarge'"></app-avatar>
 </div>
 
 <h3>Podcasts mais ouvidos</h3>
-<div *ngFor="let c of cards">
-    <app-card
-    [image]="c.image"
-    [description]="c.description"
-    [likes]="c.likes"
-    ></app-card>
-</div> -->
+<div *ngFor="let avatarImage of avatars">
+  <app-avatar [image]="avatarImage" [size]="'xlarge'"></app-avatar>
+</div>

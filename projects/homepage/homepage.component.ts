@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { AvatarComponent } from '../../src';
 import { BackgroundImageComponent } from '../../src/app/components/background-image';
-import { CardComponent } from '../../src/app/components/card/card.component';
 import { CarouselComponent } from '../../src/app/components/carousel';
-import { CardModel, CarrouselOptions } from '../../src/app/components/models';
+import { CarrouselOptions, ImageModel } from '../../src/app/components/models';
 
 @Component({
   selector: 'app-homepage',
@@ -11,24 +12,51 @@ import { CardModel, CarrouselOptions } from '../../src/app/components/models';
   imports: [
     CommonModule,
     CarouselComponent,
-    CardComponent,
     BackgroundImageComponent,
+    AvatarComponent,
+    ButtonModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent implements OnInit {
   carrouselOptions!: CarrouselOptions;
-  cards: CardModel[] = [
+  avatars: ImageModel[] = [
     {
-      contentName: 'teste',
-      image: {
-        url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-        alt: 'awd',
-      },
-      description: '',
-      likes: 323,
-      title: 'dawd',
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
+    },
+    {
+      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
   ];
 

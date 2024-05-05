@@ -1,3 +1,4 @@
+export * from './avatar';
 export * from './background-image';
 export * from './card';
 export * from './carousel';
