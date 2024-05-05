@@ -1,4 +1,4 @@
-export class Response<TType> {
+export class ResponseData<TType> {
   isSuccess: boolean;
   isFailure: boolean;
   data: TType[];

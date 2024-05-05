@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormOptions, RadioModel } from '../../src';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { FormOptions, MessengerService, RadioModel } from '../../src';
 import {
   TableColumn,
   TableComponent,
@@ -10,10 +14,10 @@ import { RadioService } from '../../src/services';
 @Component({
   selector: 'app-pageCrudRadio',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, ToastModule, ButtonModule, RippleModule],
   templateUrl: './page-crud-radio.component.html',
   styleUrl: './page-crud-radio.component.scss',
-  providers: [RadioService],
+  providers: [RadioService, MessengerService, MessageService],
 })
 export class PageCrudRadioComponent implements OnInit {
   data!: RadioModel[];
@@ -95,7 +99,10 @@ export class PageCrudRadioComponent implements OnInit {
     },
   ];
 
-  constructor(private _radioService: RadioService) {
+  constructor(
+    private _radioService: RadioService,
+    private _messengerService: MessengerService
+  ) {
     this._buscarDados();
   }
 
@@ -107,7 +114,28 @@ export class PageCrudRadioComponent implements OnInit {
         this.data = data.data;
       },
       error: (error) => {
-        console.error('Erro ao carregar dados:', error);
+        this._messengerService.showError('Erro ao carregar dados', error, true);
+      },
+    });
+  }
+
+  onDeleteButtonClick(event: RadioModel): void {
+    if (event.id === undefined) {
+      this._messengerService.showError('Registro não encontrado');
+      return;
+    }
+
+    this._radioService.delete(event.id).subscribe({
+      next: () => {
+        this._messengerService.showSuccess('Registro deletado com sucesso');
+        this._buscarDados();
+      },
+      error: (error) => {
+        this._messengerService.showError(
+          'Erro ao deletar registro',
+          error,
+          true
+        );
       },
     });
   }

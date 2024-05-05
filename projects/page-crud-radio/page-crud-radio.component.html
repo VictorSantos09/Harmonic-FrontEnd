@@ -3,4 +3,10 @@
   [columns]="columns"
   [items]="data"
   [formOptions]="formOptions"
+  (onDelete)="onDeleteButtonClick($event)"
 ></app-table>
+
+<!--Necessário para aparecer os toasts-->
+<div class="card flex justify-content-center">
+  <p-toast />
+</div>

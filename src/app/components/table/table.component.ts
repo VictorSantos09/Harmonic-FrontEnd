@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,9 +17,6 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { EventEmitter } from 'stream';
-import { Product } from '../../../models/product';
-import { ProductService } from '../../../services/product.service';
 import { FormComponent } from '../form';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
@@ -35,6 +32,7 @@ import { TableColumn, TableOptions } from './options';
     ButtonModule,
     ToastModule,
     ToolbarModule,
+    ToastModule,
     ConfirmDialogModule,
     InputTextModule,
     InputTextareaModule,
@@ -49,7 +47,7 @@ import { TableColumn, TableOptions } from './options';
     InputNumberModule,
     FormComponent,
   ],
-  providers: [ProductService, MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService],
 })
 export class TableComponent implements OnInit {
   @Input() options!: TableOptions;
@@ -57,9 +55,10 @@ export class TableComponent implements OnInit {
   @Input() formOptions?: FormOptions;
   @Input() items!: any[];
 
-  @Output() onSave?: EventEmitter<any>;
-  @Output() onDelete?: EventEmitter<any>;
-  @Output() onEdit?: EventEmitter<any>;
+  @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
 
   item!: any;
   selectedItems!: any[] | null;
@@ -101,25 +100,21 @@ export class TableComponent implements OnInit {
     });
   }
 
-  edit(product: Product) {
-    this.item = { ...product };
+  edit(item: any) {
+    this.item = { ...item };
     this.itemDialog = true;
   }
 
-  delete(product: Product) {
+  delete(item: any) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.items = this.items.filter((val) => val.id !== product.id);
+        this.items = this.items.filter((val) => val.id !== item.id);
         this.item = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registro deletado',
-          life: this._defaultLife,
-        });
+
+        this.onDelete.emit(item);
       },
     });
   }

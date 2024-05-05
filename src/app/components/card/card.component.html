@@ -1,22 +1,30 @@
-<div class="container">
-  <div class="left-section">
-    <h2>Sobre</h2>
-    <h3>Nome da Radio/Podcast</h3>
-    <img src="https://th.bing.com/th/id/OIP.nRa_XmUQH0-i_xdxraouOAHaHa?rs=1&pid=ImgDetMain" alt="" /> 
-  </div>
-  <div class="right-section">
-    <div class="pais">
-      <p>Descrição da Rádio/Podcast</p>
-      <div>
-        <p>Disponível em: /p>
-          <img src="" alt="" />Bandeira País
+<div class="card flex justify-content-center">
+  <p-card [header]="title" [subheader]="subTitle" [style]="{ width: '550px' }">
+    <ng-template pTemplate="header">
+      <img [alt]="image.alt" [src]="image.url" />
+    </ng-template>
+    <p>
+      {{ description }}
+    </p>
+    <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+        <i class="pi-thumbs-down-fill"></i>
+        <p-button
+          [label]="primaryButtonLabel"
+          severity="secondary"
+          class="w-full"
+          styleClass="w-full"
+        />
+
+        <i *ngIf="customIcon" class="{{ customIcon }}"></i>
+
+        <p-button
+          *ngIf="secondaryButtonLabel"
+          [label]="secondaryButtonLabel"
+          class="w-full"
+          styleClass="w-full"
+        />
       </div>
-    </div>
-      <p>Nome Pais</p>
-    <div class="feedback">
-      <button class="btn-feedback">Feedback</button>
-      <ng-icon name="aspectsLikeFilled"></ng-icon>
-      <p>Atributo Like/Feedback/Gosteis/Curtidas</p>
-    </div>
-  </div>
+    </ng-template>
+  </p-card>
 </div>
