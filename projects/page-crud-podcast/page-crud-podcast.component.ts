@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import {
   FormOptions,
+  MessengerService,
   RadioModel,
   TableColumn,
   TableComponent,
@@ -11,10 +14,10 @@ import { RadioService } from '../../src/services';
 @Component({
   selector: 'app-page-crud-podcast',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, ToastModule],
   templateUrl: './page-crud-podcast.component.html',
   styleUrl: './page-crud-podcast.component.scss',
-  providers: [RadioService],
+  providers: [RadioService, MessageService, MessengerService],
 })
 export class PageCrudPodcastComponent implements OnInit {
   columns: TableColumn[] = [
@@ -37,7 +40,10 @@ export class PageCrudPodcastComponent implements OnInit {
   };
   data: RadioModel[] = []; // depois criar model do podcast
 
-  constructor(private _radioService: RadioService) {} //mudar para podcast
+  constructor(
+    private _radioService: RadioService,
+    private _messengerService: MessengerService
+  ) {} //mudar para podcast
 
   ngOnInit(): void {
     this._radioService.getAll().subscribe({
@@ -45,7 +51,7 @@ export class PageCrudPodcastComponent implements OnInit {
         this.data = data.data;
       },
       error: (err) => {
-        console.error('não foi possível buscar os podcasts', err);
+        this._messengerService.showError('erro ao buscar os podcasts', err);
       },
     });
   }
