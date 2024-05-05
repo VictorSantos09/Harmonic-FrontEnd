@@ -30,28 +30,40 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Inicio',
         icon: 'pi pi-fw pi-home',
-        routerLink: [ROUTES_CNT.HOMEPAGE]
+        routerLink: [ROUTES_CNT.HOMEPAGE],
       },
       {
-        label: 'Conteúdo',
-        icon: 'pi pi-fw pi-pencil',
+        label: 'Gerenciar',
+        icon: 'pi pi-fw pi-th-large',
         items: [
           {
-            label: 'Gerenciar',
-            icon: 'pi pi-fw pi-plus',
+            label: 'Conteúdo',
+            icon: 'pi pi-fw pi-pen-to-square',
             items: [
               {
-                label: 'Radio',
-                icon: 'pi pi-fw pi-bookmark',
-                routerLink: [ROUTES_CNT.RADIO]
+                label: 'Rádio',
+                icon: 'pi pi-fw pi-volume-off',
+                routerLink: [ROUTES_CNT.RADIO],
               },
               {
                 label: 'Podcast',
-                icon: 'pi pi-fw pi-video',
-                routerLink: [ROUTES_CNT.PODCAST]
+                icon: 'pi pi-fw pi-volume-off',
+                routerLink: [ROUTES_CNT.PODCAST],
               },
             ],
-          }
+          },
+          {
+            label: 'Tipos Conteúdos',
+            icon: 'pi pi-fw pi-pen-to-square',
+          },
+          {
+            label: 'Plataformas',
+            icon: 'pi pi-fw pi-pen-to-square',
+          },
+          {
+            label: 'Países',
+            icon: 'pi pi-fw pi-pen-to-square',
+          },
         ],
       },
       {
