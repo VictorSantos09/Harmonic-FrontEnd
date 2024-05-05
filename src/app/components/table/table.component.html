@@ -40,7 +40,7 @@
   >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">{{ options.title }}</h5>
+        <h2 class="m-0">{{ options.title }}</h2>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input
@@ -67,6 +67,8 @@
           {{ c.title }}
           <p-sortIcon *ngIf="c.sortableColumn" [field]="c.name" />
         </th>
+
+        <th>Ações</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">

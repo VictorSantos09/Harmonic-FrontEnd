@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RadioModel } from '../../src';
+import { FormOptions, RadioModel } from '../../src';
 import {
   TableColumn,
   TableComponent,
@@ -16,7 +16,45 @@ import { RadioService } from '../../src/services';
   providers: [RadioService],
 })
 export class PageCrudRadioComponent implements OnInit {
-  data: RadioModel[] = [];
+  data!: RadioModel[];
+
+  formOptions: FormOptions = {
+    title: 'Rádio',
+    cancelText: 'Cancelar',
+    submitText: 'Salvar',
+    formFields: [
+      {
+        disabled: false,
+        label: 'Título',
+        name: 'titulo',
+        type: 'text',
+        required: true,
+        value: '',
+        placeholder: 'Informe o título da rádio',
+        errorMessage: 'Campo obrigatório',
+      },
+      {
+        disabled: false,
+        label: 'Descrição',
+        name: 'descricao',
+        type: 'text',
+        required: true,
+        value: '',
+        placeholder: 'Informe a descrição da rádio',
+        errorMessage: 'Campo obrigatório',
+      },
+      {
+        disabled: false,
+        label: 'País',
+        name: 'pais',
+        type: 'text',
+        required: true,
+        value: '',
+        placeholder: 'Informe o país da rádio',
+        errorMessage: 'Campo obrigatório',
+      },
+    ],
+  };
 
   tableOptions: TableOptions = {
     title: 'Rádios',
