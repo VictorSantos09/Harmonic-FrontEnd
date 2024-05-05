@@ -3,11 +3,29 @@
 <app-carousel [options]="carrouselOptions"></app-carousel>
 
 <h3>Rádios mais ouvidas</h3>
-<div *ngFor="let avatarImage of avatars">
-  <app-avatar [image]="avatarImage" [size]="'xlarge'"></app-avatar>
+<div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+  <div *ngFor="let avatarImage of avatars">
+    <a [routerLink]="informationRoute">
+      <p-avatar
+        [image]="avatarImage.url"
+        [size]="'xlarge'"
+        [shape]="'circle'"
+        [className]="'p-2'"
+      ></p-avatar>
+    </a>
+  </div>
 </div>
 
 <h3>Podcasts mais ouvidos</h3>
-<div *ngFor="let avatarImage of avatars">
-  <app-avatar [image]="avatarImage" [size]="'xlarge'"></app-avatar>
+<div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+  <div *ngFor="let avatarImage of avatars">
+    <a [routerLink]="informationRoute">
+      <p-avatar
+        [image]="avatarImage.url"
+        [size]="'xlarge'"
+        [shape]="'circle'"
+        [className]="'p-2'"
+      ></p-avatar>
+    </a>
+  </div>
 </div>
