@@ -65,6 +65,14 @@ export class TableComponent implements OnInit {
   submitted: boolean = false;
   itemDialog: boolean = false;
 
+  public globalFilterFields = [
+    'name',
+    'country.name',
+    'representative.name',
+    'status',
+    'id',
+  ];
+
   private _defaultLife = 3000;
 
   constructor(
