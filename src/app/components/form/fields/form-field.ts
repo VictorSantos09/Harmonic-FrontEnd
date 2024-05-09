@@ -1,7 +1,7 @@
 import { INPUT_TYPES } from '../../shared';
 
 export class FormField {
-  required?: boolean = true;
+  required: boolean = true;
   disabled: boolean = false;
   readonly?: boolean = false;
 
@@ -9,7 +9,7 @@ export class FormField {
     public name: string,
     public label: string,
     public type: INPUT_TYPES,
-    public value: string,
+    public value?: string,
     public placeholder?: string,
     required?: boolean,
     public hidden?: boolean,

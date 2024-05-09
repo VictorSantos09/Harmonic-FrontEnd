@@ -1,1 +1,0 @@
-export * from './table-radio.component';

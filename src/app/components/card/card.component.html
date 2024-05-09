@@ -1,11 +1,32 @@
 <div class="card flex justify-content-center">
   <p-card [header]="title" [subheader]="subTitle" [style]="{ width: '550px' }">
     <ng-template pTemplate="header">
-      <img [alt]="image.alt" [src]="image.url" />
+      <img
+        [alt]="image.alt"
+        src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+      />
     </ng-template>
-    <p>
-      {{ description }}
-    </p>
+    <ng-template pTemplate="main">
+      <p>
+        {{ description }}
+      </p>
+      <div class="pais">
+        <ng-icon>
+          <!--Icon/Imagem (caso imagem, mudar tag para img) Bandeira-->
+        </ng-icon>
+        <p>
+          <!--{{pais}}-->
+        </p>
+      </div>
+      <div class="plataforma">
+        <p>
+          <!--Disponível em:-->
+        </p>
+        <ng-icon>
+          <!--Icon/Imagem (caso imagem, mudar tag para img) Plataforma-->
+        </ng-icon>
+      </div>
+    </ng-template>
     <ng-template pTemplate="footer">
       <div class="flex gap-3 mt-1">
         <i class="pi-thumbs-down-fill"></i>
@@ -15,15 +36,12 @@
           class="w-full"
           styleClass="w-full"
         />
-
-        <i *ngIf="customIcon" class="{{ customIcon }}"></i>
-
-        <p-button
-          *ngIf="secondaryButtonLabel"
-          [label]="secondaryButtonLabel"
-          class="w-full"
-          styleClass="w-full"
-        />
+        <ng-icon>
+          <!--Icon/Imagem (caso imagem, mudar tag para img) Like-->
+        </ng-icon>
+        <p>
+          <!--Quantidade Likes-->
+        </p>
       </div>
     </ng-template>
   </p-card>

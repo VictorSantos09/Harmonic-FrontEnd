@@ -7,6 +7,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -17,7 +18,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { FormComponent } from '../form';
+import { FormField } from '../form';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
 
@@ -45,25 +46,40 @@ import { TableColumn, TableOptions } from './options';
     InputTextModule,
     FormsModule,
     InputNumberModule,
-    FormComponent,
+    FloatLabelModule,
   ],
   providers: [MessageService, ConfirmationService],
 })
-export class TableComponent implements OnInit {
+export class TableComponent<T> implements OnInit {
+  @Input() get formFields(): FormField[] {
+    return this._formFields;
+  }
+
+  set formFields(value: FormField[]) {
+    this._formFields = value;
+  }
+
+  @Input() value: T | undefined;
+  @Output() valueChange = new EventEmitter<T>();
+
   @Input() options!: TableOptions;
   @Input() columns!: TableColumn[];
   @Input() formOptions?: FormOptions;
+
   @Input() items!: any[];
 
   @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() formFieldsChange = new EventEmitter<FormField[]>();
 
   item!: any;
   selectedItems!: any[] | null;
   submitted: boolean = false;
   itemDialog: boolean = false;
+
+  private _formFields!: FormField[];
 
   public globalFilterFields = [
     'name',
@@ -160,6 +176,18 @@ export class TableComponent implements OnInit {
       this.itemDialog = false;
       this.item = {};
     }
+
+    const objetoUnico: { [key: string]: any } = this._formFields.reduce(
+      (obj: any, item) => {
+        obj[item.name] = item.value;
+        return obj;
+      },
+      {}
+    );
+
+    const t = objetoUnico as T;
+
+    this.onSave.emit(t);
   }
 
   findIndexById(id: string): number {

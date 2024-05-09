@@ -9,7 +9,6 @@ import { ButtonModule } from 'primeng/button';
 import { HomepageComponent } from '../../projects';
 import {
   FooterComponent,
-  FormComponent,
   HeaderComponent,
   NavbarComponent,
 } from './components';
@@ -27,7 +26,6 @@ import {
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    FormComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

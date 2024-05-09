@@ -21,6 +21,7 @@ import { RadioService } from '../../src/services';
 })
 export class PageCrudRadioComponent implements OnInit {
   data!: RadioModel[];
+  dataSingle: RadioModel = new RadioModel();
 
   formOptions: FormOptions = {
     title: 'Rádio',
@@ -33,7 +34,6 @@ export class PageCrudRadioComponent implements OnInit {
         name: 'titulo',
         type: 'text',
         required: true,
-        value: '',
         placeholder: 'Informe o título da rádio',
         errorMessage: 'Campo obrigatório',
       },
@@ -43,7 +43,6 @@ export class PageCrudRadioComponent implements OnInit {
         name: 'descricao',
         type: 'text',
         required: true,
-        value: '',
         placeholder: 'Informe a descrição da rádio',
         errorMessage: 'Campo obrigatório',
       },
@@ -51,11 +50,28 @@ export class PageCrudRadioComponent implements OnInit {
         disabled: false,
         label: 'País',
         name: 'pais',
-        type: 'text',
+        type: 'number',
         required: true,
-        value: '',
         placeholder: 'Informe o país da rádio',
         errorMessage: 'Campo obrigatório',
+      },
+      {
+        disabled: false,
+        label: 'Tipo Conteudo',
+        name: 'tipoconteudo',
+        type: 'number',
+        required: true,
+        placeholder: 'Informe o tipo do conteudo',
+        errorMessage: 'Informe de tipo do conteudo',
+      },
+      {
+        disabled: false,
+        label: 'Plataforma',
+        name: 'plataforma',
+        type: 'number',
+        required: true,
+        placeholder: 'Informe a plataforma do conteudo',
+        errorMessage: 'Informe a plataforma do conteudo',
       },
     ],
   };
@@ -136,6 +152,20 @@ export class PageCrudRadioComponent implements OnInit {
           error,
           true
         );
+      },
+    });
+  }
+
+  onSaveButtonClick(event: RadioModel) {
+    this.dataSingle = event;
+    console.log(this.dataSingle);
+
+    this._radioService.insert(this.dataSingle).subscribe({
+      next: (value) => {
+        this._messengerService.showSuccess('registro gravado');
+      },
+      error: (err) => {
+        this._messengerService.showError('registro não gravado', err);
       },
     });
   }

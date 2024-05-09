@@ -1,19 +1,25 @@
+/* CSS */
 .container {
+  display: flex;
   width: 550px;
-  margin: auto;
+  justify-content: space-between;
   background-color: #242424;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
+.form-container {
+  color: #fff;
+  padding: 20px;
+  width: 50%;
+}
+
+.user-info {
+  width: 40%;
+  color: #fff;
+  padding: 20px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .form-group label {
@@ -23,20 +29,15 @@ h1 {
 
 .form-group input {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   border: solid;
-  border-radius: 5px;
   border-color: #a5a8ab;
   background-color: #4f4c4c;
 }
 
-.btn {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+button {
   background-color: #933dc9;
+  padding: 10px 20px;
   color: #fff;
   border-color: #bcc1c7;
   cursor: pointer;

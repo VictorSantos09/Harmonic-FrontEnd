@@ -23,4 +23,8 @@ export class RadioService {
       }
     );
   }
+
+  insert(obj: RadioModel): Observable<Response> {
+    return this._http.post<Response>(`${API_URL.URL}Conteudo/add`, obj);
+  }
 }

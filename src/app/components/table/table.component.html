@@ -132,7 +132,30 @@
     styleClass="p-fluid"
   >
     <ng-template pTemplate="content">
-      <app-form [fields]="formOptions?.formFields!"></app-form>
+      <div class="container">
+        <div class="p-2 m-2" *ngFor="let f of formOptions?.formFields">
+          <p-floatLabel>
+            <input
+              pInputText
+              [(ngModel)]="f.value"
+              [required]="f.required"
+              [readOnly]="f.readonly"
+              [disabled]="f.disabled"
+              [placeholder]="f.placeholder"
+              [type]="f.type"
+              [name]="f.name"
+            />
+            <label [htmlFor]="f.name">{{ f.label }}</label>
+
+            <small
+              class="p-error"
+              *ngIf="submitted && !f.required && !item.name"
+            >
+              {{ f.errorMessage }}
+            </small>
+          </p-floatLabel>
+        </div>
+      </div>
     </ng-template>
 
     <!--Cancel and save Buttons-->
