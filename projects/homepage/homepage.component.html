@@ -3,17 +3,16 @@
 <h3>Rádios mais ouvidas</h3>
 <p-carousel
   [value]="avatars"
-  [numVisible]="carrouselOptions.numVisible"
-  [numScroll]="carrouselOptions.numScroll"
+  [numVisible]="3"
+  [numScroll]="4"
   [circular]="true"
   [responsiveOptions]="carrouselOptions.responsiveOptions"
-  autoplayInterval="3000"
 >
   <ng-template let-product pTemplate="item">
-    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+    <div [ngClass]="'flex justify-content-center'">
       <div
         *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'"
+        [ngClass]="'flex justify-content-center align-items-center flex-column'"
       >
         <a [routerLink]="informationRoute">
           <p-avatar
@@ -32,17 +31,17 @@
 <h3>Podcasts mais ouvidos</h3>
 <p-carousel
   [value]="avatars"
-  [numVisible]="carrouselOptions.numVisible"
-  [numScroll]="carrouselOptions.numScroll"
+  [numVisible]="3"
+  [numScroll]="4"
   [circular]="true"
   [responsiveOptions]="carrouselOptions.responsiveOptions"
   autoplayInterval="3000"
 >
   <ng-template let-product pTemplate="item">
-    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+    <div [ngClass]="'flex justify-content-center'">
       <div
         *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'"
+        [ngClass]="'flex justify-content-center align-items-center flex-column'"
       >
         <a [routerLink]="informationRoute">
           <p-avatar

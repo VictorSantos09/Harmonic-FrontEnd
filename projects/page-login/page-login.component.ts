@@ -1,49 +1,49 @@
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+
 @Component({
   selector: 'app-page-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    InputGroupModule,
+    InputGroupAddonModule,
+    PasswordModule,
+    CommonModule,
+    FormsModule,
+    FloatLabelModule,
+    DividerModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    InputGroupAddonModule,
+    InputTextModule,
+    CardModule,
+  ],
   templateUrl: './page-login.component.html',
   styleUrl: './page-login.component.scss',
 })
 export class PageLoginComponent {
-  loginForm: FormGroup = this.formBuilder.group({});
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
-
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const observer = {
-        next: (response: any) => {
-          console.log(response);
-          // Handle successful login response (e.g., navigate to a different page)
-        },
-        error: (error: any) => {
-          console.error(error);
-          // Handle login errors (e.g., display an error message)
-        },
-        complete: () => {
-          console.log('Login completed!'); // (Optional)
-        },
-      };
-
-      this.http
-        .post('https://your-api-url.com/login', this.loginForm.value)
-        .subscribe(observer);
-    }
+  login() {
+    console.log(this.loginForm.value);
   }
 }
