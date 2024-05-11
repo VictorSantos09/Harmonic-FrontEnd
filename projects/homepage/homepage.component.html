@@ -1,31 +1,59 @@
 <app-background-image></app-background-image>
 
-<app-carousel [options]="carrouselOptions"></app-carousel>
-
 <h3>Rádios mais ouvidas</h3>
-<div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
-  <div *ngFor="let avatarImage of avatars">
-    <a [routerLink]="informationRoute">
-      <p-avatar
-        [image]="avatarImage.url"
-        [size]="'xlarge'"
-        [shape]="'circle'"
-        [className]="'p-2'"
-      ></p-avatar>
-    </a>
-  </div>
-</div>
+<p-carousel
+  [value]="avatars"
+  [numVisible]="carrouselOptions.numVisible"
+  [numScroll]="carrouselOptions.numScroll"
+  [circular]="true"
+  [responsiveOptions]="carrouselOptions.responsiveOptions"
+  autoplayInterval="3000"
+>
+  <ng-template let-product pTemplate="item">
+    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+      <div
+        *ngFor="let avatarImage of avatars"
+        [ngClass]="'flex justify-content-center flex-wrap'"
+      >
+        <a [routerLink]="informationRoute">
+          <p-avatar
+            [image]="avatarImage.url"
+            [size]="'xlarge'"
+            [shape]="'circle'"
+            [className]="'p-2'"
+          ></p-avatar>
+        </a>
+        <p>{{ carrouselOptions.title }}</p>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
 
 <h3>Podcasts mais ouvidos</h3>
-<div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
-  <div *ngFor="let avatarImage of avatars">
-    <a [routerLink]="informationRoute">
-      <p-avatar
-        [image]="avatarImage.url"
-        [size]="'xlarge'"
-        [shape]="'circle'"
-        [className]="'p-2'"
-      ></p-avatar>
-    </a>
-  </div>
-</div>
+<p-carousel
+  [value]="avatars"
+  [numVisible]="carrouselOptions.numVisible"
+  [numScroll]="carrouselOptions.numScroll"
+  [circular]="true"
+  [responsiveOptions]="carrouselOptions.responsiveOptions"
+  autoplayInterval="3000"
+>
+  <ng-template let-product pTemplate="item">
+    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
+      <div
+        *ngFor="let avatarImage of avatars"
+        [ngClass]="'flex justify-content-center flex-wrap'"
+      >
+        <a [routerLink]="informationRoute">
+          <p-avatar
+            [image]="avatarImage.url"
+            [size]="'xlarge'"
+            [shape]="'circle'"
+            [className]="'p-2'"
+          ></p-avatar>
+        </a>
+        <p>{{ carrouselOptions.title }}</p>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

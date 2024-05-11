@@ -157,10 +157,14 @@ export class PageCrudRadioComponent implements OnInit {
   }
 
   onSaveButtonClick(event: RadioModel) {
-    this.dataSingle = event;
-    console.log(this.dataSingle);
+    const obj = {
+      titulo: event.titulo,
+      descricao: event.descricao,
+      idPais: event.pais,
+      idTipoConteudo: event.tipoConteudo,
+    };
 
-    this._radioService.insert(this.dataSingle).subscribe({
+    this._radioService.insert(obj).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('registro gravado');
       },

@@ -1,8 +1,11 @@
-<p-carousel *ngIf="options.images"
+<p-carousel
+  *ngIf="options.images"
   [value]="options.images"
   [numVisible]="options.numVisible"
   [numScroll]="options.numScroll"
   [responsiveOptions]="options.responsiveOptions"
+  [circular]="true"
+  autoplayInterval="3000"
 >
   <ng-template let-product pTemplate="item">
     <div>
