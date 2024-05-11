@@ -10,6 +10,7 @@ import {
   TableOptions,
 } from '../../src/app/components/table';
 import { RadioService } from '../../src/services';
+import { ConteudoDto, ConteudoDtoConsulta } from './dto';
 
 @Component({
   selector: 'app-pageCrudRadio',
@@ -20,7 +21,7 @@ import { RadioService } from '../../src/services';
   providers: [RadioService, MessengerService, MessageService],
 })
 export class PageCrudRadioComponent implements OnInit {
-  data!: RadioModel[];
+  data!: ConteudoDtoConsulta[];
   dataSingle: RadioModel = new RadioModel();
 
   formOptions: FormOptions = {
@@ -83,6 +84,11 @@ export class PageCrudRadioComponent implements OnInit {
 
   columns: TableColumn[] = [
     {
+      title: 'ID',
+      name: 'id',
+      sortableColumn: true,
+    },
+    {
       title: 'Título',
       name: 'titulo',
       sortableColumn: true,
@@ -98,13 +104,18 @@ export class PageCrudRadioComponent implements OnInit {
       sortableColumn: true,
     },
     {
-      title: 'Total Likes',
-      name: 'feedback',
+      title: 'Total Curtidas',
+      name: 'totalCurtidas',
       sortableColumn: true,
     },
     {
-      title: 'Total Dislikes',
-      name: 'feedback',
+      title: 'Total Gosteis',
+      name: 'totalGosteis',
+      sortableColumn: true,
+    },
+    {
+      title: 'Total Não Gosteis',
+      name: 'totalNaoGosteis',
       sortableColumn: true,
     },
     {
@@ -127,7 +138,22 @@ export class PageCrudRadioComponent implements OnInit {
   _buscarDados() {
     this._radioService.getAll().subscribe({
       next: (data) => {
-        this.data = data.data;
+        this.data = data.data.map((item) => {
+          const obj: ConteudoDtoConsulta = {
+            titulo: item.titulo,
+            descricao: item.descricao,
+            pais: item.pais.nome,
+            tipoConteudo: item.tipoConteudo.nome,
+            totalCurtidas: item.feedback.totalCurtidas,
+            totalGosteis: item.feedback.totalGosteis,
+            totalNaoGosteis:
+              item.feedback.totalCurtidas - item.feedback.totalGosteis,
+            id: item.id,
+            dataCadastro: item.dataCadastro,
+          };
+
+          return obj;
+        });
       },
       error: (error) => {
         this._messengerService.showError('Erro ao carregar dados', error, true);
@@ -157,16 +183,18 @@ export class PageCrudRadioComponent implements OnInit {
   }
 
   onSaveButtonClick(event: RadioModel) {
-    const obj = {
+    const obj: ConteudoDto = {
       titulo: event.titulo,
       descricao: event.descricao,
-      idPais: event.pais,
-      idTipoConteudo: event.tipoConteudo,
+      idPais: 6,
+      idTipoConteudo: 1,
+      idPlataforma: 1,
     };
 
     this._radioService.insert(obj).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('registro gravado');
+        this._buscarDados();
       },
       error: (err) => {
         this._messengerService.showError('registro não gravado', err);

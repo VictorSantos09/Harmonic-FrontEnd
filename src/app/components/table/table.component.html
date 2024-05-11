@@ -23,21 +23,28 @@
 
   <p-table
     #dt
-    [value]="items"
-    [columns]="columns"
-    [rows]="options.rowsNumber"
-    [paginator]="options.usePaginator"
-    [globalFilterFields]="globalFilterFields"
-    [tableStyle]="{ 'min-width': '10rem' }"
     styleClass="p-datatable-striped"
     responsiveLayout="stack"
+    dataKey="id"
+    scrollHeight="400px"
+    currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} registros"
+    [value]="items"
+    [columns]="columns"
+    [rows]="options.rowsNumber ?? 10"
+    [alwaysShowPaginator]="options.usePaginator ?? true"
+    [paginator]="options.usePaginator ?? true"
+    [autoLayout]="true"
+    [scrollable]="true"
+    [rowHover]="true"
+    [resizableColumns]="true"
+    [reorderableColumns]="true"
+    [globalFilterFields]="globalFilterFields"
+    [tableStyle]="{ 'min-width': '10rem' }"
+    [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[5, 10, 20]"
     [(selection)]="selectedItems"
-    [rowHover]="true"
-    dataKey="id"
-    currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} registros"
-    [showCurrentPageReport]="true"
   >
+    <!--Filter-->
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <h2 class="m-0">{{ options.title }}</h2>

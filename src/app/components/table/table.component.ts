@@ -12,7 +12,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -35,14 +34,12 @@ import { TableColumn, TableOptions } from './options';
     ToolbarModule,
     ToastModule,
     ConfirmDialogModule,
-    InputTextModule,
     InputTextareaModule,
     CommonModule,
     FileUploadModule,
     DropdownModule,
     TagModule,
     RadioButtonModule,
-    RatingModule,
     InputTextModule,
     FormsModule,
     InputNumberModule,
@@ -113,13 +110,8 @@ export class TableComponent<T> implements OnInit {
         this.items = this.items.filter(
           (val) => !this.selectedItems?.includes(val)
         );
+        this.onDeleteSelectedItems.emit(this.selectedItems);
         this.selectedItems = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registros deletados',
-          life: this._defaultLife,
-        });
       },
     });
   }
@@ -151,31 +143,9 @@ export class TableComponent<T> implements OnInit {
   save() {
     this.submitted = true;
 
-    if (this.item.name?.trim()) {
-      if (this.item.id) {
-        this.items[this.findIndexById(this.item.id)] = this.item;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registro atualizado',
-          life: this._defaultLife,
-        });
-      } else {
-        this.item.id = this.createId();
-        this.item.image = 'product-placeholder.svg';
-        this.items.push(this.item);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registro criado',
-          life: this._defaultLife,
-        });
-      }
-
-      this.items = [...this.items];
-      this.itemDialog = false;
-      this.item = {};
-    }
+    this.items = [...this.items];
+    this.itemDialog = false;
+    this.item = {};
 
     const objetoUnico: { [key: string]: any } = this._formFields.reduce(
       (obj: any, item) => {

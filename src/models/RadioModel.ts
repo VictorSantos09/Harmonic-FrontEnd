@@ -11,7 +11,7 @@ export class RadioModel {
   public tipoConteudo!: TipoConteudoModel;
   public pais!: PaisModel;
   public feedback!: FeedbackModel;
-  public id?: number;
+  public id!: number;
 
   constructor() {}
 }

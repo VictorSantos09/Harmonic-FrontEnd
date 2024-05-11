@@ -17,10 +17,7 @@ export class RadioService {
 
   delete(id: number): Observable<ResponseData<RadioModel>> {
     return this._http.delete<ResponseData<any>>(
-      `${API_URL.URL}Conteudo/delete`,
-      {
-        body: id,
-      }
+      `${API_URL.URL}Conteudo/delete?id=${id}`
     );
   }
 

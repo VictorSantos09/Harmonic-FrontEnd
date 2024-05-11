@@ -5,23 +5,16 @@ import {
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { HomepageComponent } from '../../projects';
-import {
-  FooterComponent,
-  HeaderComponent,
-  NavbarComponent,
-} from './components';
+import { FooterComponent, HeaderComponent } from './components';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    ButtonModule,
     RouterModule,
     HeaderComponent,
     FooterComponent,
-    NavbarComponent,
     HomepageComponent,
     RouterOutlet,
     RouterLink,
