@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { CarouselModule } from 'primeng/carousel';
 import { BackgroundImageComponent } from '../../src/app/components/background-image';
 import { CarouselComponent } from '../../src/app/components/carousel';
 import { CarrouselOptions, ImageModel } from '../../src/app/components/models';
@@ -12,12 +12,12 @@ import { ROUTES_CNT } from '../../src/consts';
   selector: 'app-homepage',
   standalone: true,
   imports: [
-    CommonModule,
     CarouselComponent,
     BackgroundImageComponent,
     AvatarModule,
     ButtonModule,
     RouterLink,
+    CarouselModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',

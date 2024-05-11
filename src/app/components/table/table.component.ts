@@ -1,3 +1,4 @@
+import { trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,13 +13,13 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FormField } from '../form';
+import { FieldHelper } from '../form/fields/field.helper';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
 
@@ -35,19 +36,18 @@ import { TableColumn, TableOptions } from './options';
     ToolbarModule,
     ToastModule,
     ConfirmDialogModule,
-    InputTextModule,
     InputTextareaModule,
     CommonModule,
     FileUploadModule,
     DropdownModule,
     TagModule,
     RadioButtonModule,
-    RatingModule,
     InputTextModule,
     FormsModule,
     InputNumberModule,
     FloatLabelModule,
   ],
+  animations: [trigger('fadeInOut', [])],
   providers: [MessageService, ConfirmationService],
 })
 export class TableComponent<T> implements OnInit {
@@ -74,29 +74,20 @@ export class TableComponent<T> implements OnInit {
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
   @Output() formFieldsChange = new EventEmitter<FormField[]>();
 
-  item!: any;
+  item?: any;
   selectedItems!: any[] | null;
   submitted: boolean = false;
   itemDialog: boolean = false;
+  globalFilterFields = ['id'];
+  fieldHelper = new FieldHelper();
 
   private _formFields!: FormField[];
 
-  public globalFilterFields = [
-    'name',
-    'country.name',
-    'representative.name',
-    'status',
-    'id',
-  ];
+  constructor(private confirmationService: ConfirmationService) {}
 
-  private _defaultLife = 3000;
-
-  constructor(
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.globalFilterFields.push(...this.columns.map((c) => c.name));
+  }
 
   openNew() {
     this.item = {};
@@ -113,13 +104,8 @@ export class TableComponent<T> implements OnInit {
         this.items = this.items.filter(
           (val) => !this.selectedItems?.includes(val)
         );
+        this.onDeleteSelectedItems.emit(this.selectedItems);
         this.selectedItems = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registros deletados',
-          life: this._defaultLife,
-        });
       },
     });
   }
@@ -146,36 +132,15 @@ export class TableComponent<T> implements OnInit {
   hideDialog() {
     this.itemDialog = false;
     this.submitted = false;
+    //this.item = {};
   }
 
   save() {
     this.submitted = true;
 
-    if (this.item.name?.trim()) {
-      if (this.item.id) {
-        this.items[this.findIndexById(this.item.id)] = this.item;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registro atualizado',
-          life: this._defaultLife,
-        });
-      } else {
-        this.item.id = this.createId();
-        this.item.image = 'product-placeholder.svg';
-        this.items.push(this.item);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Registro criado',
-          life: this._defaultLife,
-        });
-      }
-
-      this.items = [...this.items];
-      this.itemDialog = false;
-      this.item = {};
-    }
+    this.items = [...this.items];
+    this.itemDialog = false;
+    this.item = {};
 
     const objetoUnico: { [key: string]: any } = this._formFields.reduce(
       (obj: any, item) => {
@@ -184,32 +149,11 @@ export class TableComponent<T> implements OnInit {
       },
       {}
     );
-
     const t = objetoUnico as T;
 
+    this._formFields.forEach((f) => (f.value = null));
+
     this.onSave.emit(t);
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    var chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
   }
 
   getEventValue($event: any): string {

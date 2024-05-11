@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
@@ -10,7 +9,7 @@ import {
 @Component({
   selector: 'app-page-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './page-login.component.html',
   styleUrl: './page-login.component.scss',
 })

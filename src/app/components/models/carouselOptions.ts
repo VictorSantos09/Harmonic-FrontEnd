@@ -6,11 +6,11 @@ export class CarrouselOptions {
 
   constructor(
     public images: ImageModel[],
-    public numVisible: number = 1,
-    public numScroll: number = 1,
+    public numVisible: number,
+    public numScroll: number,
     public title?: string
   ) {
-    this.numVisible = 1;
-    this.numScroll = 1;
+    this.numVisible = 3;
+    this.numScroll = 3;
   }
 }

@@ -1,10 +1,10 @@
 import { FormField } from '../fields';
 
 export class FormOptions {
-  constructor(
-    public title: string,
-    public submitText: string,
-    public cancelText: string,
-    public formFields: FormField[]
-  ) {}
+  static readonly DEFAULT_WIDTH = 800;
+  title!: string;
+  submitText!: string;
+  cancelText!: string;
+  formFields!: FormField[];
+  width?: number = FormOptions.DEFAULT_WIDTH;
 }

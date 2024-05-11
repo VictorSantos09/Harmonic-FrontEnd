@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
@@ -7,7 +6,7 @@ import { ROUTES_CNT } from '../../../consts';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MenubarModule],
+  imports: [MenubarModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

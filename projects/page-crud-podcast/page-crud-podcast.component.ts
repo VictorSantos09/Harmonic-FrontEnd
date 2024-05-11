@@ -54,5 +54,7 @@ export class PageCrudPodcastComponent implements OnInit {
         this._messengerService.showError('erro ao buscar os podcasts', err);
       },
     });
+
+    console.log('teste');
   }
 }

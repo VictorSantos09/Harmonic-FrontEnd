@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgIconComponent } from '@ng-icons/core';
 import { AvatarModule } from 'primeng/avatar';
@@ -11,7 +10,6 @@ import { SplitterModule } from 'primeng/splitter';
   selector: 'app-details-conteudo',
   standalone: true,
   imports: [
-    CommonModule,
     AvatarModule,
     NgIconComponent,
     CardModule,
