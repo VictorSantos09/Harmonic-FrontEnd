@@ -19,6 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FormField } from '../form';
+import { FieldHelper } from '../form/fields/field.helper';
 import { FormOptions } from '../form/options';
 import { TableColumn, TableOptions } from './options';
 
@@ -73,29 +74,20 @@ export class TableComponent<T> implements OnInit {
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
   @Output() formFieldsChange = new EventEmitter<FormField[]>();
 
-  item!: any;
+  item?: any;
   selectedItems!: any[] | null;
   submitted: boolean = false;
   itemDialog: boolean = false;
+  globalFilterFields = ['id'];
+  fieldHelper = new FieldHelper();
 
   private _formFields!: FormField[];
 
-  public globalFilterFields = [
-    'name',
-    'country.name',
-    'representative.name',
-    'status',
-    'id',
-  ];
+  constructor(private confirmationService: ConfirmationService) {}
 
-  private _defaultLife = 3000;
-
-  constructor(
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.globalFilterFields.push(...this.columns.map((c) => c.name));
+  }
 
   openNew() {
     this.item = {};
@@ -140,6 +132,7 @@ export class TableComponent<T> implements OnInit {
   hideDialog() {
     this.itemDialog = false;
     this.submitted = false;
+    //this.item = {};
   }
 
   save() {
@@ -156,32 +149,11 @@ export class TableComponent<T> implements OnInit {
       },
       {}
     );
-
     const t = objetoUnico as T;
 
+    this._formFields.forEach((f) => (f.value = null));
+
     this.onSave.emit(t);
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    var chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
   }
 
   getEventValue($event: any): string {

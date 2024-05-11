@@ -1,24 +1,24 @@
 import { INPUT_TYPES } from '../../shared';
 
 export class FormField {
+  name!: string;
+  type!: INPUT_TYPES;
+  typeElement!: FormFieldType;
   required: boolean = true;
-  disabled: boolean = false;
+  hidden?: boolean = false;
+  disabled?: boolean = false;
   readonly?: boolean = false;
-
-  constructor(
-    public name: string,
-    public label: string,
-    public type: INPUT_TYPES,
-    public value?: string,
-    public placeholder?: string,
-    required?: boolean,
-    public hidden?: boolean,
-    disabled?: boolean,
-    readonly?: boolean,
-    public errorMessage?: string
-  ) {
-    this.required = required ?? true;
-    this.disabled = disabled ?? false;
-    this.readonly = readonly ?? false;
-  }
+  errorMessage?: string;
+  placeholder?: string;
+  label?: string;
+  value?: string | number | boolean | null | undefined | any;
+  options?: any[];
+  optionLabel?: string;
 }
+
+export type FormFieldType =
+  | 'DROPDOWN'
+  | `COMBOBOX`
+  | `TEXT-AREA`
+  | `INPUT-NUMBER`
+  | `INPUT-TEXT`;

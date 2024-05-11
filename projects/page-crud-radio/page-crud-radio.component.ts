@@ -35,6 +35,7 @@ export class PageCrudRadioComponent implements OnInit {
         required: true,
         placeholder: 'Informe o título da rádio',
         errorMessage: 'Campo obrigatório',
+        typeElement: 'INPUT-TEXT',
       },
       {
         disabled: false,
@@ -44,6 +45,7 @@ export class PageCrudRadioComponent implements OnInit {
         required: true,
         placeholder: 'Informe a descrição da rádio',
         errorMessage: 'Campo obrigatório',
+        typeElement: 'TEXT-AREA',
       },
       {
         disabled: false,
@@ -53,6 +55,19 @@ export class PageCrudRadioComponent implements OnInit {
         required: true,
         placeholder: 'Informe o país da rádio',
         errorMessage: 'Campo obrigatório',
+        typeElement: 'DROPDOWN',
+        optionLabel: 'nome',
+        options: [
+          { nome: 'Brazil', id: 6 },
+          { nome: 'Australia', id: 2 },
+          { nome: 'China', id: 3 },
+          { nome: 'Egypt', id: 4 },
+          { nome: 'France', id: 5 },
+          { nome: 'Germany', id: 6 },
+          { nome: 'India', id: 7 },
+          { nome: 'Japan', id: 8 },
+          { nome: 'Spain', id: 9 },
+        ],
       },
       {
         disabled: false,
@@ -62,6 +77,12 @@ export class PageCrudRadioComponent implements OnInit {
         required: true,
         placeholder: 'Informe o tipo do conteudo',
         errorMessage: 'Informe de tipo do conteudo',
+        typeElement: 'DROPDOWN',
+        optionLabel: 'nome',
+        options: [
+          { nome: 'Rádio', id: 1 },
+          { nome: 'Podcast', id: 3 },
+        ],
       },
       {
         disabled: false,
@@ -71,6 +92,13 @@ export class PageCrudRadioComponent implements OnInit {
         required: true,
         placeholder: 'Informe a plataforma do conteudo',
         errorMessage: 'Informe a plataforma do conteudo',
+        typeElement: 'DROPDOWN',
+        optionLabel: 'nome',
+        options: [
+          { nome: 'Spotify', id: 1 },
+          { nome: 'Youtube', id: 2 },
+          { nome: 'Deezer', id: 3 },
+        ],
       },
     ],
   };
@@ -179,13 +207,13 @@ export class PageCrudRadioComponent implements OnInit {
     });
   }
 
-  onSaveButtonClick(event: RadioModel) {
+  onSaveButtonClick(event: any) {
     const obj: ConteudoDto = {
       titulo: event.titulo,
       descricao: event.descricao,
-      idPais: 6,
-      idTipoConteudo: 1,
-      idPlataforma: 1,
+      idPais: event.pais.id,
+      idTipoConteudo: event.tipoconteudo.id,
+      idPlataforma: 0,
     };
 
     this._radioService.insert(obj).subscribe({
