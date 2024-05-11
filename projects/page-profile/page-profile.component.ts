@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
@@ -13,7 +12,7 @@ import {
 @Component({
   selector: 'app-page-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './page-profile.component.html',
   styleUrl: './page-profile.component.scss',
 })

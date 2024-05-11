@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { FormOptions, MessengerService, RadioModel } from '../../src';
 import {
@@ -15,7 +13,7 @@ import { ConteudoDto, ConteudoDtoConsulta } from './dto';
 @Component({
   selector: 'app-pageCrudRadio',
   standalone: true,
-  imports: [TableComponent, ToastModule, ButtonModule, RippleModule],
+  imports: [TableComponent, ToastModule],
   templateUrl: './page-crud-radio.component.html',
   styleUrl: './page-crud-radio.component.scss',
   providers: [RadioService, MessengerService, MessageService],
@@ -119,10 +117,9 @@ export class PageCrudRadioComponent implements OnInit {
       sortableColumn: true,
     },
     {
-      title: 'Data Cadastro',
-      name: 'dataCadastro',
+      title: 'Tipo',
+      name: 'tipoConteudo',
       sortableColumn: true,
-      isDate: true,
     },
   ];
 

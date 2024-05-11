@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { aspectsLikeFilled } from '@ng-icons/ux-aspects';
@@ -12,7 +11,6 @@ import { ImageModel } from '../models';
   selector: 'app-card',
   standalone: true,
   imports: [
-    CommonModule,
     AvatarModule,
     NgIconComponent,
     CardModule,

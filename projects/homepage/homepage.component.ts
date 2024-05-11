@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
@@ -13,7 +12,6 @@ import { ROUTES_CNT } from '../../src/consts';
   selector: 'app-homepage',
   standalone: true,
   imports: [
-    CommonModule,
     CarouselComponent,
     BackgroundImageComponent,
     AvatarModule,

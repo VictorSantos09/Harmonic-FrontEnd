@@ -5,7 +5,6 @@ import {
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
-import { HomepageComponent } from '../../projects';
 import { FooterComponent, HeaderComponent } from './components';
 
 @Component({
@@ -15,7 +14,6 @@ import { FooterComponent, HeaderComponent } from './components';
     RouterModule,
     HeaderComponent,
     FooterComponent,
-    HomepageComponent,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,

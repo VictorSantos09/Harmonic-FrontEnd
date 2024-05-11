@@ -1,3 +1,4 @@
+import { trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -45,6 +46,7 @@ import { TableColumn, TableOptions } from './options';
     InputNumberModule,
     FloatLabelModule,
   ],
+  animations: [trigger('fadeInOut', [])],
   providers: [MessageService, ConfirmationService],
 })
 export class TableComponent<T> implements OnInit {
