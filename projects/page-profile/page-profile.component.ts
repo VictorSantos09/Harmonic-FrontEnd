@@ -1,11 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-page-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    FloatLabelModule,
+    PasswordModule,
+  ],
   templateUrl: './page-profile.component.html',
   styleUrl: './page-profile.component.scss',
 })

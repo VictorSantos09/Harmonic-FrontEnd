@@ -1,23 +1,28 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { API_URL } from './API_URL';
-import { LocalStorageService } from './local-storage.service';
+import { AuthEventService } from './auth-event.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  readonly COOKIE_NAME = 'isAuthenticated';
+
   get isAuthenticated(): boolean {
-    return localStorage.getItem('isAuthenticated') === 'true';
+    // if (this._cookieService.check(this.COOKIE_NAME)) {
+    //   return this._cookieService.get(this.COOKIE_NAME) === 'true';
+    // }
+
+    // return false;
+
+    return window.localStorage.getItem(this.COOKIE_NAME) === 'true';
   }
-
-  @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  private _isAuthenticated = false;
 
   constructor(
     private _http: HttpClient,
-    private _localStorageService: LocalStorageService
+    //private _cookieService: CookieService,
+    private _authEventService: AuthEventService
   ) {}
 
   public login(dto: LoginDTO) {
@@ -28,29 +33,32 @@ export class AuthService {
       })
       .subscribe({
         next: () => {
-          this._isAuthenticated = true;
-          this._setLocalStorage();
-          this.onAuthChanged.emit(this._isAuthenticated);
+          this._setCookies(true);
+          this._authEventService.emitIsAuthenticated(true);
         },
         error: () => {
-          this._isAuthenticated = false;
-          this._setLocalStorage();
-          this.onAuthChanged.emit(this._isAuthenticated);
+          this._setCookies(false);
+          this._authEventService.emitIsAuthenticated(false);
         },
       });
   }
 
   public logout() {
-    this._isAuthenticated = false;
-    this._setLocalStorage();
-    this.onAuthChanged.emit(this._isAuthenticated);
+    this._setCookies(false);
+    this._authEventService.emitIsAuthenticated(false);
   }
 
-  private _setLocalStorage() {
-    this._localStorageService.setItem(
-      'isAuthenticated',
-      this._isAuthenticated.toString()
-    );
+  private _setCookies(isAuthenticated: boolean) {
+    localStorage.setItem(this.COOKIE_NAME, isAuthenticated.toString());
+
+    // if (this._cookieService.check(this.COOKIE_NAME)) {
+    //   this._cookieService.delete(this.COOKIE_NAME);
+    // } else {
+    //   this._cookieService.set(this.COOKIE_NAME, isAuthenticated.toString(), {
+    //     secure: true,
+    //     sameSite: 'Strict',
+    //   });
+    // }
   }
 }
 

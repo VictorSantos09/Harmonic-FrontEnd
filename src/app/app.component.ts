@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   RouterLink,
   RouterLinkActive,
@@ -21,6 +21,8 @@ import { FooterComponent, HeaderComponent } from './components';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Harmonic';
+
+  ngOnInit(): void {}
 }

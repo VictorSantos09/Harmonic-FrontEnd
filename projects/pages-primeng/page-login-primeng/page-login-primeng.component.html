@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div class="container" [ngClass]="'flex justify-content-center'">
   <div class="flex flex-column align-items-center gap-4">
     <h1>LOGIN</h1>
@@ -29,6 +31,10 @@
       <label for="password">Password</label>
     </p-floatLabel>
 
-    <p-button label="Submit" severity="help" />
+    <p-button
+      label="Submit"
+      severity="help"
+      (onClick)="onSubmitButtonClick()"
+    />
   </div>
 </div>

@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { ROUTES_CNT } from '../../../consts';
+import { AuthEventService, AuthService } from '../../../services';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [MenubarModule],
+  providers: [AuthService, Router],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
+
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private eventService: AuthEventService
+  ) {}
 
   myStyle(): object {
     if (typeof window !== 'undefined') {
@@ -25,13 +34,26 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventService.getEventIsAuthenticated().subscribe((data) => {
+      this._setItems(data);
+    });
+
+    this._setItems(this._authService.isAuthenticated);
+  }
+
+  private _setItems(isAuthenticated: boolean) {
+    this.items = [];
+
     this.items = [
       {
         label: 'Inicio',
         icon: 'pi pi-fw pi-home',
-        routerLink: [ROUTES_CNT.HOMEPAGE],
+        command: () => {
+          this._router.navigate([ROUTES_CNT.HOMEPAGE]);
+        },
       },
       {
+        visible: isAuthenticated,
         label: 'Gerenciar',
         icon: 'pi pi-fw pi-th-large',
         items: [
@@ -42,7 +64,9 @@ export class NavbarComponent implements OnInit {
               {
                 label: 'Rádio',
                 icon: 'pi pi-fw pi-volume-off',
-                routerLink: [ROUTES_CNT.RADIO],
+                command: () => {
+                  this._router.navigate([ROUTES_CNT.RADIO]);
+                },
               },
               {
                 label: 'Podcast',
@@ -66,18 +90,38 @@ export class NavbarComponent implements OnInit {
         ],
       },
       {
+        visible: true,
         label: 'Conta',
         icon: 'pi pi-fw pi-user',
         items: [
           {
-            label: 'Consulta',
+            visible: !isAuthenticated,
+            label: 'Entrar',
+            icon: 'pi pi-fw pi-sign-in',
+            routerLink: [ROUTES_CNT.LOGIN],
+          },
+          {
+            visible: !isAuthenticated,
+            label: 'Criar Conta',
             icon: 'pi pi-fw pi-user-plus',
+            routerLink: [ROUTES_CNT.CADASTRO],
           },
           {
-            label: 'Cancelar',
-            icon: 'pi pi-fw pi-user-minus',
+            visible: isAuthenticated,
+            label: 'Sair',
+            icon: 'pi pi-fw pi-power-off',
+            command: () => {
+              this._authService.logout();
+            },
           },
           {
+            visible: isAuthenticated,
+            label: 'Meu Perfil',
+            icon: 'pi pi-fw pi-user-edit',
+            routerLink: [ROUTES_CNT.MEU_PERFIL],
+          },
+          {
+            visible: isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
             items: [
@@ -88,10 +132,6 @@ export class NavbarComponent implements OnInit {
             ],
           },
         ],
-      },
-      {
-        label: 'Sair',
-        icon: 'pi pi-fw pi-power-off',
       },
     ];
   }
