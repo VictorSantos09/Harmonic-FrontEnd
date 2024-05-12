@@ -8,19 +8,19 @@ import { PageCardComponent } from '../../projects/page-card/page-card.component'
 import { PageProfileComponent } from '../../projects/page-profile/page-profile.component';
 import { PageRegisterComponent } from '../../projects/page-register/page-register.component';
 import { PageLoginPrimengComponent } from '../../projects/pages-primeng/page-login-primeng';
-import { AuthGuard, AuthLoginGuard, RegisterGuard } from './guards';
+import { AdminGuard, AuthGuard, AuthLoginGuard, RegisterGuard } from './guards';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
   {
     path: 'radio',
     component: PageCrudRadioComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'podcast',
     component: PageCrudPodcastComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'register',
