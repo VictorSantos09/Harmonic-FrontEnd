@@ -5,20 +5,41 @@ import {
   PageCrudRadioComponent,
 } from '../../projects';
 import { PageCardComponent } from '../../projects/page-card/page-card.component';
-import { PageLoginComponent } from '../../projects/page-login/page-login.component';
 import { PageProfileComponent } from '../../projects/page-profile/page-profile.component';
 import { PageRegisterComponent } from '../../projects/page-register/page-register.component';
+import { PageLoginPrimengComponent } from '../../projects/pages-primeng/page-login-primeng';
+import { AuthGuard, AuthLoginGuard } from './guards';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
-  { path: 'radio', component: PageCrudRadioComponent },
-  { path: 'podcast', component: PageCrudPodcastComponent },
-  { path: 'register', component: PageRegisterComponent },
-  { path: 'login', component: PageLoginComponent },
-  { path: 'profile', component: PageProfileComponent },
+  {
+    path: 'radio',
+    component: PageCrudRadioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'podcast',
+    component: PageCrudPodcastComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'register',
+    component: PageRegisterComponent,
+  },
+  {
+    path: 'login',
+    component: PageLoginPrimengComponent,
+    canActivate: [AuthLoginGuard],
+  },
+  {
+    path: 'profile',
+    component: PageProfileComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'information',
     component: PageCardComponent,
     data: { contentId: '1' },
+    canActivate: [AuthGuard],
   },
 ];
