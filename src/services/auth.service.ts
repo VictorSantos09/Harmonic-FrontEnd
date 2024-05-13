@@ -16,7 +16,7 @@ export class AuthService {
 
     // return false;
 
-    return window.localStorage.getItem(this.COOKIE_NAME) === 'true';
+    return localStorage.getItem(this.COOKIE_NAME) === 'true';
   }
 
   constructor(

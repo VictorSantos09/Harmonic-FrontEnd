@@ -1,45 +1,43 @@
 import { Routes } from '@angular/router';
-import {
-  HomepageComponent,
-  PageCrudPodcastComponent,
-  PageCrudRadioComponent,
-} from '../../projects';
-import { PageCardComponent } from '../../projects/page-card/page-card.component';
-import { PageProfileComponent } from '../../projects/page-profile/page-profile.component';
-import { PageRegisterComponent } from '../../projects/page-register/page-register.component';
-import { PageLoginPrimengComponent } from '../../projects/pages-primeng/page-login-primeng';
+import { HomepageComponent } from '../../projects';
 import { AdminGuard, AuthGuard, AuthLoginGuard, RegisterGuard } from './guards';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
   {
     path: 'radio',
-    component: PageCrudRadioComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageCrudRadioComponent),
     canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'podcast',
-    component: PageCrudPodcastComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageCrudPodcastComponent),
     canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'register',
-    component: PageRegisterComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageRegisterComponent),
     canActivate: [RegisterGuard],
   },
   {
     path: 'login',
-    component: PageLoginPrimengComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageLoginComponent),
     canActivate: [AuthLoginGuard],
   },
   {
     path: 'profile',
-    component: PageProfileComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageProfileComponent),
     canActivate: [AuthGuard],
   },
   {
     path: 'information',
-    component: PageCardComponent,
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageCardComponent),
     data: { contentId: '1' },
     canActivate: [AuthGuard],
   },

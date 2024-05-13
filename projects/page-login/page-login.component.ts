@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -14,6 +16,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { AuthEventService, AuthService, MessengerService } from '../../src';
 
 @Component({
   selector: 'app-page-login',
@@ -32,6 +35,7 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     CardModule,
   ],
+  providers: [AuthService, Router, MessengerService, MessageService],
   templateUrl: './page-login.component.html',
   styleUrl: './page-login.component.scss',
 })
@@ -41,9 +45,26 @@ export class PageLoginComponent {
     password: ['', Validators.required],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router,
+    private _authEventService: AuthEventService,
+    private _messengerService: MessengerService
+  ) {}
 
   login() {
-    console.log(this.loginForm.value);
+    this._authService.login({
+      email: this.loginForm.value.email!,
+      password: this.loginForm.value.password!,
+    });
+
+    this._authEventService.getEventIsAuthenticated().subscribe((data) => {
+      if (data) this._router.navigate(['/']);
+      else
+        this._messengerService.showInfo(
+          'usuário ou senha invalidos. Tente novamente.'
+        );
+    });
   }
 }
