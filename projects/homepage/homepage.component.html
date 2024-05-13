@@ -1,27 +1,24 @@
 <app-background-image></app-background-image>
 
-<h3>Rádios mais ouvidas</h3>
+<h1>Rádios mais ouvidas</h1>
 <p-carousel
   [value]="avatars"
   [numVisible]="carrouselOptions.numVisible"
   [numScroll]="carrouselOptions.numScroll"
   [circular]="true"
   [responsiveOptions]="carrouselOptions.responsiveOptions"
-  autoplayInterval="3000"
->
+  autoplayInterval="3000">
   <ng-template let-product pTemplate="item">
     <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
       <div
         *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'"
-      >
+        [ngClass]="'flex justify-content-center flex-wrap'">
         <a [routerLink]="informationRoute">
           <p-avatar
             [image]="avatarImage.url"
             [size]="'xlarge'"
             [shape]="'circle'"
-            [className]="'p-2'"
-          ></p-avatar>
+            [className]="'p-2'"></p-avatar>
         </a>
         <p>{{ carrouselOptions.title }}</p>
       </div>
@@ -29,28 +26,25 @@
   </ng-template>
 </p-carousel>
 
-<h3>Podcasts mais ouvidos</h3>
+<h1>Podcasts mais ouvidos</h1>
 <p-carousel
   [value]="avatars"
   [numVisible]="carrouselOptions.numVisible"
   [numScroll]="carrouselOptions.numScroll"
   [circular]="true"
   [responsiveOptions]="carrouselOptions.responsiveOptions"
-  autoplayInterval="3000"
->
+  autoplayInterval="3000">
   <ng-template let-product pTemplate="item">
     <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
       <div
         *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'"
-      >
+        [ngClass]="'flex justify-content-center flex-wrap'">
         <a [routerLink]="informationRoute">
           <p-avatar
             [image]="avatarImage.url"
             [size]="'xlarge'"
             [shape]="'circle'"
-            [className]="'p-2'"
-          ></p-avatar>
+            [className]="'p-2'"></p-avatar>
         </a>
         <p>{{ carrouselOptions.title }}</p>
       </div>
