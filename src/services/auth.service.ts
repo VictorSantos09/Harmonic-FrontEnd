@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { API_URL } from './API_URL';
 import { AuthEventService } from './auth-event.service';
 
@@ -8,6 +8,8 @@ import { AuthEventService } from './auth-event.service';
 })
 export class AuthService {
   readonly COOKIE_NAME = 'isAuthenticated';
+
+  @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   get isAuthenticated(): boolean {
     // if (this._cookieService.check(this.COOKIE_NAME)) {
@@ -35,10 +37,12 @@ export class AuthService {
         next: () => {
           this._setCookies(true);
           this._authEventService.emitIsAuthenticated(true);
+          this.onAuthChanged.emit(true);
         },
         error: () => {
           this._setCookies(false);
           this._authEventService.emitIsAuthenticated(false);
+          this.onAuthChanged.emit(false);
         },
       });
   }
@@ -46,6 +50,7 @@ export class AuthService {
   public logout() {
     this._setCookies(false);
     this._authEventService.emitIsAuthenticated(false);
+    this.onAuthChanged.emit(false);
   }
 
   private _setCookies(isAuthenticated: boolean) {
