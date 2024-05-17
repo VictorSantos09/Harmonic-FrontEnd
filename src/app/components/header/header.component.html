@@ -1,1 +1,2 @@
-<app-navbar></app-navbar>
+<app-navbar *ngIf="isAuthenticated" [items]="itemsAuth"></app-navbar>
+<app-navbar *ngIf="!isAuthenticated" [items]="itemsNotAuth"></app-navbar>

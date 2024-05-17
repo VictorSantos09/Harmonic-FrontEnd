@@ -1,43 +1,27 @@
 .container {
-  width: 550px;
-  margin: auto;
+  margin: 2rem;
   background-color: #242424;
   color: #fff;
   padding: 20px;
   border-radius: 8px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
+button {
   width: 100%;
-  padding: 10px;
-  border: solid;
-  border-radius: 5px;
-  border-color: #a5a8ab;
-  background-color: #4f4c4c;
-}
-
-.btn {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #933dc9;
+  font-weight: bold;
+  background-color: #96099b;
   color: #fff;
-  border-color: #bcc1c7;
-  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--purple-800);
+  color: #8d8a8a;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 15.5rem;
 }

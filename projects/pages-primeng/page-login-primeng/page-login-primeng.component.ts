@@ -1,25 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { AuthEventService, AuthService, MessengerService } from '../../src';
+import { ToastModule } from 'primeng/toast';
+import { AuthEventService, AuthService, MessengerService } from '../../../src';
 
 @Component({
-  selector: 'app-page-login',
+  selector: 'app-page-login-primeng',
   standalone: true,
   imports: [
     InputGroupModule,
@@ -30,37 +24,32 @@ import { AuthEventService, AuthService, MessengerService } from '../../src';
     FloatLabelModule,
     DividerModule,
     ButtonModule,
-    ReactiveFormsModule,
-    InputGroupAddonModule,
-    InputTextModule,
-    CardModule,
+    ToastModule,
   ],
   providers: [AuthService, Router, MessengerService, MessageService],
-  templateUrl: './page-login.component.html',
-  styleUrl: './page-login.component.scss',
+  templateUrl: './page-login-primeng.component.html',
+  styleUrl: './page-login-primeng.component.scss',
 })
-export class PageLoginComponent {
-  loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-  });
+export class PageLoginPrimengComponent {
+  valuePassword: string | undefined;
+  valueUsername: string | undefined;
 
   constructor(
-    private fb: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
     private _authEventService: AuthEventService,
     private _messengerService: MessengerService
   ) {}
 
-  login() {
+  onSubmitButtonClick() {
     this._authService.login({
-      email: this.loginForm.value.email!,
-      password: this.loginForm.value.password!,
+      email: this.valueUsername!,
+      password: this.valuePassword!,
     });
 
     this._authEventService.getEventIsAuthenticated().subscribe((data) => {
-      if (data) this._router.navigate(['/']);
+      if (data)
+        window.location.reload(); //window.location.href = '/'; //this._router.navigate(['/']);
       else
         this._messengerService.showInfo(
           'usuário ou senha invalidos. Tente novamente.'

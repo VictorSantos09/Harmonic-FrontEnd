@@ -1,52 +1,62 @@
 <app-background-image></app-background-image>
 
-<h1>Rádios mais ouvidas</h1>
+<h3>Rádios mais ouvidas</h3>
 <p-carousel
   [value]="avatars"
-  [numVisible]="carrouselOptions.numVisible"
-  [numScroll]="carrouselOptions.numScroll"
+  [numVisible]="3"
+  [numScroll]="3"
   [circular]="true"
-  [responsiveOptions]="carrouselOptions.responsiveOptions"
-  autoplayInterval="3000">
-  <ng-template let-product pTemplate="item">
-    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
-      <div
-        *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'">
-        <a [routerLink]="informationRoute">
-          <p-avatar
-            [image]="avatarImage.url"
-            [size]="'xlarge'"
-            [shape]="'circle'"
-            [className]="'p-2'"></p-avatar>
-        </a>
-        <p>{{ carrouselOptions.title }}</p>
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template let-avatar pTemplate="item">
+    <div class="border-1 surface-border border-round m-2 p-3">
+      <div class="mb-3">
+        <div class="relative mx-auto">
+          <div [ngClass]="'flex justify-content-center'">
+            <div [ngClass]="'flex align-items-center flex-column'">
+              <a [routerLink]="informationRoute">
+                <p-avatar
+                  [image]="avatar.url"
+                  [size]="'xlarge'"
+                  [shape]="'circle'"
+                  [className]="'p-2'"
+                ></p-avatar>
+              </a>
+              <p>{{ carrouselOptions.title }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </ng-template>
 </p-carousel>
 
-<h1>Podcasts mais ouvidos</h1>
+<h3>Podcasts mais ouvidos</h3>
 <p-carousel
   [value]="avatars"
-  [numVisible]="carrouselOptions.numVisible"
-  [numScroll]="carrouselOptions.numScroll"
+  [numVisible]="3"
+  [numScroll]="3"
   [circular]="true"
-  [responsiveOptions]="carrouselOptions.responsiveOptions"
-  autoplayInterval="3000">
-  <ng-template let-product pTemplate="item">
-    <div class="col-12 md:col-4" [ngClass]="'flex flex-row'">
-      <div
-        *ngFor="let avatarImage of avatars"
-        [ngClass]="'flex justify-content-center flex-wrap'">
-        <a [routerLink]="informationRoute">
-          <p-avatar
-            [image]="avatarImage.url"
-            [size]="'xlarge'"
-            [shape]="'circle'"
-            [className]="'p-2'"></p-avatar>
-        </a>
-        <p>{{ carrouselOptions.title }}</p>
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template let-avatar pTemplate="item">
+    <div class="border-1 surface-border border-round m-2 p-3">
+      <div class="mb-3">
+        <div class="relative mx-auto">
+          <div [ngClass]="'flex justify-content-center'">
+            <div [ngClass]="'flex align-items-center flex-column'">
+              <a [routerLink]="informationRoute">
+                <p-avatar
+                  [image]="avatar.url"
+                  [size]="'xlarge'"
+                  [shape]="'circle'"
+                  [className]="'p-2'"
+                ></p-avatar>
+              </a>
+              <p>{{ carrouselOptions.title }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </ng-template>

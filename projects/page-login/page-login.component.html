@@ -1,24 +1,53 @@
-<div class="container">
-  <h1>LOGIN</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        class="form-control"
-      />
+<div
+  class="container"
+  [ngClass]="'flex align-items-center justify-content-center'"
+>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    novalidate
+    [ngClass]="'p-col-12 p-md-6 p-lg-4'"
+  >
+    <div [ngClass]="'flex align-items-center flex-column'">
+      <h1>Login</h1>
+      <div class="field" [ngClass]="'flex flex-column'">
+        <p-floatLabel>
+          <input id="email" type="email" pInputText formControlName="email" />
+          <label for="email">Email</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            loginForm.get('email')?.invalid && loginForm.get('email')?.dirty
+          "
+          >Email válido é obrigatório</small
+        >
+      </div>
+      <div class="field">
+        <p-floatLabel>
+          <p-password
+            id="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            formControlName="password"
+          ></p-password>
+          <label for="password">Senha</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            loginForm.get('password')?.invalid &&
+            loginForm.get('password')?.dirty
+          "
+          >Senha é obrigatória</small
+        >
+      </div>
+      <button
+        pButton
+        type="submit"
+        label="Login"
+        [disabled]="loginForm.invalid"
+      ></button>
     </div>
-    <div class="form-group">
-      <label for="password">Senha</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        class="form-control"
-      />
-    </div>
-    <button type="submit" class="btn btn-primary">LOGIN</button>
   </form>
 </div>

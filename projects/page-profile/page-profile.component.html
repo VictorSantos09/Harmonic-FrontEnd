@@ -1,4 +1,4 @@
-<!-- HTML -->
+HTML
 <div class="container">
   <div class="user-info">
     <h2>Informações do Usuário</h2>
@@ -34,38 +34,61 @@
     </div>
   </div>
   <div class="form-container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="user">User</label>
-        <input
-          type="text"
-          id="user"
-          formControlName="user"
-          placeholder="User"
-        />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          formControlName="email"
-          placeholder="USER DO USUARIO"
-        />
-        <div *ngIf="registerForm.controls['email'].errors?.['emailDomain']">
-          O e-mail deve ser do domínio gmail.com, hotmail.com ou outlook.com.
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      [ngClass]="'p-col-12 p-md-6 p-lg-4'"
+    >
+      <div [ngClass]="'flex align-items-center flex-column'">
+        <h1>Cadastro</h1>
+        <div class="field" [ngClass]="'flex flex-column'">
+          <p-floatLabel>
+            <input id="user" type="user" pInputText formControlName="user" />
+            <label for="user">User</label>
+          </p-floatLabel>
         </div>
+        <div class="field" [ngClass]="'flex flex-column'">
+          <p-floatLabel>
+            <input id="email" type="email" pInputText formControlName="email" />
+            <label for="email">Email</label>
+          </p-floatLabel>
+          <small
+            class="p-error block"
+            *ngIf="
+              registerForm.get('email')?.invalid &&
+              registerForm.get('email')?.dirty
+            "
+            >Email válido é obrigatório</small
+          >
+
+          <div class="field">
+            <p-floatLabel>
+              <p-password
+                id="password"
+                [feedback]="false"
+                [toggleMask]="true"
+                formControlName="password"
+              ></p-password>
+              <label for="password">Senha</label>
+            </p-floatLabel>
+            <small
+              class="p-error block"
+              *ngIf="
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.dirty
+              "
+              >Senha é obrigatória</small
+            >
+          </div>
+        </div>
+        <button
+          pButton
+          type="submit"
+          label="Cadastrar"
+          [disabled]="registerForm.invalid"
+        ></button>
       </div>
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          placeholder="Senha"
-        />
-      </div>
-      <button type="submit" [disabled]="!form.valid">SALVAR</button>
     </form>
   </div>
 </div>

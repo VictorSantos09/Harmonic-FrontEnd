@@ -1,30 +1,98 @@
-<div class="container">
-    <h1>CADASTRO</h1>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="user">Usuário</label>
-        <input type="text" id="user" formControlName="user" class="form-control">
+<div
+  class="container"
+  [ngClass]="'flex align-items-center justify-content-center'"
+>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    [ngClass]="'p-col-12 p-md-6 p-lg-4'"
+  >
+    <div [ngClass]="'flex align-items-center flex-column'">
+      <h1>Cadastro</h1>
+      <div class="field" [ngClass]="'flex flex-column'">
+        <p-floatLabel>
+          <input id="user" type="user" pInputText formControlName="user" />
+          <label for="user">User</label>
+        </p-floatLabel>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" class="form-control">
-        <div *ngIf="registerForm.controls['email'].errors?.['emailDomain']">O e-mail deve ser do domínio gmail.com, hotmail.com ou outlook.com.</div>
+      <div class="field" [ngClass]="'flex flex-column'">
+        <p-floatLabel>
+          <input id="email" type="email" pInputText formControlName="email" />
+          <label for="email">Email</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.dirty
+          "
+          >Email válido é obrigatório</small
+        >
       </div>
-      <div class="form-group">
-        <label for="confirmEmail">Confirmar Email</label>
-        <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control">
-        <div *ngIf="registerForm.controls['confirmEmail'].errors?.['notMatching']">Os e-mails não correspondem.</div>
+      <div class="field" [ngClass]="'flex flex-column'">
+        <p-floatLabel>
+          <input
+            id="confirmEmail"
+            type="email"
+            pInputText
+            formControlName="confirmEmail"
+          />
+          <label for="confirmEmail">Confirmar Email</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            registerForm.get('confirmEmail')?.invalid &&
+            registerForm.get('confirmEmail')?.dirty
+          "
+          >Confirmação de email é obrigatória</small
+        >
       </div>
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input type="password" id="password" formControlName="password" class="form-control">
+      <div class="field">
+        <p-floatLabel>
+          <p-password
+            id="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            formControlName="password"
+          ></p-password>
+          <label for="password">Senha</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.dirty
+          "
+          >Senha é obrigatória</small
+        >
       </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirmar Senha</label>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
-        <div *ngIf="registerForm.controls['confirmPassword'].errors?.['notMatching']">As senhas não correspondem.</div>
+      <div class="field">
+        <p-floatLabel>
+          <p-password
+            id="confirmPassword"
+            [feedback]="false"
+            [toggleMask]="true"
+            formControlName="confirmPassword"
+          ></p-password>
+          <label for="confirmPassword">Confirmar Senha</label>
+        </p-floatLabel>
+        <small
+          class="p-error block"
+          *ngIf="
+            registerForm.get('confirmPassword')?.invalid &&
+            registerForm.get('confirmPassword')?.dirty
+          "
+          >Confirmação de senha é obrigatória</small
+        >
       </div>
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
-    </form>
-  </div>
-  
+      <button
+        pButton
+        type="submit"
+        label="Cadastrar"
+        [disabled]="registerForm.invalid"
+      ></button>
+    </div>
+  </form>
+</div>

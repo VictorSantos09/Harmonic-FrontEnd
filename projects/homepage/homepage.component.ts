@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
@@ -12,6 +13,7 @@ import { ROUTES_CNT } from '../../src/consts';
   selector: 'app-homepage',
   standalone: true,
   imports: [
+    CommonModule,
     CarouselComponent,
     BackgroundImageComponent,
     AvatarModule,
@@ -65,16 +67,29 @@ export class HomepageComponent implements OnInit {
     },
   ];
 
+  responsiveOptions: any;
   ngOnInit(): void {
     this.carrouselOptions = {
-      images: [
-        {
-          url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-        },
-      ],
+      images: this.avatars,
       title: 'Teste',
-      numScroll: 1,
-      numVisible: 1,
     };
+
+    this.responsiveOptions = [
+      {
+        breakpoint: '1199px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '991px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '767px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+    ];
   }
 }

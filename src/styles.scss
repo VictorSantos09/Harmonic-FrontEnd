@@ -1,6 +1,23 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
+body {
+  margin: 0;
+}
+
 a {
   text-decoration: none;
+}
+
+app-page-login {
+  display: flex;
+  justify-content: center;
+}
+app-page-register {
+  display: flex;
+  justify-content: center;
+}
+app-page-login-primeng {
+  display: flex;
+  justify-content: center;
 }

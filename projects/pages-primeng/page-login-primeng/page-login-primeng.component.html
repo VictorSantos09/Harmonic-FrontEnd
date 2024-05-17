@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+
+<div class="container" [ngClass]="'flex justify-content-center'">
+  <div class="flex flex-column align-items-center gap-4">
+    <h1>LOGIN</h1>
+    <p-floatLabel>
+      <input pInputText id="username" [(ngModel)]="valueUsername" />
+      <label for="username">Username</label>
+    </p-floatLabel>
+
+    <p-floatLabel>
+      <p-password
+        [(ngModel)]="valuePassword"
+        [feedback]="false"
+        [toggleMask]="true"
+      >
+        <ng-template pTemplate="header">
+          <h6>Pick a password</h6>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-divider />
+          <p class="mt-2">Suggestions</p>
+          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+            <li>At least one lowercase</li>
+            <li>At least one uppercase</li>
+            <li>At least one numeric</li>
+            <li>Minimum 8 characters</li>
+          </ul>
+        </ng-template>
+      </p-password>
+      <label for="password">Password</label>
+    </p-floatLabel>
+
+    <p-button
+      label="Submit"
+      severity="help"
+      (onClick)="onSubmitButtonClick()"
+    />
+  </div>
+</div>
