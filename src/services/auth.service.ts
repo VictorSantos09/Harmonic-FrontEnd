@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { API_URL } from './API_URL';
 import { AuthEventService } from './auth-event.service';
 
@@ -12,18 +13,18 @@ export class AuthService {
   @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   get isAuthenticated(): boolean {
-    // if (this._cookieService.check(this.COOKIE_NAME)) {
-    //   return this._cookieService.get(this.COOKIE_NAME) === 'true';
-    // }
+    if (this._cookieService.check(this.COOKIE_NAME)) {
+      return this._cookieService.get(this.COOKIE_NAME) === 'true';
+    }
 
-    // return false;
+    return false;
 
-    return localStorage.getItem(this.COOKIE_NAME) === 'true';
+    // return localStorage.getItem(this.COOKIE_NAME) === 'true';
   }
 
   constructor(
     private _http: HttpClient,
-    //private _cookieService: CookieService,
+    private _cookieService: CookieService,
     private _authEventService: AuthEventService
   ) {}
 
