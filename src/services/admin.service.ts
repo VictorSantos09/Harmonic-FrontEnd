@@ -9,6 +9,8 @@ export class AdminService {
   constructor(private _http: HttpClient) {}
 
   public isAdmin() {
-    return this._http.get<boolean>(`${API_URL.URL}Admin/is-admin`);
+    return this._http.get<boolean>(`${API_URL.URL}Admin/is-admin`, {
+      withCredentials: true,
+    });
   }
 }
