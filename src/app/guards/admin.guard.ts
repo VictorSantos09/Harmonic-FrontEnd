@@ -9,14 +9,11 @@ export const AdminGuard: CanActivateFn = (route, state) => {
   const adminService = inject(AdminService);
   const router = inject(Router);
 
-  console.log('injected', adminService == null, router == null);
-
   return adminService.isAdmin().pipe(
     map((isAdmin) => {
       if (isAdmin) {
         return true;
       } else {
-        console.log('to homepage else');
         router.navigate([ROUTES_CNT.HOMEPAGE]);
         return false;
       }
