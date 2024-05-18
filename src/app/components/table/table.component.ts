@@ -59,9 +59,6 @@ export class TableComponent<T> implements OnInit {
     this._formFields = value;
   }
 
-  @Input() value: T | undefined;
-  @Output() valueChange = new EventEmitter<T>();
-
   @Input() options!: TableOptions;
   @Input() columns!: TableColumn[];
   @Input() formOptions?: FormOptions;
@@ -72,6 +69,7 @@ export class TableComponent<T> implements OnInit {
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onEditCanceled: EventEmitter<any> = new EventEmitter<any>();
   @Output() formFieldsChange = new EventEmitter<FormField[]>();
 
   item?: any;
@@ -158,5 +156,20 @@ export class TableComponent<T> implements OnInit {
 
   getEventValue($event: any): string {
     return $event.target.value;
+  }
+
+  onRowEditInit(item: any) {
+    this.item = item;
+  }
+
+  onRowEditSave(item: any) {
+    this.onEdit.emit(this.item);
+  }
+
+  onRowEditCancel(item: any, index: number) {
+    this.onEditCanceled.emit({
+      item: item,
+      index: index,
+    });
   }
 }

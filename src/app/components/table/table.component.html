@@ -28,6 +28,7 @@
     dataKey="id"
     scrollHeight="400px"
     currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} registros"
+    editMode="row"
     [value]="items"
     [columns]="columns"
     [rows]="options.rowsNumber ?? 10"
@@ -75,52 +76,119 @@
           <p-sortIcon *ngIf="c.sortableColumn" [field]="c.name" />
         </th>
 
-        <th>Ações</th>
+        <th alignFrozen="right" pFrozenColumn>Ações</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
+
+    <!--BODY-->
+    <ng-template
+      pTemplate="body"
+      let-rowData
+      let-editing="editing"
+      let-ri="rowIndex"
+      let-columns="columns"
+    >
+      <tr [pEditableRow]="rowData">
         <td>
           <p-tableCheckbox [value]="rowData" />
         </td>
 
+        <!--ROWS-->
         <td *ngFor="let col of columns">
-          <img
-            *ngIf="col.isImage"
-            [src]="col.image.url"
-            [alt]="col.image.alt"
-            [width]="col.image.width"
-            [height]="col.image.height"
-          />
+          <p-cellEditor>
+            <!--INPUT-->
+            <ng-template pTemplate="input" *ngIf="col.fieldConfig.canEdit">
+              <!--INPUT-TEXT-->
+              <input
+                *ngIf="fieldHelper.isInputTextType(col.fieldConfig)"
+                pInputText
+                [type]="col.fieldConfig.type"
+                [required]="col.fieldConfig.required"
+                [readOnly]="col.fieldConfig.readonly"
+                [disabled]="col.fieldConfig.disabled ?? false"
+                [placeholder]="col.fieldConfig.placeholder"
+                [name]="col.fieldConfig.name"
+                [(ngModel)]="rowData[col.name]"
+              />
 
-          <span *ngIf="!col.isImage && !col.isDate">
-            {{ rowData[col.name] || "N/A" }}
-          </span>
+              <!--TEXT AREA-->
+              <textarea
+                *ngIf="fieldHelper.isTextAreaType(col.fieldConfig)"
+                id="float-input"
+                rows="5"
+                cols="30"
+                pInputTextarea
+                autoResize="true"
+                [(ngModel)]="rowData[col.name]"
+              ></textarea>
 
-          <span *ngIf="!col.isImage && col.isDate">
-            {{ rowData[col.name] | date : "dd/MM/yyyy" || "N/A" }}
-          </span>
+              <p-dropdown
+                *ngIf="fieldHelper.isDropdownType(col.fieldConfig)"
+                [(ngModel)]="rowData[col.name]"
+                [options]="col.fieldConfig.options"
+                [optionLabel]="col.fieldConfig.optionLabel"
+                [placeholder]="col.fieldConfig.placeholder"
+                showClear="true"
+                editable="true"
+              />
+            </ng-template>
+
+            <!--OUTPUT-->
+            <ng-template pTemplate="output">
+              {{ rowData.name }}
+              <img
+                *ngIf="col.isImage"
+                [src]="col.image.url"
+                [alt]="col.image.alt"
+                [width]="col.image.width"
+                [height]="col.image.height"
+              />
+
+              <span *ngIf="!col.isImage && !col.isDate">
+                {{ rowData[col.name] || "N/A" }}
+              </span>
+
+              <span *ngIf="!col.isImage && col.isDate">
+                {{ rowData[col.name] | date : "dd/MM/yyyy" || "N/A" }}
+              </span>
+            </ng-template>
+          </p-cellEditor>
         </td>
 
-        <!--Edit and Delete Button-->
-        <td>
-          <p-button
-            pRipple
-            icon="pi pi-pencil"
-            class="mr-2"
-            [rounded]="true"
-            [outlined]="true"
-            severity="success"
-            (click)="edit(rowData)"
-          />
-          <p-button
-            pRipple
-            icon="pi pi-trash"
-            severity="danger"
-            [rounded]="true"
-            [outlined]="true"
-            (click)="delete(rowData)"
-          />
+        <!--Edit Button-->
+        <td alignFrozen="right" pFrozenColumn>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button
+              *ngIf="!editing"
+              pButton
+              pRipple
+              type="button"
+              pInitEditableRow
+              icon="pi pi-pencil"
+              (click)="onRowEditInit(rowData)"
+              class="p-button-rounded p-button-text"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pSaveEditableRow
+              icon="pi pi-check"
+              (click)="onRowEditSave(rowData)"
+              class="p-button-rounded p-button-text p-button-success mr-2"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(rowData, ri)"
+              class="p-button-rounded p-button-text p-button-danger"
+            ></button>
+          </div>
         </td>
       </tr>
     </ng-template>
@@ -131,7 +199,7 @@
     </ng-template>
   </p-table>
 
-  <!--Form-->
+  <!--FORM-->
   <p-dialog
     [(visible)]="itemDialog"
     [style]="{ width: (formOptions?.width ?? 1000) + 'px' }"
@@ -142,7 +210,7 @@
     <!--FIELDS-->
     <ng-template pTemplate="content">
       <div class="p-2 m-2" *ngFor="let f of formOptions?.formFields">
-        <!--DROPDOWN -- Bug com NgIf-->
+        <!--DROPDOWN-->
         <div
           class="field"
           *ngIf="f.options?.length && fieldHelper.isDropdownType(f)"

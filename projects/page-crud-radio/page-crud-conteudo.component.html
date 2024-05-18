@@ -5,8 +5,9 @@
   [formOptions]="formOptions"
   (onDelete)="onDeleteButtonClick($event)"
   (onSave)="onSaveButtonClick($event)"
+  (onEdit)="onEditButtonClick($event)"
+  (onEditCanceled)="onEditCanceled($event)"
   [(formFields)]="formOptions.formFields"
-  [(value)]="dataSingle"
 ></app-table>
 
 <!--Necessário para aparecer os toasts-->
