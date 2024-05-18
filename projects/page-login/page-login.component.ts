@@ -16,6 +16,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { take } from 'rxjs';
 import { AuthEventService, AuthService, MessengerService } from '../../src';
 
 @Component({
@@ -34,6 +36,7 @@ import { AuthEventService, AuthService, MessengerService } from '../../src';
     InputGroupAddonModule,
     InputTextModule,
     CardModule,
+    ToastModule,
   ],
   providers: [AuthService, Router, MessengerService, MessageService],
   templateUrl: './page-login.component.html',
@@ -59,12 +62,15 @@ export class PageLoginComponent {
       password: this.loginForm.value.password!,
     });
 
-    this._authEventService.getEventIsAuthenticated().subscribe((data) => {
-      if (data) this._router.navigate(['/']);
-      else
-        this._messengerService.showInfo(
-          'usuário ou senha invalidos. Tente novamente.'
-        );
-    });
+    this._authEventService
+      .getEventIsAuthenticated()
+      .pipe(take(1))
+      .subscribe((data) => {
+        if (data) this._router.navigate(['/']);
+        else
+          this._messengerService.showError(
+            'usuário ou senha invalidos. Tente novamente.'
+          );
+      });
   }
 }

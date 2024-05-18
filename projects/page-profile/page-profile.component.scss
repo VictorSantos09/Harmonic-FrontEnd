@@ -4,6 +4,8 @@
   width: 550px;
   justify-content: space-between;
   background-color: #242424;
+  margin: 2rem;
+  border-radius: 8px;
 }
 
 .form-container {
@@ -13,11 +15,28 @@
 }
 
 .user-info {
-  width: 40%;
+  width: 50%;
   color: #fff;
   padding: 20px;
 }
 
+.informations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.informations .user {
+  margin-top: 1rem;
+}
+
+.informations .email {
+  margin-top: 0.6rem;
+}
+
+.informations .password {
+  margin-top: 0.6rem;
+}
 .form-group {
   margin-bottom: 10px;
 }
@@ -27,18 +46,30 @@
   margin-bottom: 5px;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 5px;
-  border: solid;
-  border-color: #a5a8ab;
-  background-color: #4f4c4c;
+.form-container input {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature-settings, normal);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.87);
+  background: #1e1e1e;
+  padding: 1rem 1rem;
+  padding-right: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s,
+    box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+  appearance: none;
+  border-radius: 4px;
 }
 
 button {
   background-color: #933dc9;
-  padding: 10px 20px;
+  padding: 13px 20px;
   color: #fff;
-  border-color: #bcc1c7;
+  border: none;
   cursor: pointer;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: var(--purple-800);
 }
