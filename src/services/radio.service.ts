@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConteudoDto } from '../../projects/page-conteudo/dto';
+import { ConteudoDto } from '../../projects/page-crud-radio/dto';
 import { RadioModel } from '../app';
-import { API_URL, ResponseData } from './consts';
+import { API_URL } from './API_URL';
+import { ResponseData } from './response';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConteudoService {
+export class RadioService {
   constructor(private _http: HttpClient) {}
 
   getAll(): Observable<ResponseData<RadioModel>> {

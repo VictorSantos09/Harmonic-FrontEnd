@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { FormOptions, MessengerService } from '../../src';
+import { FormOptions, MessengerService, RadioModel } from '../../src';
 import {
   TableColumn,
   TableComponent,
   TableOptions,
 } from '../../src/app/components/table';
-import { ConteudoService } from '../../src/services';
+import { RadioService } from '../../src/services';
 import { ConteudoDto, ConteudoDtoConsulta } from './dto';
 
 @Component({
@@ -16,7 +16,7 @@ import { ConteudoDto, ConteudoDtoConsulta } from './dto';
   imports: [TableComponent, ToastModule],
   templateUrl: './page-crud-conteudo.component.html',
   styleUrl: './page-crud-conteudo.component.scss',
-  providers: [ConteudoService, MessengerService, MessageService],
+  providers: [RadioService, MessengerService, MessageService],
 })
 export class PageConteudoComponent implements OnInit {
   data!: ConteudoDtoConsulta[];
@@ -245,7 +245,7 @@ export class PageConteudoComponent implements OnInit {
   ];
 
   constructor(
-    private _conteudoService: ConteudoService,
+    private _radioService: RadioService,
     private _messengerService: MessengerService
   ) {
     this._buscarDados();
@@ -254,7 +254,7 @@ export class PageConteudoComponent implements OnInit {
   async ngOnInit(): Promise<void> {}
 
   _buscarDados() {
-    const sub = this._conteudoService.getAll().subscribe({
+    const sub = this._radioService.getAll().subscribe({
       next: (data) => {
         this.data = data.data.map((item) => {
           const obj: ConteudoDtoConsulta = {
@@ -281,13 +281,13 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onDeleteButtonClick(event: ConteudoDtoConsulta): void {
+  onDeleteButtonClick(event: RadioModel): void {
     if (event.id === undefined) {
       this._messengerService.showError('Registro não encontrado');
       return;
     }
 
-    this._conteudoService.delete(event.id).subscribe({
+    this._radioService.delete(event.id).subscribe({
       next: () => {
         this._messengerService.showSuccess('Registro deletado com sucesso');
         this._buscarDados();
@@ -311,7 +311,7 @@ export class PageConteudoComponent implements OnInit {
       idPlataforma: 0,
     };
 
-    const sub = this._conteudoService.insert(obj).subscribe({
+    const sub = this._radioService.insert(obj).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('registro gravado');
         this._buscarDados();
@@ -335,7 +335,7 @@ export class PageConteudoComponent implements OnInit {
       id: event.id,
     };
 
-    const sub = this._conteudoService.update(dto).subscribe({
+    const sub = this._radioService.update(dto).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('Conteúdo atualizado com sucesso');
         sub.unsubscribe();
