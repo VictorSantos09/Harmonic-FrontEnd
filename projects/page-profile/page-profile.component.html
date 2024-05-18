@@ -1,36 +1,37 @@
-HTML
 <div class="container">
   <div class="user-info">
-    <h2>Informações do Usuário</h2>
-    <div class="user">
-      <p>
-        <strong> Usuário: </strong>
-      </p>
-      <p>
-        <strong>
-          <!--{{ user.name }}-->
-        </strong>
-      </p>
-    </div>
-    <div class="email">
-      <p>
-        <strong> E-mail: </strong>
-      </p>
-      <p>
-        <strong>
-          <!--{{ user.email }}-->
-        </strong>
-      </p>
-    </div>
-    <div class="password">
-      <p>
-        <strong> Senha: </strong>
-      </p>
-      <p>
-        <strong>
-          <!--{{ user.password }}-->
-        </strong>
-      </p>
+    <h2>Informações User</h2>
+    <div class="informations">
+      <div class="user">
+        <p>
+          <strong> Usuário: </strong>
+        </p>
+        <p>
+          <strong>
+            <!--{{ user.name }}-->
+          </strong>
+        </p>
+      </div>
+      <div class="email">
+        <p>
+          <strong> E-mail: </strong>
+        </p>
+        <p>
+          <strong>
+            <!--{{ user.email }}-->
+          </strong>
+        </p>
+      </div>
+      <div class="password">
+        <p>
+          <strong> Senha: </strong>
+        </p>
+        <p>
+          <strong>
+            <!--{{ user.password }}-->
+          </strong>
+        </p>
+      </div>
     </div>
   </div>
   <div class="form-container">
@@ -43,24 +44,32 @@ HTML
       <div [ngClass]="'flex align-items-center flex-column'">
         <h1>Cadastro</h1>
         <div class="field" [ngClass]="'flex flex-column'">
-          <p-floatLabel>
-            <input id="user" type="user" pInputText formControlName="user" />
-            <label for="user">User</label>
-          </p-floatLabel>
-        </div>
-        <div class="field" [ngClass]="'flex flex-column'">
-          <p-floatLabel>
-            <input id="email" type="email" pInputText formControlName="email" />
-            <label for="email">Email</label>
-          </p-floatLabel>
-          <small
-            class="p-error block"
-            *ngIf="
-              registerForm.get('email')?.invalid &&
-              registerForm.get('email')?.dirty
-            "
-            >Email válido é obrigatório</small
-          >
+          <div class="field">
+            <p-floatLabel>
+              <input id="user" type="user" pInputText formControlName="user" />
+              <label for="user">User</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="field">
+            <p-floatLabel>
+              <input
+                id="email"
+                type="email"
+                pInputText
+                formControlName="email"
+              />
+              <label for="email">Email</label>
+            </p-floatLabel>
+            <small
+              class="p-error block"
+              *ngIf="
+                registerForm.get('email')?.invalid &&
+                registerForm.get('email')?.dirty
+              "
+              >Email válido é obrigatório</small
+            >
+          </div>
 
           <div class="field">
             <p-floatLabel>
@@ -87,7 +96,9 @@ HTML
           type="submit"
           label="Cadastrar"
           [disabled]="registerForm.invalid"
-        ></button>
+        >
+          Salvar
+        </button>
       </div>
     </form>
   </div>
