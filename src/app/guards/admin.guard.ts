@@ -6,21 +6,21 @@ import { ROUTES_CNT } from '../../consts';
 import { AdminService } from '../../services';
 
 export const AdminGuard: CanActivateFn = (route, state) => {
-  const adminService = inject(AdminService);
-
-  return adminService.isAdmin().pipe(
-    map((isAdmin) => {
-      if (isAdmin) {
-        return true;
-      } else {
+  return inject(AdminService)
+    .isAdmin()
+    .pipe(
+      map((isAdmin) => {
+        if (isAdmin) {
+          return true;
+        } else {
+          inject(Router).navigate([ROUTES_CNT.HOMEPAGE]);
+          return false;
+        }
+      }),
+      catchError((error) => {
+        console.error('AdminGuard error:', error);
         inject(Router).navigate([ROUTES_CNT.HOMEPAGE]);
-        return false;
-      }
-    }),
-    catchError((error) => {
-      console.error('AdminGuard error:', error);
-      inject(Router).navigate([ROUTES_CNT.HOMEPAGE]);
-      return of(false);
-    })
-  );
+        return of(false);
+      })
+    );
 };
