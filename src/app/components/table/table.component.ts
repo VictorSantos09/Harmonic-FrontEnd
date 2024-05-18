@@ -72,6 +72,7 @@ export class TableComponent<T> implements OnInit {
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onEditCanceled: EventEmitter<any> = new EventEmitter<any>();
   @Output() formFieldsChange = new EventEmitter<FormField[]>();
 
   item?: any;
@@ -158,5 +159,22 @@ export class TableComponent<T> implements OnInit {
 
   getEventValue($event: any): string {
     return $event.target.value;
+  }
+
+  onRowEditInit(product: any) {
+    console.log('onRowEditInit', product);
+  }
+
+  onRowEditSave(product: any) {
+    console.log('onRowEditSave', product);
+    this.onEdit.emit(product);
+  }
+
+  onRowEditCancel(product: any, index: number) {
+    console.log('onRowEditCancel', product, index);
+    this.onEditCanceled.emit({
+      item: product,
+      index: index,
+    });
   }
 }
