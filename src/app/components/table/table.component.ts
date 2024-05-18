@@ -59,9 +59,6 @@ export class TableComponent<T> implements OnInit {
     this._formFields = value;
   }
 
-  @Input() value: T | undefined;
-  @Output() valueChange = new EventEmitter<T>();
-
   @Input() options!: TableOptions;
   @Input() columns!: TableColumn[];
   @Input() formOptions?: FormOptions;
@@ -161,19 +158,17 @@ export class TableComponent<T> implements OnInit {
     return $event.target.value;
   }
 
-  onRowEditInit(product: any) {
-    console.log('onRowEditInit', product);
+  onRowEditInit(item: any) {
+    this.item = item;
   }
 
-  onRowEditSave(product: any) {
-    console.log('onRowEditSave', product);
-    this.onEdit.emit(product);
+  onRowEditSave(item: any) {
+    this.onEdit.emit(this.item);
   }
 
-  onRowEditCancel(product: any, index: number) {
-    console.log('onRowEditCancel', product, index);
+  onRowEditCancel(item: any, index: number) {
     this.onEditCanceled.emit({
-      item: product,
+      item: item,
       index: index,
     });
   }

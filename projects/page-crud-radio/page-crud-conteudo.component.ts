@@ -14,13 +14,34 @@ import { ConteudoDto, ConteudoDtoConsulta } from './dto';
   selector: 'app-pageCrudRadio',
   standalone: true,
   imports: [TableComponent, ToastModule],
-  templateUrl: './page-crud-radio.component.html',
-  styleUrl: './page-crud-radio.component.scss',
+  templateUrl: './page-crud-conteudo.component.html',
+  styleUrl: './page-crud-conteudo.component.scss',
   providers: [RadioService, MessengerService, MessageService],
 })
-export class PageCrudRadioComponent implements OnInit {
+export class PageConteudoComponent implements OnInit {
   data!: ConteudoDtoConsulta[];
-  dataSingle: RadioModel = new RadioModel();
+  paises = [
+    { nome: 'brasil', id: 6 },
+    { nome: 'Australia', id: 2 },
+    { nome: 'China', id: 3 },
+    { nome: 'Egypt', id: 4 },
+    { nome: 'France', id: 5 },
+    { nome: 'Germany', id: 6 },
+    { nome: 'India', id: 7 },
+    { nome: 'Japan', id: 8 },
+    { nome: 'Spain', id: 9 },
+  ];
+
+  tiposConteudos = [
+    { nome: 'Rádio', id: 1 },
+    { nome: 'Podcast', id: 3 },
+  ];
+
+  plataformas = [
+    { nome: 'Spotify', id: 1 },
+    { nome: 'Youtube', id: 2 },
+    { nome: 'Deezer', id: 3 },
+  ];
 
   formOptions: FormOptions = {
     title: 'Rádio',
@@ -57,17 +78,7 @@ export class PageCrudRadioComponent implements OnInit {
         errorMessage: 'Campo obrigatório',
         typeElement: 'DROPDOWN',
         optionLabel: 'nome',
-        options: [
-          { nome: 'Brazil', id: 6 },
-          { nome: 'Australia', id: 2 },
-          { nome: 'China', id: 3 },
-          { nome: 'Egypt', id: 4 },
-          { nome: 'France', id: 5 },
-          { nome: 'Germany', id: 6 },
-          { nome: 'India', id: 7 },
-          { nome: 'Japan', id: 8 },
-          { nome: 'Spain', id: 9 },
-        ],
+        options: this.paises,
       },
       {
         disabled: false,
@@ -79,10 +90,7 @@ export class PageCrudRadioComponent implements OnInit {
         errorMessage: 'Informe de tipo do conteudo',
         typeElement: 'DROPDOWN',
         optionLabel: 'nome',
-        options: [
-          { nome: 'Rádio', id: 1 },
-          { nome: 'Podcast', id: 3 },
-        ],
+        options: this.tiposConteudos,
       },
       {
         disabled: false,
@@ -94,17 +102,13 @@ export class PageCrudRadioComponent implements OnInit {
         errorMessage: 'Informe a plataforma do conteudo',
         typeElement: 'DROPDOWN',
         optionLabel: 'nome',
-        options: [
-          { nome: 'Spotify', id: 1 },
-          { nome: 'Youtube', id: 2 },
-          { nome: 'Deezer', id: 3 },
-        ],
+        options: this.plataformas,
       },
     ],
   };
 
   tableOptions: TableOptions = {
-    title: 'Rádios',
+    title: 'Conteúdos',
     dataKey: 'id',
   };
 
@@ -250,7 +254,7 @@ export class PageCrudRadioComponent implements OnInit {
   async ngOnInit(): Promise<void> {}
 
   _buscarDados() {
-    this._radioService.getAll().subscribe({
+    const sub = this._radioService.getAll().subscribe({
       next: (data) => {
         this.data = data.data.map((item) => {
           const obj: ConteudoDtoConsulta = {
@@ -266,11 +270,13 @@ export class PageCrudRadioComponent implements OnInit {
             dataCadastro: item.dataCadastro,
           };
 
+          sub.unsubscribe();
           return obj;
         });
       },
       error: (error) => {
         this._messengerService.showError('Erro ao carregar dados', error, true);
+        sub.unsubscribe();
       },
     });
   }
@@ -305,14 +311,48 @@ export class PageCrudRadioComponent implements OnInit {
       idPlataforma: 0,
     };
 
-    this._radioService.insert(obj).subscribe({
+    const sub = this._radioService.insert(obj).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('registro gravado');
         this._buscarDados();
+        sub.unsubscribe();
       },
       error: (err) => {
         this._messengerService.showError('registro não gravado', err);
+        sub.unsubscribe();
       },
     });
+  }
+
+  onEditButtonClick(event: any) {
+    const dto = {
+      descricao: event.descricao,
+      idPais: this.paises.find((p) => p.nome === event.pais)?.id || 0,
+      idPlataforma: 1,
+      idTipoConteudo:
+        this.tiposConteudos.find((t) => t.nome === event.tipoConteudo)?.id || 0,
+      titulo: event.titulo,
+      id: event.id,
+    };
+
+    const sub = this._radioService.update(dto).subscribe({
+      next: (value) => {
+        this._messengerService.showSuccess('Conteúdo atualizado com sucesso');
+        sub.unsubscribe();
+        this._buscarDados();
+      },
+      error: (err) => {
+        this._messengerService.showError(
+          'Não foi possível atualizar o conteúdo',
+          err
+        );
+        this._buscarDados();
+        sub.unsubscribe();
+      },
+    });
+  }
+
+  onEditCanceled(event: any) {
+    this._messengerService.showInfo('Edição cancelada');
   }
 }

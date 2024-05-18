@@ -18,7 +18,11 @@ export class MessengerService {
     });
   }
 
-  public showError(message: string, error?: any, printToConsole?: boolean) {
+  public showError(
+    message: string,
+    error?: any,
+    printToConsole: boolean = true
+  ) {
     this._messageService.add({
       severity: 'error',
       summary: 'Erro',
