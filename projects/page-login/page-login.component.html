@@ -1,13 +1,11 @@
 <div
   class="container"
-  [ngClass]="'flex align-items-center justify-content-center'"
->
+  [ngClass]="'flex align-items-center justify-content-center'">
   <form
     [formGroup]="loginForm"
     (ngSubmit)="login()"
     novalidate
-    [ngClass]="'p-col-12 p-md-6 p-lg-4'"
-  >
+    [ngClass]="'p-col-12 p-md-6 p-lg-4'">
     <div [ngClass]="'flex align-items-center flex-column'">
       <h1>Login</h1>
       <div class="field" [ngClass]="'flex flex-column'">
@@ -19,9 +17,7 @@
           class="p-error block"
           *ngIf="
             loginForm.get('email')?.invalid && loginForm.get('email')?.dirty
-          "
-          >Email válido é obrigatório</small
-        >
+          ">Email válido é obrigatório</small>
       </div>
       <div class="field">
         <p-floatLabel>
@@ -29,8 +25,7 @@
             id="password"
             [feedback]="false"
             [toggleMask]="true"
-            formControlName="password"
-          ></p-password>
+            formControlName="password"></p-password>
           <label for="password">Senha</label>
         </p-floatLabel>
         <small
@@ -38,16 +33,13 @@
           *ngIf="
             loginForm.get('password')?.invalid &&
             loginForm.get('password')?.dirty
-          "
-          >Senha é obrigatória</small
-        >
+          ">Senha é obrigatória</small>
       </div>
       <button
         pButton
         type="submit"
         label="Login"
-        [disabled]="loginForm.invalid"
-      ></button>
+        [disabled]="loginForm.invalid"></button>
     </div>
   </form>
 </div>
