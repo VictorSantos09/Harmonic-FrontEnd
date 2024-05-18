@@ -24,18 +24,16 @@ export class AuthService {
 
   public register(dto: RegisterDTO) {
     return this._http
-      .post<any>(`${API_URL.URL_DEVELOPMENT}register`, dto, {
+      .post<any>(`${API_URL.URL}register`, dto, {
         params: { useCookies: 'true' },
         withCredentials: true,
       })
       .subscribe({
         next: () => {
-          this._setCookies(true);
           this._authEventService.emitIsAuthenticated(true);
           this.onAuthChanged.emit(true);
         },
         error: () => {
-          this._setCookies(false);
           this._authEventService.emitIsAuthenticated(false);
           this.onAuthChanged.emit(false);
         },
@@ -44,7 +42,7 @@ export class AuthService {
 
   public login(dto: LoginDTO) {
     return this._http
-      .post<any>(`${API_URL.URL_DEVELOPMENT}login`, dto, {
+      .post<any>(`${API_URL.URL}login`, dto, {
         params: { useCookies: 'true' },
         withCredentials: true,
       })
