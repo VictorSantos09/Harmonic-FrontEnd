@@ -1,1 +1,1 @@
-export * from './page-crud-radio.component';
+export * from './page-crud-conteudo.component';

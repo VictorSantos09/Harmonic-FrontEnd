@@ -57,20 +57,9 @@ export class HeaderComponent implements OnInit {
           {
             label: 'Conteúdo',
             icon: 'pi pi-fw pi-pen-to-square',
-            items: [
-              {
-                label: 'Rádio',
-                icon: 'pi pi-fw pi-volume-off',
-                command: () => {
-                  this._router.navigate([ROUTES_CNT.RADIO]);
-                },
-              },
-              {
-                label: 'Podcast',
-                icon: 'pi pi-fw pi-volume-off',
-                routerLink: [ROUTES_CNT.PODCAST],
-              },
-            ],
+            command: () => {
+              this._router.navigate([ROUTES_CNT.CONTEUDO]);
+            },
           },
           {
             label: 'Tipos Conteúdos',

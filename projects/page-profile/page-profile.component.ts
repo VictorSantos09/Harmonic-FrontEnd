@@ -35,7 +35,6 @@ export class PageProfileComponent {
       this.http
         .put('https://your-api-url.com', this.registerForm.value)
         .subscribe((response) => {
-          console.log(response);
           this.registerForm.reset(); // Limpe os campos do formulário após a submissão
         });
     }

@@ -5,15 +5,9 @@ import { AdminGuard, AuthGuard, AuthLoginGuard, RegisterGuard } from './guards';
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
   {
-    path: 'radio',
+    path: 'conteudo',
     loadComponent: () =>
-      import('../../projects').then((m) => m.PageCrudRadioComponent),
-    canActivate: [AuthGuard, AdminGuard],
-  },
-  {
-    path: 'podcast',
-    loadComponent: () =>
-      import('../../projects').then((m) => m.PageCrudPodcastComponent),
+      import('../../projects').then((m) => m.PageConteudoComponent),
     canActivate: [AuthGuard, AdminGuard],
   },
   {
