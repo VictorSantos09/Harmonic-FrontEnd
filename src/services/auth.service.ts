@@ -28,9 +28,29 @@ export class AuthService {
     private _authEventService: AuthEventService
   ) {}
 
+  public register(dto: RegisterDTO) {
+    return this._http
+      .post<any>(`${API_URL.URL_DEVELOPMENT}register`, dto, {
+        params: { useCookies: 'true' },
+        withCredentials: true,
+      })
+      .subscribe({
+        next: () => {
+          this._setCookies(true);
+          this._authEventService.emitIsAuthenticated(true);
+          this.onAuthChanged.emit(true);
+        },
+        error: () => {
+          this._setCookies(false);
+          this._authEventService.emitIsAuthenticated(false);
+          this.onAuthChanged.emit(false);
+        },
+      });
+  }
+
   public login(dto: LoginDTO) {
     return this._http
-      .post<any>(`${API_URL.URL}login`, dto, {
+      .post<any>(`${API_URL.URL_DEVELOPMENT}login`, dto, {
         params: { useCookies: 'true' },
         withCredentials: true,
       })
@@ -73,5 +93,11 @@ export class LoginDTO {
   password!: string;
   twoFactorCode?: string;
   twoFactorRecoveryCode?: string;
+  useSessionCookie?: boolean;
+}
+
+export class RegisterDTO {
+  email!: string;
+  password!: string;
   useSessionCookie?: boolean;
 }

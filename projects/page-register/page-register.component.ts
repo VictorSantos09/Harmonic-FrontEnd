@@ -7,6 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -15,6 +17,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { take } from 'rxjs';
+import { AuthEventService, AuthService, MessengerService } from '../../src';
 
 @Component({
   selector: 'app-page-register',
@@ -35,10 +39,12 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     CardModule,
   ],
+  providers: [AuthService, Router, MessengerService, MessageService],
 })
 export class PageRegisterComponent {
   registerForm = this.fb.group(
     {
+      user: '',
       email: ['', [Validators.required, Validators.email]],
       confirmEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -47,7 +53,13 @@ export class PageRegisterComponent {
     { validator: this.checkPasswords }
   );
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router,
+    private _authEventService: AuthEventService,
+    private _messengerService: MessengerService
+  ) {}
 
   checkPasswords(group: FormGroup) {
     let pass = group.controls['password'].value;
@@ -61,6 +73,20 @@ export class PageRegisterComponent {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    this._authService.register({
+      email: this.registerForm.value.email!,
+      password: this.registerForm.value.password!,
+    });
+
+    this._authEventService
+      .getEventIsAuthenticated()
+      .pipe(take(1))
+      .subscribe((data) => {
+        if (data) this._router.navigate(['/']);
+        else
+          this._messengerService.showError(
+            'usuário ou senha invalidos. Tente novamente.'
+          );
+      });
   }
 }
