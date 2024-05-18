@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Observable, catchError, map, of } from 'rxjs';
 import { API_URL } from './API_URL';
 import { AuthEventService } from './auth-event.service';
 
@@ -8,23 +8,17 @@ import { AuthEventService } from './auth-event.service';
   providedIn: 'root',
 })
 export class AuthService {
-  readonly COOKIE_NAME = 'isAuthenticated';
-
   @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  get isAuthenticated(): boolean {
-    if (this._cookieService.check(this.COOKIE_NAME)) {
-      return this._cookieService.get(this.COOKIE_NAME) === 'true';
-    }
-
-    return false;
-
-    // return localStorage.getItem(this.COOKIE_NAME) === 'true';
+  get isAuthenticated(): Observable<boolean> {
+    return this._http.get<boolean>(`${API_URL.URL}auth`).pipe(
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 
   constructor(
     private _http: HttpClient,
-    private _cookieService: CookieService,
     private _authEventService: AuthEventService
   ) {}
 
@@ -56,12 +50,10 @@ export class AuthService {
       })
       .subscribe({
         next: () => {
-          this._setCookies(true);
           this._authEventService.emitIsAuthenticated(true);
           this.onAuthChanged.emit(true);
         },
         error: () => {
-          this._setCookies(false);
           this._authEventService.emitIsAuthenticated(false);
           this.onAuthChanged.emit(false);
         },
@@ -69,22 +61,8 @@ export class AuthService {
   }
 
   public logout() {
-    this._setCookies(false);
     this._authEventService.emitIsAuthenticated(false);
     this.onAuthChanged.emit(false);
-  }
-
-  private _setCookies(isAuthenticated: boolean) {
-    localStorage.setItem(this.COOKIE_NAME, isAuthenticated.toString());
-
-    // if (this._cookieService.check(this.COOKIE_NAME)) {
-    //   this._cookieService.delete(this.COOKIE_NAME);
-    // } else {
-    //   this._cookieService.set(this.COOKIE_NAME, isAuthenticated.toString(), {
-    //     secure: true,
-    //     sameSite: 'Strict',
-    //   });
-    // }
   }
 }
 

@@ -7,19 +7,23 @@ import { AdminService } from '../../services';
 
 export const AdminGuard: CanActivateFn = (route, state) => {
   const adminService = inject(AdminService);
+  const router = inject(Router);
+
+  console.log('injected', adminService == null, router == null);
 
   return adminService.isAdmin().pipe(
     map((isAdmin) => {
       if (isAdmin) {
         return true;
       } else {
-        inject(Router).navigate([ROUTES_CNT.HOMEPAGE]);
+        console.log('to homepage else');
+        router.navigate([ROUTES_CNT.HOMEPAGE]);
         return false;
       }
     }),
     catchError((error) => {
       console.error('AdminGuard error:', error);
-      inject(Router).navigate([ROUTES_CNT.HOMEPAGE]);
+      router.navigate([ROUTES_CNT.HOMEPAGE]);
       return of(false);
     })
   );
