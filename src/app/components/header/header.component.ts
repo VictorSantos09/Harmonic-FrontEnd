@@ -26,16 +26,16 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isAuthenticated = this._authService.isAuthenticated;
+    this._authService.onAuthChanged.subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+      this.itemsAuth = this._setItems(true);
+      this.itemsNotAuth = this._setItems(false);
+    });
 
     this.itemsAuth = this._setItems(true);
     this.itemsNotAuth = this._setItems(false);
 
     this.eventService.getEventIsAuthenticated().subscribe((data) => {
-      this.isAuthenticated = data;
-    });
-
-    this._authService.onAuthChanged.subscribe((data) => {
       this.isAuthenticated = data;
     });
   }
