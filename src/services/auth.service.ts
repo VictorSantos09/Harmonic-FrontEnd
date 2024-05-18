@@ -8,11 +8,12 @@ import { AuthEventService } from './auth-event.service';
   providedIn: 'root',
 })
 export class AuthService {
-  readonly COOKIE_NAME = 'isAuthenticated';
+  readonly COOKIE_NAME = '.AspNetCore.Identity.Application';
 
   @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   get isAuthenticated(): boolean {
+    console.log(this._cookieService.getAll());
     if (this._cookieService.check(this.COOKIE_NAME)) {
       return this._cookieService.get(this.COOKIE_NAME) === 'true';
     }

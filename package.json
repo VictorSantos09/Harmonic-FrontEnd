@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start-https": "ng serve --ssl true --ssl-cert ./ssl/server.crt --ssl-key ./ssl/server.key",
+    "start-dev-prd": "ng serve --configuration production",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
