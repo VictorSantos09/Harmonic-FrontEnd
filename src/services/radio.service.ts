@@ -74,6 +74,7 @@ export class RadioService {
       `${API_URL.URL}Conteudo/detalhes`,
       {
         params: { id: id.toString() },
+        withCredentials: true,
       }
     );
   }
@@ -83,6 +84,7 @@ export class RadioService {
       `${API_URL.URL}Conteudo/conteudo-plataformas-url`,
       {
         params: { id: id.toString() },
+        withCredentials: true,
       }
     );
   }
