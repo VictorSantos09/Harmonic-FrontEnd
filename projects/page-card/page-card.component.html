@@ -1,1 +1,52 @@
-<app-card></app-card>
+<p-toast />
+
+<p-splitter styleClass="mb-5" layout="vertical">
+  <ng-template pTemplate>
+    <div class="col flex align-items-center justify-content-center">
+      <app-card
+        *ngIf="conteudo"
+        [title]="conteudo.titulo"
+        [subTitle]="conteudo.tipo"
+        [description]="conteudo.descricao"
+        [image]="conteudo.imagem"
+        [country]="conteudo.pais"
+        primaryButtonLabel="Like"
+        primaryButtonIcon="pi pi-thumbs-up-fill"
+        secondaryButtonLabel="Deslike"
+        secondaryButtonIcon="pi pi-thumbs-down-fill"
+        (onPrimaryButtonClick)="onLike()"
+        (onSecondaryButtonClick)="onDislike()"
+      ></app-card>
+    </div>
+  </ng-template>
+  <ng-template pTemplate>
+    <div class="col">
+      <p-card header="Reações">
+        <p class="flex align-items-center gap-1">
+          {{ conteudo.total_curtidas > 0 ? conteudo.total_curtidas : 0 }}
+          Reações
+          <i class="pi pi-heart" style="font-size: 1.5rem"></i>
+        </p>
+        <p class="flex align-items-center gap-1">
+          {{ conteudo.total_gosteis > 0 ? conteudo.total_gosteis : 0 }} Likes
+          <i class="pi pi-heart-fill" style="font-size: 1.5rem"></i>
+        </p>
+      </p-card>
+    </div>
+
+    <div class="col">
+      <p-card header="Disponível Em">
+        <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
+          <a
+            class="p-2 flex gap-2 align-items-center"
+            [href]="cp"
+            target="_blank"
+          >
+            <i class="pi pi-headphones" style="font-size: 1.5rem"></i
+            >{{ extrairNomePlataforma(cp) }}
+          </a>
+        </div>
+      </p-card>
+    </div>
+  </ng-template>
+</p-splitter>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { FormOptions, MessengerService, RadioModel } from '../../src';
+import { ConteudoModel, FormOptions, MessengerService } from '../../src';
 import {
   TableColumn,
   TableComponent,
@@ -281,7 +281,7 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onDeleteButtonClick(event: RadioModel): void {
+  onDeleteButtonClick(event: ConteudoModel): void {
     if (event.id === undefined) {
       this._messengerService.showError('Registro não encontrado');
       return;
