@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
+import { ConteudoTopDto, MessengerService, RadioService } from '../../src';
 import { BackgroundImageComponent } from '../../src/app/components/background-image';
 import { CarouselComponent } from '../../src/app/components/carousel';
-import { CarrouselOptions, ImageModel } from '../../src/app/components/models';
 import { ROUTES_CNT } from '../../src/consts';
 
 @Component({
@@ -21,59 +22,28 @@ import { ROUTES_CNT } from '../../src/consts';
     RouterLink,
     CarouselModule,
   ],
+  providers: [MessageService, MessengerService],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent implements OnInit {
   informationRoute = ROUTES_CNT.CONTEUDO_INFORMACAO;
 
-  carrouselOptions!: CarrouselOptions;
-  avatars: ImageModel[] = [
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-    {
-      url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600',
-    },
-  ];
+  topRadios: ConteudoTopDto[] = [];
+  topPodcasts: ConteudoTopDto[] = [];
 
   responsiveOptions: any;
-  ngOnInit(): void {
-    this.carrouselOptions = {
-      images: this.avatars,
-      title: 'Teste',
-    };
 
+  constructor(
+    private _router: Router,
+    private _radioService: RadioService,
+    private _messengerService: MessengerService
+  ) {
+    this._buscarTopRadios();
+    this.buscarTopPodcasts();
+  }
+
+  ngOnInit(): void {
     this.responsiveOptions = [
       {
         breakpoint: '1199px',
@@ -91,5 +61,35 @@ export class HomepageComponent implements OnInit {
         numScroll: 1,
       },
     ];
+  }
+
+  onAvatarClick(id: number) {
+    this._router.navigate([this.informationRoute, id]);
+  }
+
+  private _buscarTopRadios() {
+    const sub = this._radioService.getTopRadios().subscribe({
+      next: (value) => {
+        this.topRadios = value.data;
+        sub.unsubscribe();
+      },
+      error: (err) => {
+        this._messengerService.showError('Erro ao buscar top radios', err);
+        sub.unsubscribe();
+      },
+    });
+  }
+
+  private buscarTopPodcasts() {
+    const sub = this._radioService.getTopPodcasts().subscribe({
+      next: (value) => {
+        this.topPodcasts = value.data;
+        sub.unsubscribe();
+      },
+      error: (err) => {
+        this._messengerService.showError('Erro ao buscar top podcasts', err);
+        sub.unsubscribe();
+      },
+    });
   }
 }

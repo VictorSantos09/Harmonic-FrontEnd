@@ -17,6 +17,25 @@ export class ResponseData<TType> {
   }
 }
 
+export class ResponseDataSingle<TType> {
+  isSuccess: boolean;
+  isFailure: boolean;
+  data: TType;
+  error: Error;
+
+  constructor(
+    isSuccess: boolean,
+    isFailure: boolean,
+    data: TType,
+    error: Error
+  ) {
+    this.isSuccess = isSuccess;
+    this.isFailure = isFailure;
+    this.data = data;
+    this.error = error;
+  }
+}
+
 export class Error {
   code: string;
   message: string;

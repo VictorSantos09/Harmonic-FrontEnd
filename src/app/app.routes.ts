@@ -29,10 +29,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'information',
+    path: 'information/:id',
     loadComponent: () =>
       import('../../projects').then((m) => m.PageCardComponent),
-    data: { contentId: '1' },
     canActivate: [AuthGuard],
   },
 ];
