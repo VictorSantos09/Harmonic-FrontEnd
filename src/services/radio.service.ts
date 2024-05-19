@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ConteudoDto } from '../../projects/page-crud-radio/dto';
 import { ConteudoDetalhesDto, ConteudoModel, ConteudoTopDto } from '../app';
 import { API_URL } from './API_URL';
-import { ResponseData, ResponseDataSingle } from './response';
+import { Response, ResponseData, ResponseDataSingle } from './response';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +28,13 @@ export class RadioService {
         withCredentials: true,
       }
     );
+  }
+
+  deleteRange(ids: number[]): Observable<Response> {
+    return this._http.delete<Response>(`${API_URL.URL}Conteudo/range`, {
+      body: ids,
+      withCredentials: true,
+    });
   }
 
   insert(obj: ConteudoDto): Observable<Response> {

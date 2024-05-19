@@ -66,7 +66,6 @@ export class TableComponent<T> implements OnInit {
   @Input() items!: any[];
 
   @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEditCanceled: EventEmitter<any> = new EventEmitter<any>();
@@ -122,7 +121,7 @@ export class TableComponent<T> implements OnInit {
         this.items = this.items.filter((val) => val.id !== item.id);
         this.item = {};
 
-        this.onDelete.emit(item);
+        this.onDeleteSelectedItems.emit(item);
       },
     });
   }
