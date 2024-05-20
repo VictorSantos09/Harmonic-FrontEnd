@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ROUTES_CNT } from '../../../consts';
-import { AuthEventService, AuthService } from '../../../services';
+import { AuthEventService, AuthService, AuthState } from '../../../services';
 import { NavbarComponent } from '../navbar';
 
 @Component({
@@ -15,9 +15,10 @@ import { NavbarComponent } from '../navbar';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated!: boolean;
+  authState!: AuthState;
   itemsAuth: MenuItem[] | undefined;
   itemsNotAuth: MenuItem[] | undefined;
+  itemsAuthAdmin: MenuItem[] | undefined;
 
   constructor(
     private _authService: AuthService,
@@ -26,21 +27,22 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._authService.onAuthChanged.subscribe((isAuthenticated) => {
-      this.isAuthenticated = isAuthenticated;
-      this.itemsAuth = this._setItems(true);
-      this.itemsNotAuth = this._setItems(false);
-    });
+    // this._authService.onAuthChanged.subscribe((authState) => {
+    //   this.authState = authState;
 
-    this.itemsAuth = this._setItems(true);
-    this.itemsNotAuth = this._setItems(false);
+    //   this._setItemsWithState(authState);
+    // });
 
-    this.eventService.getEventIsAuthenticated().subscribe((data) => {
-      this.isAuthenticated = data;
+    this._setItemsDefaultOptions();
+
+    this.eventService.getEventIsAuthenticated().subscribe((authState) => {
+      this.authState = authState;
+
+      this._setItemsWithState(authState);
     });
   }
 
-  private _setItems(isAuthenticated: boolean) {
+  private _setItems(authState: AuthState) {
     return [
       {
         label: 'Inicio',
@@ -50,7 +52,7 @@ export class HeaderComponent implements OnInit {
         },
       },
       {
-        visible: isAuthenticated,
+        visible: authState.isAdmin,
         label: 'Gerenciar',
         icon: 'pi pi-fw pi-th-large',
         items: [
@@ -81,19 +83,19 @@ export class HeaderComponent implements OnInit {
         icon: 'pi pi-fw pi-user',
         items: [
           {
-            visible: !isAuthenticated,
+            visible: !authState.isAuthenticated,
             label: 'Entrar',
             icon: 'pi pi-fw pi-sign-in',
             routerLink: [ROUTES_CNT.LOGIN],
           },
           {
-            visible: !isAuthenticated,
+            visible: !authState.isAuthenticated,
             label: 'Criar Conta',
             icon: 'pi pi-fw pi-user-plus',
             routerLink: [ROUTES_CNT.CADASTRO],
           },
           {
-            visible: isAuthenticated,
+            visible: authState.isAuthenticated,
             label: 'Sair',
             icon: 'pi pi-fw pi-power-off',
             command: () => {
@@ -101,13 +103,13 @@ export class HeaderComponent implements OnInit {
             },
           },
           {
-            visible: isAuthenticated,
+            visible: authState.isAuthenticated,
             label: 'Meu Perfil',
             icon: 'pi pi-fw pi-user-edit',
             routerLink: [ROUTES_CNT.MEU_PERFIL],
           },
           {
-            visible: isAuthenticated,
+            visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
             items: [
@@ -120,5 +122,28 @@ export class HeaderComponent implements OnInit {
         ],
       },
     ];
+  }
+
+  private _setItemsDefaultOptions() {
+    this.itemsAuth = this._setItems({
+      isAdmin: false,
+      isAuthenticated: true,
+    });
+
+    this.itemsNotAuth = this._setItems({
+      isAdmin: false,
+      isAuthenticated: false,
+    });
+
+    this.itemsAuthAdmin = this._setItems({
+      isAdmin: true,
+      isAuthenticated: true,
+    });
+  }
+
+  private _setItemsWithState(authState: AuthState) {
+    this.itemsAuth = this._setItems(authState);
+    this.itemsNotAuth = this._setItems(authState);
+    this.itemsAuthAdmin = this._setItems(authState);
   }
 }

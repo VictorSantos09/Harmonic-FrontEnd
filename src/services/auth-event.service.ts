@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { AuthState } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthEventService {
   constructor() {}
-  private eventSubject = new Subject<any>();
+  private eventSubject = new Subject<AuthState>();
 
-  emitIsAuthenticated(value: boolean) {
+  emitIsAuthenticated(value: AuthState) {
     this.eventSubject.next(value);
   }
 

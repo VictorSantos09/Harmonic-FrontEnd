@@ -18,7 +18,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { take } from 'rxjs';
-import { AuthEventService, AuthService, MessengerService } from '../../src';
+import {
+  AuthEventService,
+  AuthService,
+  MessengerService,
+  ROUTES_CNT,
+} from '../../src';
 
 @Component({
   selector: 'app-page-login',
@@ -66,7 +71,7 @@ export class PageLoginComponent {
       .getEventIsAuthenticated()
       .pipe(take(1))
       .subscribe((data) => {
-        if (data) this._router.navigate(['/']);
+        if (data.isAuthenticated) this._router.navigate([ROUTES_CNT.HOMEPAGE]);
         else
           this._messengerService.showError(
             'usuário ou senha invalidos. Tente novamente.'

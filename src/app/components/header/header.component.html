@@ -1,2 +1,9 @@
-<app-navbar *ngIf="isAuthenticated" [items]="itemsAuth"></app-navbar>
-<app-navbar *ngIf="!isAuthenticated" [items]="itemsNotAuth"></app-navbar>
+<app-navbar
+  *ngIf="authState && !authState.isAdmin"
+  [items]="itemsAuth"
+></app-navbar>
+<app-navbar
+  *ngIf="authState && authState?.isAdmin"
+  [items]="itemsAuthAdmin"
+></app-navbar>
+<app-navbar *ngIf="!authState" [items]="itemsNotAuth"></app-navbar>
