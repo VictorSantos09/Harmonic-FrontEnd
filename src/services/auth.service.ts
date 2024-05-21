@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { API_URL } from './API_URL';
+import { AdminService } from './admin.service';
 import { AuthEventService } from './auth-event.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  @Output() onAuthChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onAuthChanged: EventEmitter<AuthState> =
+    new EventEmitter<AuthState>();
 
   get isAuthenticated(): Observable<boolean> {
     return this._http.get<boolean>(`${API_URL.URL}auth`).pipe(
@@ -19,7 +21,8 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    private _authEventService: AuthEventService
+    private _authEventService: AuthEventService,
+    private _adminService: AdminService
   ) {}
 
   public register(dto: RegisterDTO) {
@@ -36,19 +39,58 @@ export class AuthService {
       })
       .subscribe({
         next: () => {
-          this._authEventService.emitIsAuthenticated(true);
-          this.onAuthChanged.emit(true);
+          const sub = this._adminService.isAdmin().subscribe({
+            next: (isAdmin) => {
+              this._authEventService.emitIsAuthenticated({
+                isAdmin: isAdmin,
+                isAuthenticated: true,
+              });
+
+              this.onAuthChanged.emit({
+                isAuthenticated: true,
+                isAdmin: isAdmin,
+              });
+
+              sub.unsubscribe();
+            },
+          });
         },
         error: () => {
-          this._authEventService.emitIsAuthenticated(false);
-          this.onAuthChanged.emit(false);
+          this._authEventService.emitIsAuthenticated({
+            isAdmin: false,
+            isAuthenticated: false,
+          });
+          this.onAuthChanged.emit({
+            isAdmin: false,
+            isAuthenticated: false,
+          });
         },
       });
   }
 
   public logout() {
-    this._authEventService.emitIsAuthenticated(false);
-    this.onAuthChanged.emit(false);
+    const sub = this._http
+      .post(
+        `${API_URL.URL}Auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .subscribe({
+        next: () => {
+          this._authEventService.emitIsAuthenticated({
+            isAdmin: false,
+            isAuthenticated: false,
+          });
+          this.onAuthChanged.emit({
+            isAdmin: false,
+            isAuthenticated: false,
+          });
+
+          sub.unsubscribe();
+        },
+      });
   }
 }
 
@@ -63,4 +105,9 @@ export class LoginDTO {
 export class RegisterDTO {
   email!: string;
   password!: string;
+}
+
+export class AuthState {
+  isAuthenticated!: boolean;
+  isAdmin!: boolean;
 }
