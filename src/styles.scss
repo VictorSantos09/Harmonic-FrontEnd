@@ -25,3 +25,6 @@ app-page-profile {
   display: flex;
   justify-content: center;
 }
+li.p-carousel-indicator.p-highlight > button {
+  background-color: var(--purple-400);
+}
