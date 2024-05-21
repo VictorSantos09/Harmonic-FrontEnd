@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { FormOptions, MessengerService, RadioModel } from '../../src';
+import { FormOptions, MessengerService } from '../../src';
 import {
   TableColumn,
   TableComponent,
@@ -281,20 +281,22 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onDeleteButtonClick(event: RadioModel): void {
-    if (event.id === undefined) {
+  onDeleteButtonClick(event: ConteudoDtoConsulta[]): void {
+    if (!event) {
       this._messengerService.showError('Registro não encontrado');
       return;
     }
 
-    this._radioService.delete(event.id).subscribe({
+    const ids = event.map((e) => e.id);
+
+    this._radioService.deleteRange(ids).subscribe({
       next: () => {
-        this._messengerService.showSuccess('Registro deletado com sucesso');
+        this._messengerService.showSuccess('Registros deletados com sucesso');
         this._buscarDados();
       },
       error: (error) => {
         this._messengerService.showError(
-          'Erro ao deletar registro',
+          'Erro ao deletar registros',
           error,
           true
         );

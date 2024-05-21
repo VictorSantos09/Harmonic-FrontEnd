@@ -1,9 +1,10 @@
-import { FeedbackModel } from '../models/FeedbackModel';
-import { PaisModel } from '../models/PaisModel';
-import { TipoConteudoModel } from '../models/TipoConteudoModel';
+import { ImageModel } from '../app';
+import { FeedbackModel } from './FeedbackModel';
+import { PaisModel } from './PaisModel';
+import { TipoConteudoModel } from './TipoConteudoModel';
 
-export class RadioModel {
-  public image!: string;
+export class ConteudoModel {
+  public image!: ImageModel;
   public titulo!: string;
   public dataCadastro!: Date;
   public descricao!: string;

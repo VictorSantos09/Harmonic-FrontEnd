@@ -2,7 +2,7 @@
 
 <h3 class="ml-7">Rádios mais ouvidas</h3>
 <p-carousel
-  [value]="avatars"
+  [value]="topRadios"
   [numVisible]="3"
   [numScroll]="3"
   [circular]="true"
@@ -14,15 +14,15 @@
         <div class="relative mx-auto">
           <div [ngClass]="'flex justify-content-center'">
             <div [ngClass]="'flex align-items-center flex-column'">
-              <a [routerLink]="informationRoute">
+              <a (click)="onAvatarClick(avatar.id)">
                 <p-avatar
-                  [image]="avatar.url"
+                  [image]="avatar.imagem"
                   [size]="'xlarge'"
                   [shape]="'circle'"
                   [className]="'p-2'"
                 ></p-avatar>
               </a>
-              <p class="mb-0">{{ carrouselOptions.title }}</p>
+              <p>{{ avatar.titulo }}</p>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
 
 <h3 class="ml-7">Podcasts mais ouvidos</h3>
 <p-carousel
-  [value]="avatars"
+  [value]="topPodcasts"
   [numVisible]="3"
   [numScroll]="3"
   [circular]="true"
@@ -45,15 +45,19 @@
         <div class="relative mx-auto">
           <div [ngClass]="'flex justify-content-center'">
             <div [ngClass]="'flex align-items-center flex-column'">
-              <a [routerLink]="informationRoute">
+              <a (click)="onAvatarClick(avatar.id)">
                 <p-avatar
-                  [image]="avatar.url"
+                  [image]="avatar.imagem"
                   [size]="'xlarge'"
                   [shape]="'circle'"
                   [className]="'p-2'"
                 ></p-avatar>
               </a>
+              <<<<<<< HEAD
               <p class="mb-0">{{ carrouselOptions.title }}</p>
+              =======
+              <p>{{ avatar.titulo }}</p>
+              >>>>>>> main
             </div>
           </div>
         </div>

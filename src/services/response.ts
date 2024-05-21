@@ -1,21 +1,18 @@
-export class ResponseData<TType> {
-  isSuccess: boolean;
-  isFailure: boolean;
-  data: TType[];
-  error: Error;
-
-  constructor(
-    isSuccess: boolean,
-    isFailure: boolean,
-    data: TType[],
-    error: Error
-  ) {
-    this.isSuccess = isSuccess;
-    this.isFailure = isFailure;
-    this.data = data;
-    this.error = error;
-  }
+export class Response {
+  isSuccess!: boolean;
+  isFailure!: boolean;
+  error!: Error;
 }
+
+export class ResponseData<TType> extends Response {
+  data!: TType[];
+}
+
+export class ResponseDataSingle<TType> extends Response {
+  data!: TType;
+}
+
+export class ResponseDataEmpty extends Response {}
 
 export class Error {
   code: string;
