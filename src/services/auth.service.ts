@@ -25,6 +25,12 @@ export class AuthService {
     private _adminService: AdminService
   ) {}
 
+  public register(dto: RegisterDTO) {
+    return this._http.post<any>(`${API_URL.URL}register`, dto, {
+      withCredentials: true,
+    });
+  }
+
   public login(dto: LoginDTO) {
     return this._http
       .post<any>(`${API_URL.URL}login`, dto, {
@@ -94,6 +100,11 @@ export class LoginDTO {
   twoFactorCode?: string;
   twoFactorRecoveryCode?: string;
   useSessionCookie?: boolean;
+}
+
+export class RegisterDTO {
+  email!: string;
+  password!: string;
 }
 
 export class AuthState {
