@@ -17,8 +17,13 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { take } from 'rxjs';
-import { AuthEventService, AuthService, MessengerService } from '../../src';
+import { ToastModule } from 'primeng/toast';
+import {
+  AuthEventService,
+  AuthService,
+  MessengerService,
+  ROUTES_CNT,
+} from '../../src';
 
 @Component({
   selector: 'app-page-register',
@@ -38,6 +43,7 @@ import { AuthEventService, AuthService, MessengerService } from '../../src';
     InputGroupAddonModule,
     InputTextModule,
     CardModule,
+    ToastModule,
   ],
   providers: [AuthService, Router, MessengerService, MessageService],
 })
@@ -73,20 +79,24 @@ export class PageRegisterComponent {
   }
 
   onSubmit() {
-    this._authService.register({
-      email: this.registerForm.value.email!,
-      password: this.registerForm.value.password!,
-    });
-
-    this._authEventService
-      .getEventIsAuthenticated()
-      .pipe(take(1))
-      .subscribe((data) => {
-        if (data) this._router.navigate(['/']);
-        else
+    this._authService
+      .register({
+        email: this.registerForm.value.email!,
+        password: this.registerForm.value.password!,
+      })
+      .subscribe({
+        next: () => {
+          this._messengerService.showSuccess('Conta criada com sucesso');
+          setTimeout(() => {
+            this._router.navigate([ROUTES_CNT.LOGIN]);
+          }, 1500);
+        },
+        error: (err) => {
           this._messengerService.showError(
-            'usuário ou senha invalidos. Tente novamente.'
+            'Um erro ocorreu ao criar sua conta',
+            err
           );
+        },
       });
   }
 }
