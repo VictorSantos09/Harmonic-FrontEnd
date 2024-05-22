@@ -25,6 +25,7 @@ import { CardComponent } from '../../src/app/components/card/card.component';
 export class PageCardComponent implements OnInit {
   conteudo: ConteudoDetalhesDto = new ConteudoDetalhesDto();
   conteudoPlataformasURLs: string[] = [];
+  id!: number;
 
   constructor(
     private _route: ActivatedRoute,
@@ -35,12 +36,22 @@ export class PageCardComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
+      console.log(this.conteudo.id);
     });
     this._buscarConteudo(this.conteudo.id);
+    console.log('init', this.conteudo.id);
   }
 
   onLike() {
-    this._messengerService.showSuccess('Curtiu!');
+    console.log('call', this.conteudo.id);
+    this._radioService.like(12).subscribe({
+      next: (value) => {
+        this._messengerService.showSuccess('Curtiu!');
+      },
+      error: (err) => {
+        this._messengerService.showError('Erro ao curtir', err);
+      },
+    });
   }
 
   onDislike() {

@@ -95,4 +95,15 @@ export class RadioService {
       }
     );
   }
+
+  like(idConteudo: number): Observable<Response> {
+    return this._http.post<Response>(
+      `${API_URL.URL}ConteudoReacao/like`,
+      API_URL,
+      {
+        withCredentials: true,
+        params: { idConteudo: idConteudo.toString() },
+      }
+    );
+  }
 }
