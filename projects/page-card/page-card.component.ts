@@ -36,26 +36,55 @@ export class PageCardComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
-      console.log(this.conteudo.id);
+      this._buscarConteudo(this.conteudo.id);
+      this.getUsuarioReacao();
     });
-    this._buscarConteudo(this.conteudo.id);
-    console.log('init', this.conteudo.id);
   }
 
   onLike() {
-    console.log('call', this.conteudo.id);
-    this._radioService.like(12).subscribe({
-      next: (value) => {
+    this._radioService
+      .like(this.conteudo.id)
+      .then((x) => {
         this._messengerService.showSuccess('Curtiu!');
-      },
-      error: (err) => {
+      })
+      .catch((err) => {
         this._messengerService.showError('Erro ao curtir', err);
-      },
-    });
+      });
   }
 
   onDislike() {
-    this._messengerService.showSuccess('Descurtiu!');
+    this._radioService
+      .dislike(this.conteudo.id)
+      .then((x) => {
+        this._messengerService.showSuccess('Descurtiu!');
+      })
+      .catch((err) => {
+        this._messengerService.showError('Erro ao descurtir', err);
+      });
+  }
+
+  getUsuarioReacao() {
+    const sub = this._radioService
+      .getUsuarioReacao(this.conteudo.id)
+      .subscribe({
+        next: (value) => {
+          if (value.data) {
+            this._messengerService.showSuccess('Você curtiu esse conteúdo');
+          } else {
+            this._messengerService.showSuccess('Você não curtiu esse conteúdo');
+          }
+
+          sub.unsubscribe();
+        },
+        error: (err) => {
+          this._messengerService.showError(
+            'Erro ao buscar reação do usuário',
+            err
+          );
+
+          sub.unsubscribe();
+        },
+      });
   }
 
   extrairNomePlataforma(url: string): string {
