@@ -35,15 +35,36 @@
     </div>
 
     <div class="col">
+      <span class="fi fi-gr"></span> <span class="fi fi-gr fis"></span>
       <p-card header="Disponível Em">
+        <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :(</p>
         <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
           <a
             class="p-2 flex gap-2 align-items-center"
             [href]="cp"
             target="_blank"
           >
-            <i class="pi pi-headphones" style="font-size: 1.5rem"></i
-            >{{ extrairNomePlataforma(cp) }}
+            <div [ngSwitch]="extrairNomePlataforma(cp)">
+              <img
+                *ngSwitchCase="'Youtube'"
+                src="..//src/assets/Youtube.png"
+                height="30px"
+              />
+              <img
+                *ngSwitchCase="'Deezer'"
+                src="..//src/assets/Deezer.png"
+                height="30px"
+              />
+              <img
+                *ngSwitchCase="'Spotify'"
+                src="..//src/assets/Spotify.png"
+                height="30px"
+              />
+            </div>
+            <script>
+              document.getElementById("iconePlataforma").inner;
+            </script>
+            {{ extrairNomePlataforma(cp) }}
           </a>
         </div>
       </p-card>
