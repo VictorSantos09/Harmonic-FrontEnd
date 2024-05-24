@@ -28,7 +28,8 @@ export class CardComponent {
   @Input() title!: string | undefined;
   @Input() subTitle?: string | undefined;
   @Input() description!: string | undefined;
-  @Input() country!: string | undefined;
+  @Input() icon!: string | undefined;
+  @Input() pais!:string | undefined;
 
   @Input() primaryButtonLabel!: string | undefined;
   @Input() secondaryButtonLabel?: string | undefined;
