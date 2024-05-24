@@ -9,7 +9,8 @@
         [subTitle]="conteudo.tipo"
         [description]="conteudo.descricao"
         [image]="conteudo.imagem"
-        [country]="conteudo.pais"
+        [icon]="conteudo.icon"
+        [pais]="conteudo.pais"
         primaryButtonLabel="Like"
         primaryButtonIcon="pi pi-thumbs-up-fill"
         secondaryButtonLabel="Deslike"
@@ -35,7 +36,6 @@
     </div>
 
     <div class="col">
-      <span class="fi fi-gr"></span> <span class="fi fi-gr fis"></span>
       <p-card header="Disponível Em">
         <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :(</p>
         <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
