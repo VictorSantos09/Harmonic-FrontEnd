@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -25,6 +26,7 @@ import { CardComponent } from '../../src/app/components/card/card.component';
 export class PageCardComponent implements OnInit {
   conteudo: ConteudoDetalhesDto = new ConteudoDetalhesDto();
   conteudoPlataformasURLs: string[] = [];
+  conteudoNaoTemPlataforma : boolean = false;
 
   constructor(
     private _route: ActivatedRoute,
@@ -66,7 +68,7 @@ export class PageCardComponent implements OnInit {
         this.conteudo = value.data;
         sub.unsubscribe();
       },
-      error: (err) => {
+      error: (err : HttpErrorResponse) => {
         this._messengerService.showError('Erro ao buscar conteúdo', err);
         sub.unsubscribe();
       },
@@ -77,11 +79,12 @@ export class PageCardComponent implements OnInit {
         this.conteudoPlataformasURLs = value.data;
         sub2.unsubscribe();
       },
-      error: (err) => {
-        this._messengerService.showError(
-          'Erro ao buscar as plataformas do conteúdo',
-          err
-        );
+      error: (err : HttpErrorResponse) => {
+        if(err.status === 404){
+          this.conteudoNaoTemPlataforma = true;
+        }else{
+          this._messengerService.showError(err.error.error.message);
+        }
         sub2.unsubscribe();
       },
     });
