@@ -8,4 +8,5 @@ export class ConteudoDetalhesDto {
   total_curtidas!: number;
   total_gosteis!: number;
   imagem!: string;
+  liked!:boolean;
 }

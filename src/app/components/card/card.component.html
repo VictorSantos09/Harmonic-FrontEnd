@@ -4,6 +4,10 @@
       <img [src]="image" />
     </ng-template>
     <ng-template pTemplate="main">
+      <div class="flex align-items-center py-2 gap-2" *ngIf="liked">
+        <i class="pi pi-verified color-primary"></i>
+        <h3>Você curtiu esse conteúdo</h3>
+      </div>
       <div class="pais">
         <div class="flex" style="font-size: 1rem">
           <i [className]="icon"></i>
@@ -21,6 +25,7 @@
           [icon]="primaryButtonIcon"
           severity="secondary"
           class="w-full"
+          [disabled]="liked"
           styleClass="w-full"
           (onClick)="onPrimaryButtonClicked()"
         />
@@ -29,6 +34,7 @@
           [icon]="secondaryButtonIcon"
           class="w-full"
           styleClass="w-full"
+          [disabled]="!liked"
           (onClick)="onSecondaryButtonClicked()"
         />
       </div>

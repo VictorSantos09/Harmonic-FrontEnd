@@ -13,10 +13,14 @@ export class AuthService {
     new EventEmitter<AuthState>();
 
   get isAuthenticated(): Observable<boolean> {
-    return this._http.get<boolean>(`${API_URL.URL}auth`).pipe(
-      map(() => true),
-      catchError(() => of(false))
-    );
+    return this._http
+      .get<boolean>(`${API_URL.URL}auth`, {
+        withCredentials: true,
+      })
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
   }
 
   constructor(

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { aspectsLikeFilled } from '@ng-icons/ux-aspects';
@@ -18,6 +19,7 @@ import { TagModule } from 'primeng/tag';
     SplitterModule,
     PanelModule,
     TagModule,
+    CommonModule,
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
@@ -29,7 +31,8 @@ export class CardComponent {
   @Input() subTitle?: string | undefined;
   @Input() description!: string | undefined;
   @Input() icon!: string | undefined;
-  @Input() pais!:string | undefined;
+  @Input() pais!: string | undefined;
+  @Input() liked!: boolean;
 
   @Input() primaryButtonLabel!: string | undefined;
   @Input() secondaryButtonLabel?: string | undefined;
