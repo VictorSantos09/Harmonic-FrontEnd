@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { SplitterModule } from 'primeng/splitter';
@@ -32,6 +32,7 @@ import { CardComponent } from '../../src/app/components/card/card.component';
 export class PageCardComponent implements OnInit {
   conteudo: ConteudoDetalhesDto = new ConteudoDetalhesDto();
   conteudoPlataformasURLs: string[] = [];
+  id!: number;
   conteudoNaoTemPlataforma: boolean = false;
   conteudoLiked!: boolean;
 
@@ -39,6 +40,7 @@ export class PageCardComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
+    private _router: Router,
     private _messengerService: MessengerService,
     private _radioService: RadioService,
     private _authService: AuthService
@@ -47,6 +49,7 @@ export class PageCardComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
+      this._buscarConteudo(this.conteudo.id);
     });
 
     this._buscarConteudo(this.conteudo.id);
@@ -78,11 +81,25 @@ export class PageCardComponent implements OnInit {
   }
 
   onLike() {
-    this._messengerService.showSuccess('Curtiu!');
+    this._radioService
+      .like(this.conteudo.id)
+      .then((x) => {
+        this.getLiked();
+      })
+      .catch((err) => {
+        this._messengerService.showError('Erro ao curtir', err);
+      });
   }
 
   onDislike() {
-    this._messengerService.showSuccess('Descurtiu!');
+    this._radioService
+      .dislike(this.conteudo.id)
+      .then((x) => {
+        this.getLiked();
+      })
+      .catch((err) => {
+        this._messengerService.showError('Erro ao descurtir', err);
+      });
   }
 
   extrairNomePlataforma(url: string): string {

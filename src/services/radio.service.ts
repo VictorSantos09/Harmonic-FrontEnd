@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { ConteudoDto } from '../../projects/page-crud-radio/dto';
 import { ConteudoDetalhesDto, ConteudoModel, ConteudoTopDto } from '../app';
 import { API_URL } from './API_URL';
@@ -91,6 +91,40 @@ export class RadioService {
       `${API_URL.URL}Conteudo/conteudo-plataformas-url`,
       {
         params: { id: id.toString() },
+        withCredentials: true,
+      }
+    );
+  }
+
+  like(idConteudo: number): Promise<Response> {
+    return lastValueFrom(
+      this._http.post<Response>(`${API_URL.URL}ConteudoReacao/like`, API_URL, {
+        withCredentials: true,
+        params: { idConteudo: idConteudo.toString() },
+      })
+    );
+  }
+
+  dislike(idConteudo: number): Promise<Response> {
+    return lastValueFrom(
+      this._http.post<Response>(
+        `${API_URL.URL}ConteudoReacao/dislike`,
+        API_URL,
+        {
+          withCredentials: true,
+          params: { idConteudo: idConteudo.toString() },
+        }
+      )
+    );
+  }
+
+  getUsuarioReacao(
+    idConteudo: number
+  ): Observable<ResponseDataSingle<boolean>> {
+    return this._http.get<ResponseDataSingle<boolean>>(
+      `${API_URL.URL}ConteudoReacao/liked`,
+      {
+        params: { idConteudo: idConteudo.toString() },
         withCredentials: true,
       }
     );
