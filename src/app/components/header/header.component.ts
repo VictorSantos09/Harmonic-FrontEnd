@@ -2,8 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { lastValueFrom } from 'rxjs';
 import { ROUTES_CNT } from '../../../consts';
-import { AuthEventService, AuthService, AuthState } from '../../../services';
+import {
+  AdminService,
+  AuthEventService,
+  AuthService,
+  AuthState,
+} from '../../../services';
 import { NavbarComponent } from '../navbar';
 
 @Component({
@@ -23,17 +29,25 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private eventService: AuthEventService
+    private eventService: AuthEventService,
+    private _adminService: AdminService
   ) {}
 
   ngOnInit(): void {
-    // this._authService.onAuthChanged.subscribe((authState) => {
-    //   this.authState = authState;
+    lastValueFrom(this._authService.isAuthenticated).then((value) => {
+      lastValueFrom(this._adminService.isAdmin())
+        .then((isAdmin) => {
+          this.authState = {
+            isAdmin: isAdmin,
+            isAuthenticated: value,
+          };
 
-    //   this._setItemsWithState(authState);
-    // });
-
-    this._setItemsDefaultOptions();
+          this._setItemsWithState(this.authState);
+        })
+        .catch(() => {
+          this._setItemsDefaultOptions();
+        });
+    });
 
     this.eventService.getEventIsAuthenticated().subscribe((authState) => {
       this.authState = authState;
