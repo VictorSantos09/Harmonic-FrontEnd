@@ -40,12 +40,11 @@
       <p-card header="Disponível Em">
         <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :(</p>
         <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
-          <a
-            class="p-2 flex gap-2 align-items-center"
-            [href]="cp"
-            target="_blank"
-          >
-            <div [ngSwitch]="extrairNomePlataforma(cp)">
+          <a [href]="cp" target="_blank">
+            <div
+              class="flex align-items-center gap-2"
+              [ngSwitch]="extrairNomePlataforma(cp)"
+            >
               <img
                 *ngSwitchCase="'Youtube'"
                 src="..//src/assets/Youtube.png"
@@ -61,11 +60,10 @@
                 src="..//src/assets/Spotify.png"
                 height="30px"
               />
+              <p>
+                {{ extrairNomePlataforma(cp) }}
+              </p>
             </div>
-            <script>
-              document.getElementById("iconePlataforma").inner;
-            </script>
-            {{ extrairNomePlataforma(cp) }}
           </a>
         </div>
       </p-card>
