@@ -95,4 +95,15 @@ export class RadioService {
       }
     );
   }
+
+  getConteudoLiked(id:number) :Observable<ResponseDataSingle<boolean>> {
+    return this._http.get<ResponseDataSingle<boolean>>(
+      `${API_URL.URL}conteudoReacao/liked`,
+      {
+        params: { idConteudo: id.toString() },
+      }
+    );
+  } 
 }
+
+

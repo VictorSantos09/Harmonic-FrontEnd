@@ -27,18 +27,42 @@ export class PageCardComponent implements OnInit {
   conteudo: ConteudoDetalhesDto = new ConteudoDetalhesDto();
   conteudoPlataformasURLs: string[] = [];
   conteudoNaoTemPlataforma : boolean = false;
-
+  conteudoLiked! : boolean ;
+  
   constructor(
     private _route: ActivatedRoute,
     private _messengerService: MessengerService,
     private _radioService: RadioService
   ) {}
-
+  
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
     });
     this._buscarConteudo(this.conteudo.id);
+
+    this.getLiked();
+
+    
+  }
+  
+  getLiked(){
+    const conteudoLiked = this._radioService.getConteudoLiked(this.conteudo.id).subscribe({
+      next: (value) => {
+        console.log('penis', value);
+        
+        this.conteudoLiked = value.data;
+        conteudoLiked.unsubscribe();
+      },
+      error: (err : HttpErrorResponse) => {
+        if(err.status === 404){
+          this.conteudoNaoTemPlataforma = true;
+        }else{
+          this._messengerService.showError(err.error.error.message);
+        }
+        conteudoLiked.unsubscribe();
+      },
+    });
   }
 
   onLike() {
@@ -47,6 +71,7 @@ export class PageCardComponent implements OnInit {
 
   onDislike() {
     this._messengerService.showSuccess('Descurtiu!');
+    
   }
 
   extrairNomePlataforma(url: string): string {

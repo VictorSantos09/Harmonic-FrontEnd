@@ -15,12 +15,19 @@
       </p>
     </ng-template>
     <ng-template pTemplate="footer">
+
+        <h3 *ngIf="liked">Conteudo verificado :)</h3>
+        <h3 *ngIf="!liked">Conteudo verificado :(</h3>
+      
+        
+
       <div class="flex gap-3 mt-1">
         <p-button
           [label]="primaryButtonLabel"
           [icon]="primaryButtonIcon"
           severity="secondary"
           class="w-full"
+          [disabled]="liked"
           styleClass="w-full"
           (onClick)="onPrimaryButtonClicked()"
         />
@@ -29,6 +36,7 @@
           [icon]="secondaryButtonIcon"
           class="w-full"
           styleClass="w-full"
+          [disabled]="liked"
           (onClick)="onSecondaryButtonClicked()"
         />
       </div>
