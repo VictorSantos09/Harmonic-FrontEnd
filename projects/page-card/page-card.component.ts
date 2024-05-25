@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { SplitterModule } from 'primeng/splitter';
@@ -40,6 +40,7 @@ export class PageCardComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
+    private _router: Router,
     private _messengerService: MessengerService,
     private _radioService: RadioService,
     private _authService: AuthService
@@ -49,7 +50,6 @@ export class PageCardComponent implements OnInit {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
       this._buscarConteudo(this.conteudo.id);
-      this.getUsuarioReacao();
     });
 
     this._buscarConteudo(this.conteudo.id);
@@ -84,7 +84,7 @@ export class PageCardComponent implements OnInit {
     this._radioService
       .like(this.conteudo.id)
       .then((x) => {
-        this._messengerService.showSuccess('Curtiu!');
+        this.getLiked();
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao curtir', err);
@@ -95,34 +95,10 @@ export class PageCardComponent implements OnInit {
     this._radioService
       .dislike(this.conteudo.id)
       .then((x) => {
-        this._messengerService.showSuccess('Descurtiu!');
+        this.getLiked();
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao descurtir', err);
-      });
-  }
-
-  getUsuarioReacao() {
-    const sub = this._radioService
-      .getUsuarioReacao(this.conteudo.id)
-      .subscribe({
-        next: (value) => {
-          if (value.data) {
-            this._messengerService.showSuccess('Você curtiu esse conteúdo');
-          } else {
-            this._messengerService.showSuccess('Você não curtiu esse conteúdo');
-          }
-
-          sub.unsubscribe();
-        },
-        error: (err) => {
-          this._messengerService.showError(
-            'Erro ao buscar reação do usuário',
-            err
-          );
-
-          sub.unsubscribe();
-        },
       });
   }
 

@@ -118,20 +118,8 @@ export class HeaderComponent implements OnInit {
           },
           {
             visible: authState.isAuthenticated,
-            label: 'Meu Perfil',
-            icon: 'pi pi-fw pi-user-edit',
-            routerLink: [ROUTES_CNT.MEU_PERFIL],
-          },
-          {
-            visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'Consulta',
-              },
-            ],
           },
         ],
       },
