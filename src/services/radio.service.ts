@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { ConteudoDto } from '../../projects/page-crud-radio/dto';
-import { ConteudoDetalhesDto, ConteudoModel, ConteudoTopDto } from '../app';
+import {
+  ConteudoDetalhesDto,
+  ConteudoModel,
+  ConteudoPlataformaDetalhesDto,
+  ConteudoTopDto,
+} from '../app';
 import { API_URL } from './API_URL';
 import { Response, ResponseData, ResponseDataSingle } from './response';
 
@@ -81,6 +86,18 @@ export class RadioService {
       `${API_URL.URL}Conteudo/detalhes`,
       {
         params: { id: id.toString() },
+        withCredentials: true,
+      }
+    );
+  }
+
+  getDetalhesConteudoPlataformas(
+    id: number
+  ): Observable<ResponseData<ConteudoPlataformaDetalhesDto>> {
+    return this._http.get<ResponseData<ConteudoPlataformaDetalhesDto>>(
+      `${API_URL.URL}ConteudoPlataforma/details`,
+      {
+        params: { id: id },
         withCredentials: true,
       }
     );

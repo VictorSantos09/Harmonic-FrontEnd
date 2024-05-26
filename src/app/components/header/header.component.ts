@@ -81,14 +81,6 @@ export class HeaderComponent implements OnInit {
             label: 'Tipos Conteúdos',
             icon: 'pi pi-fw pi-pen-to-square',
           },
-          {
-            label: 'Plataformas',
-            icon: 'pi pi-fw pi-pen-to-square',
-          },
-          {
-            label: 'Países',
-            icon: 'pi pi-fw pi-pen-to-square',
-          },
         ],
       },
       {

@@ -9,6 +9,7 @@ export class TableColumn {
   isImage?: boolean = false;
   image?: ImageModel | undefined;
   isDate?: boolean = false;
+  isLink?: boolean = false;
   fieldConfig?: ColumnField;
 
   constructor(

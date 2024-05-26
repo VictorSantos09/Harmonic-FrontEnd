@@ -1,4 +1,3 @@
 export interface DataModel {
-  name: string;
-  value: any;
+  id: number | string;
 }
