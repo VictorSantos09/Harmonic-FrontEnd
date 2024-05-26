@@ -80,6 +80,9 @@ export class HeaderComponent implements OnInit {
           {
             label: 'Tipos Conteúdos',
             icon: 'pi pi-fw pi-pen-to-square',
+            command: () => {
+              this._router.navigate([ROUTES_CNT.TIPO_CONTEUDO]);
+            },
           },
         ],
       },

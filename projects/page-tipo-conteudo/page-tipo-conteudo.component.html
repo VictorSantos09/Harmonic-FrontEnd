@@ -1,0 +1,14 @@
+<p-toast />
+
+<app-table
+  [columns]="columns"
+  (onEdit)="onEdit($event)"
+  (onSave)="onSave($event)"
+  (onDeleteSelectedItems)="onDeleteSelectedItems($event)"
+  [items]="items"
+  [options]="options"
+  [formOptions]="formOptions"
+  [(formFields)]="formFields"
+  (onEditCanceled)="onEditCanceled($event)"
+>
+</app-table>
