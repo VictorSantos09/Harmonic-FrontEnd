@@ -3,5 +3,7 @@ export * from './admin.service';
 export * from './auth-event.service';
 export * from './auth.service';
 export * from './local-storage.service';
+export * from './pais.service';
+export * from './plataforma.service';
 export * from './radio.service';
-export * from './tipoConteudo.service';
+export * from './tipo-conteudo.service';

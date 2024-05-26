@@ -1,14 +1,16 @@
-<app-table
-  [options]="tableOptions"
-  [columns]="columns"
-  [items]="data"
-  [formOptions]="formOptions"
-  (onDeleteSelectedItems)="onDeleteButtonClick($event)"
-  (onSave)="onSaveButtonClick($event)"
-  (onEdit)="onEditButtonClick($event)"
-  (onEditCanceled)="onEditCanceled($event)"
-  [(formFields)]="formOptions.formFields"
-></app-table>
+<div *ngIf="formOptions">
+  <app-table
+    [options]="tableOptions"
+    [columns]="columns"
+    [items]="data"
+    [formOptions]="formOptions"
+    (onDeleteSelectedItems)="onDeleteButtonClick($event)"
+    (onSave)="onSaveButtonClick($event)"
+    (onEdit)="onEditButtonClick($event)"
+    (onEditCanceled)="onEditCanceled($event)"
+    [(formFields)]="formOptions.formFields"
+  ></app-table>
+</div>
 
 <!--Necessário para aparecer os toasts-->
 <div class="card flex justify-content-center">

@@ -14,6 +14,7 @@ export class FormField {
   value?: string | number | boolean | null | undefined | any;
   options?: any[];
   optionLabel?: string;
+  optionValue?: string | undefined;
 }
 
 export type FormFieldType =
