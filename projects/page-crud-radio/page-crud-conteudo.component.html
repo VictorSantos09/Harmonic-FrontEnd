@@ -1,15 +1,20 @@
 <div *ngIf="formOptions">
-  <app-table
+  <app-table-expandable
     [options]="tableOptions"
     [columns]="columns"
     [items]="data"
+    [optionsExpandable]="tableOptions"
+    [itemsExpandable]="dataExpandable"
+    [itemsExpandable]="dataExpandable"
+    [columnsExpandable]="columsExpandable"
     [formOptions]="formOptions"
     (onDeleteSelectedItems)="onDeleteButtonClick($event)"
     (onSave)="onSaveButtonClick($event)"
     (onEdit)="onEditButtonClick($event)"
     (onEditCanceled)="onEditCanceled($event)"
+    (onRowExpand)="onRowExpand($event)"
     [(formFields)]="formOptions.formFields"
-  ></app-table>
+  ></app-table-expandable>
 </div>
 
 <!--Necessário para aparecer os toasts-->

@@ -8,13 +8,10 @@ import {
   MessengerService,
   PaisModel,
   PlataformaModel,
+  TableExpandableComponent,
   TipoConteudoModel,
 } from '../../src';
-import {
-  TableColumn,
-  TableComponent,
-  TableOptions,
-} from '../../src/app/components/table';
+import { TableColumn, TableOptions } from '../../src/app/components/table';
 import {
   PaisService,
   PlataformaService,
@@ -26,7 +23,7 @@ import { ConteudoDto, ConteudoDtoConsulta } from './dto';
 @Component({
   selector: 'app-pageCrudRadio',
   standalone: true,
-  imports: [TableComponent, ToastModule, CommonModule],
+  imports: [TableExpandableComponent, ToastModule, CommonModule],
   templateUrl: './page-crud-conteudo.component.html',
   styleUrl: './page-crud-conteudo.component.scss',
   providers: [
@@ -40,6 +37,7 @@ import { ConteudoDto, ConteudoDtoConsulta } from './dto';
 })
 export class PageConteudoComponent implements OnInit {
   data!: ConteudoDtoConsulta[];
+  dataExpandable: any[] = [];
 
   tableOptions: TableOptions = {
     title: 'Conteúdos',
@@ -53,6 +51,7 @@ export class PageConteudoComponent implements OnInit {
   formOptions!: FormOptions;
 
   columns!: TableColumn[];
+  columsExpandable!: TableColumn[];
 
   constructor(
     private _radioService: RadioService,
@@ -252,6 +251,31 @@ export class PageConteudoComponent implements OnInit {
         },
       },
     ];
+
+    this.columsExpandable = [
+      {
+        name: 'plataforma',
+        title: 'Plataforma',
+        sortableColumn: true,
+      },
+      {
+        name: 'pais',
+        title: 'País',
+        sortableColumn: true,
+      },
+      {
+        name: 'link',
+        title: 'Link',
+        sortableColumn: true,
+        isLink: true,
+      },
+      {
+        name: 'datacadastro',
+        title: 'Data Cadastro',
+        sortableColumn: true,
+        isDate: true,
+      },
+    ];
   }
 
   private async _buscarDados(): Promise<void> {
@@ -395,5 +419,20 @@ export class PageConteudoComponent implements OnInit {
 
   onEditCanceled(event: any) {
     this._messengerService.showInfo('Edição cancelada');
+  }
+
+  onRowExpand(event: any) {
+    lastValueFrom(
+      this._radioService.getDetalhesConteudoPlataformas(event.data.id)
+    )
+      .then((data) => {
+        this.dataExpandable = data.data;
+      })
+      .catch((error) => {
+        this._messengerService.showError(
+          'Erro ao buscar detalhes do conteúdo',
+          error
+        );
+      });
   }
 }

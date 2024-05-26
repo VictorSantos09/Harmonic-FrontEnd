@@ -24,7 +24,7 @@ import { FieldHelper } from '../form/fields/field.helper';
 import { FormOptions } from '../form/options';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-table-expandable',
   templateUrl: 'table-expandable.component.html',
   standalone: true,
   imports: [
@@ -62,14 +62,18 @@ export class TableExpandableComponent<T> implements OnInit {
   @Input() options!: TableOptions;
   @Input() columns!: TableColumn[];
   @Input() formOptions?: FormOptions;
+  @Input() optionsExpandable!: TableOptions;
+  @Input() columnsExpandable!: TableColumn[];
 
   @Input() items!: any[];
+  @Input() itemsExpandable: any[] = [];
 
   @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDeleteSelectedItems: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEditCanceled: EventEmitter<any> = new EventEmitter<any>();
   @Output() formFieldsChange = new EventEmitter<FormField[]>();
+  @Output() onRowExpand: EventEmitter<any> = new EventEmitter<any>();
 
   item?: any;
   selectedItems!: any[] | null;
@@ -171,5 +175,9 @@ export class TableExpandableComponent<T> implements OnInit {
       item: item,
       index: index,
     });
+  }
+
+  onRowExpandEvent(event: any) {
+    this.onRowExpand.emit(event);
   }
 }

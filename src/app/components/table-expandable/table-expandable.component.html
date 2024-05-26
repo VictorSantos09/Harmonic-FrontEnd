@@ -42,6 +42,7 @@
     [rowsPerPageOptions]="[5, 10, 20]"
     [expandedRowKeys]="expandedRows"
     [(selection)]="selectedItems"
+    (onRowExpand)="onRowExpandEvent($event)"
   >
     <!--Filter-->
     <ng-template pTemplate="caption">
@@ -205,44 +206,55 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="rowexpansion" let-product>
+    <ng-template pTemplate="rowexpansion" let-rowExpansionData>
       <tr>
         <td colspan="7">
           <div class="p-3">
-            <p-table [value]="product.orders" dataKey="id">
+            <p-table
+              [value]="itemsExpandable"
+              [dataKey]="optionsExpandable.dataKey"
+            >
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="id">Id <p-sortIcon field="price" /></th>
-                  <th pSortableColumn="customer">
-                    Customer <p-sortIcon field="customer" />
+                  <th
+                    *ngFor="let c of columnsExpandable"
+                    [pSortableColumn]="c.sortableColumn ? c.name : undefined"
+                    style="min-width: 15rem"
+                  >
+                    {{ c.title }}
+                    <p-sortIcon *ngIf="c.sortableColumn" [field]="c.name" />
                   </th>
-                  <th pSortableColumn="date">
-                    Date <p-sortIcon field="date" />
-                  </th>
-                  <th pSortableColumn="amount">
-                    Amount <p-sortIcon field="amount" />
-                  </th>
-                  <th pSortableColumn="status">
-                    Status <p-sortIcon field="status" />
-                  </th>
-                  <th style="width: 4rem"></th>
                 </tr>
               </ng-template>
-              <ng-template pTemplate="body" let-order>
+              <ng-template pTemplate="body" let-data>
                 <tr>
-                  <td>{{ order.id }}</td>
-                  <td>{{ order.customer }}</td>
-                  <td>{{ order.date }}</td>
-                  <td>{{ order.amount | currency : "USD" }}</td>
-                  <td>
-                    <p-tag [value]="order.status" />
+                  <td *ngFor="let col of columnsExpandable">
+                    {{ data.name }}
+                    <span *ngIf="!col.isImage && !col.isDate && !col.isLink">
+                      {{ data[col.name] || "N/A" }}
+                    </span>
+
+                    <span *ngIf="!col.isImage && col.isDate">
+                      {{ data[col.name] | date : "dd/MM/yyyy" || "N/A" }}
+                    </span>
+
+                    <span *ngIf="col.isLink">
+                      <a target="_blank" [href]="data[col.name]">
+                        <p-button
+                          icon="pi pi-search"
+                          [rounded]="true"
+                          severity="success"
+                          [outlined]="true"
+                          [raised]="true"
+                        />
+                      </a>
+                    </span>
                   </td>
-                  <td><p-button type="button" icon="pi pi-search" /></td>
                 </tr>
               </ng-template>
               <ng-template pTemplate="emptymessage">
                 <tr>
-                  <td colspan="6">There are no order for this product yet.</td>
+                  <td colspan="6">Não há registros</td>
                 </tr>
               </ng-template>
             </p-table>
