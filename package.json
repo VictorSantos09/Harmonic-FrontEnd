@@ -28,6 +28,7 @@
     "@ng-icons/ux-aspects": "^27.3.1",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
+    "flag-icons": "^7.2.2",
     "ngx-cookie-service": "^17.1.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",

@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { ConteudoDto } from '../../projects/page-crud-radio/dto';
-import { ConteudoDetalhesDto, ConteudoModel, ConteudoTopDto } from '../app';
+import {
+  ConteudoDetalhesDto,
+  ConteudoModel,
+  ConteudoPlataformaDetalhesDto,
+  ConteudoTopDto,
+} from '../app';
 import { API_URL } from './API_URL';
 import { Response, ResponseData, ResponseDataSingle } from './response';
 
@@ -86,11 +91,67 @@ export class RadioService {
     );
   }
 
+  getDetalhesConteudoPlataformas(
+    id: number
+  ): Observable<ResponseData<ConteudoPlataformaDetalhesDto>> {
+    return this._http.get<ResponseData<ConteudoPlataformaDetalhesDto>>(
+      `${API_URL.URL}ConteudoPlataforma/details`,
+      {
+        params: { id: id },
+        withCredentials: true,
+      }
+    );
+  }
+
   getConteudoPlataformasURL(id: number): Observable<ResponseData<string>> {
     return this._http.get<ResponseData<string>>(
       `${API_URL.URL}Conteudo/conteudo-plataformas-url`,
       {
         params: { id: id.toString() },
+        withCredentials: true,
+      }
+    );
+  }
+
+  like(idConteudo: number): Promise<Response> {
+    return lastValueFrom(
+      this._http.post<Response>(`${API_URL.URL}ConteudoReacao/like`, API_URL, {
+        withCredentials: true,
+        params: { idConteudo: idConteudo.toString() },
+      })
+    );
+  }
+
+  dislike(idConteudo: number): Promise<Response> {
+    return lastValueFrom(
+      this._http.post<Response>(
+        `${API_URL.URL}ConteudoReacao/dislike`,
+        API_URL,
+        {
+          withCredentials: true,
+          params: { idConteudo: idConteudo.toString() },
+        }
+      )
+    );
+  }
+
+  getUsuarioReacao(
+    idConteudo: number
+  ): Observable<ResponseDataSingle<boolean>> {
+    return this._http.get<ResponseDataSingle<boolean>>(
+      `${API_URL.URL}ConteudoReacao/liked`,
+      {
+        params: { idConteudo: idConteudo.toString() },
+        withCredentials: true,
+      }
+    );
+  }
+
+  getConteudoLiked(id: number): Observable<ResponseDataSingle<boolean>> {
+    return this._http.get<ResponseDataSingle<boolean>>(
+      `${API_URL.URL}conteudoReacao/liked`,
+      {
+        params: { idConteudo: id },
         withCredentials: true,
       }
     );
