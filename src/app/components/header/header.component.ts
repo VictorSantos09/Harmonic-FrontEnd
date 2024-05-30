@@ -112,6 +112,7 @@ export class HeaderComponent implements OnInit {
             visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
+            routerLink: [ROUTES_CNT.MOMENTS],
           },
         ],
       },
