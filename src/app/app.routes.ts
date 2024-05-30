@@ -34,4 +34,10 @@ export const routes: Routes = [
       import('../../projects').then((m) => m.PageCardComponent),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'moments',
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageMomentsComponent),
+    canActivate: [AuthGuard],
+  },
 ];

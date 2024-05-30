@@ -5,4 +5,5 @@ export class ROUTES_CNT {
   static readonly CONTEUDO_INFORMACAO = '/information';
   static readonly HOMEPAGE = '/';
   static readonly LOGIN = '/login';
+  static readonly MOMENTS = '/moments';
 }

@@ -7,3 +7,4 @@ export * from './pais.service';
 export * from './plataforma.service';
 export * from './radio.service';
 export * from './tipo-conteudo.service';
+export * from './conteudoCurtidos.service';
