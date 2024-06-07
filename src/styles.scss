@@ -6,6 +6,18 @@ body {
   padding: 0;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-footer {
+  margin-top: auto;
+}
+
 a {
   text-decoration: none;
 }
@@ -22,10 +34,7 @@ app-page-login-primeng {
   display: flex;
   justify-content: center;
 }
-app-page-profile {
-  display: flex;
-  justify-content: center;
-}
+
 li.p-carousel-indicator.p-highlight > button {
   background-color: var(--purple-400);
 }
