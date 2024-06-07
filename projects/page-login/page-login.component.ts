@@ -78,4 +78,8 @@ export class PageLoginComponent {
           );
       });
   }
+
+  navigateToCadastro() {
+    this._router.navigate([ROUTES_CNT.CADASTRO]);
+  }
 }

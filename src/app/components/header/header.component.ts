@@ -35,8 +35,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     lastValueFrom(this._authService.isAuthenticated).then((value) => {
+      console.log("This is value: " + value)
       lastValueFrom(this._adminService.isAdmin())
         .then((isAdmin) => {
+          console.log("This is isAdmin: " + isAdmin)
           this.authState = {
             isAdmin: isAdmin,
             isAuthenticated: value,
@@ -50,13 +52,14 @@ export class HeaderComponent implements OnInit {
     });
 
     this.eventService.getEventIsAuthenticated().subscribe((authState) => {
+      console.log("This is isAdmin: " + authState.isAdmin + "\nThis is isAuthenticated:" + authState.isAuthenticated)
       this.authState = authState;
 
       this._setItemsWithState(authState);
-    });
-  }
+  });
+}
 
-  private _setItems(authState: AuthState) {
+private _setItems(authState: AuthState) {
     return [
       {
         label: 'Inicio',
@@ -76,10 +79,6 @@ export class HeaderComponent implements OnInit {
             command: () => {
               this._router.navigate([ROUTES_CNT.CONTEUDO]);
             },
-          },
-          {
-            label: 'Tipos Conteúdos',
-            icon: 'pi pi-fw pi-pen-to-square',
           },
         ],
       },
@@ -112,7 +111,7 @@ export class HeaderComponent implements OnInit {
             visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
-            routerLink: [ROUTES_CNT.MOMENTS],
+            routerLink: [ROUTES_CNT.MOMENTS]
           },
         ],
       },

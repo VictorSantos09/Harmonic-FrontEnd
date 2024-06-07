@@ -11,6 +11,7 @@ import {
   AuthService,
   ConteudoDetalhesDto,
   MessengerService,
+  ROUTES_CNT,
   RadioService,
 } from '../../src';
 import { CardComponent } from '../../src/app/components/card/card.component';
@@ -88,6 +89,7 @@ export class PageCardComponent implements OnInit {
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao curtir', err);
+        this._router.navigate([ROUTES_CNT.LOGIN])
       });
   }
 
@@ -99,6 +101,7 @@ export class PageCardComponent implements OnInit {
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao descurtir', err);
+        this._router.navigate([ROUTES_CNT.LOGIN])
       });
   }
 

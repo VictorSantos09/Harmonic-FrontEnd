@@ -14,7 +14,7 @@
         <div class="relative mx-auto">
           <div [ngClass]="'flex justify-content-center'">
             <div [ngClass]="'flex align-items-center flex-column'">
-              <a (click)="onAvatarClick(avatar.id)">
+              <a (click)="onAvatarClick(avatar.id)" style="cursor: pointer;">
                 <p-avatar
                   [image]="avatar.imagem"
                   [size]="'xlarge'"
