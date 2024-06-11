@@ -38,7 +38,7 @@
 
     <div class="col">
       <p-card header="Disponível Em">
-        <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :(</p>
+        <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :</p>
         <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
           <a [href]="cp" target="_blank">
             <div
@@ -48,16 +48,19 @@
               <img
                 *ngSwitchCase="'Youtube'"
                 src="..//src/assets/Youtube.png"
+                alt="logo do Youtube"
                 height="30px"
               />
               <img
                 *ngSwitchCase="'Deezer'"
                 src="..//src/assets/Deezer.png"
+                alt="logo do Deezer"
                 height="30px"
               />
               <img
                 *ngSwitchCase="'Spotify'"
                 src="..//src/assets/Spotify.png"
+                alt="logo do Spotify"
                 height="30px"
               />
               <p>
