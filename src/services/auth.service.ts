@@ -48,11 +48,13 @@ export class AuthService {
               this._authEventService.emitIsAuthenticated({
                 isAdmin: isAdmin,
                 isAuthenticated: true,
+                isEmail: dto.email,
               });
 
               this.onAuthChanged.emit({
                 isAuthenticated: true,
                 isAdmin: isAdmin,
+                isEmail: dto.email,
               });
 
               sub.unsubscribe();
@@ -63,10 +65,12 @@ export class AuthService {
           this._authEventService.emitIsAuthenticated({
             isAdmin: false,
             isAuthenticated: false,
+            isEmail: "",
           });
           this.onAuthChanged.emit({
             isAdmin: false,
             isAuthenticated: false,
+            isEmail: "",
           });
         },
       });
@@ -86,10 +90,12 @@ export class AuthService {
           this._authEventService.emitIsAuthenticated({
             isAdmin: false,
             isAuthenticated: false,
+            isEmail: "",
           });
           this.onAuthChanged.emit({
             isAdmin: false,
             isAuthenticated: false,
+            isEmail: "",
           });
 
           sub.unsubscribe();
@@ -114,4 +120,5 @@ export class RegisterDTO {
 export class AuthState {
   isAuthenticated!: boolean;
   isAdmin!: boolean;
+  isEmail!: string;
 }
