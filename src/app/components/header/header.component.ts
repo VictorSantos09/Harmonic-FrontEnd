@@ -128,19 +128,19 @@ private _setItems(authState: AuthState) {
     this.itemsAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: true,
-      Email: this.authState.Email,
+      Email: null,
     });
 
     this.itemsNotAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: false,
-      Email: this.authState.Email,
+      Email: null,
     });
 
     this.itemsAuthAdmin = this._setItems({
       isAdmin: true,
       isAuthenticated: true,
-      Email: this.authState.Email,
+      Email: null,
     });
   }
 
