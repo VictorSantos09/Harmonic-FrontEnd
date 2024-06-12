@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit {
           this.authState = {
             isAdmin: isAdmin,
             isAuthenticated: value,
+            Email: null,
           };
 
           this._setItemsWithState(this.authState);
@@ -115,6 +116,11 @@ private _setItems(authState: AuthState) {
           },
         ],
       },
+      {
+        visible: authState.isAuthenticated,
+        label: `Olá, ${authState.Email}`,
+        icon: 'pi pi-fw pi-user',
+      }
     ];
   }
 
@@ -122,16 +128,19 @@ private _setItems(authState: AuthState) {
     this.itemsAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: true,
+      Email: null,
     });
 
     this.itemsNotAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: false,
+      Email: null,
     });
 
     this.itemsAuthAdmin = this._setItems({
       isAdmin: true,
       isAuthenticated: true,
+      Email: null,
     });
   }
 
