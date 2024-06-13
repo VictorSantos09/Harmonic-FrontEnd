@@ -102,6 +102,12 @@ export class AuthService {
         },
       });
   }
+
+  public getAccountInfo(): Observable<AccountInfo> {
+    return this._http.get<AccountInfo>(`${API_URL.URL}manage/info`, {
+      withCredentials: true,
+    });
+  }
 }
 
 export class LoginDTO {
@@ -120,5 +126,10 @@ export class RegisterDTO {
 export class AuthState {
   isAuthenticated!: boolean;
   isAdmin!: boolean;
-  Email!: string | null;
+  Email?: string | null;
+}
+
+export class AccountInfo {
+  email!: string;
+  isEmailConfirmed!: boolean;
 }
