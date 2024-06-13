@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { lastValueFrom } from 'rxjs';
 import { ROUTES_CNT } from '../../../consts';
 import {
@@ -10,13 +11,14 @@ import {
   AuthService,
   AuthState,
 } from '../../../services';
+import { MessengerService } from '../../shared';
 import { NavbarComponent } from '../navbar';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
-  providers: [AuthService],
+  imports: [NavbarComponent, CommonModule, ToastModule],
+  providers: [AuthService, MessengerService, MessageService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -30,19 +32,17 @@ export class HeaderComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private eventService: AuthEventService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _messengerService: MessengerService
   ) {}
 
   ngOnInit(): void {
     lastValueFrom(this._authService.isAuthenticated).then((value) => {
-      console.log("This is value: " + value)
       lastValueFrom(this._adminService.isAdmin())
         .then((isAdmin) => {
-          console.log("This is isAdmin: " + isAdmin)
           this.authState = {
             isAdmin: isAdmin,
             isAuthenticated: value,
-            Email: null,
           };
 
           this._setItemsWithState(this.authState);
@@ -53,14 +53,13 @@ export class HeaderComponent implements OnInit {
     });
 
     this.eventService.getEventIsAuthenticated().subscribe((authState) => {
-      console.log("This is isAdmin: " + authState.isAdmin + "\nThis is isAuthenticated:" + authState.isAuthenticated)
       this.authState = authState;
 
       this._setItemsWithState(authState);
-  });
-}
+    });
+  }
 
-private _setItems(authState: AuthState) {
+  private _setItems(authState: AuthState) {
     return [
       {
         label: 'Inicio',
@@ -112,7 +111,7 @@ private _setItems(authState: AuthState) {
             visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
-            routerLink: [ROUTES_CNT.MOMENTS]
+            routerLink: [ROUTES_CNT.MOMENTS],
           },
         ],
       },
@@ -120,7 +119,7 @@ private _setItems(authState: AuthState) {
         visible: authState.isAuthenticated,
         label: `Olá, ${authState.Email}`,
         icon: 'pi pi-fw pi-user',
-      }
+      },
     ];
   }
 
@@ -128,19 +127,16 @@ private _setItems(authState: AuthState) {
     this.itemsAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: true,
-      Email: null,
     });
 
     this.itemsNotAuth = this._setItems({
       isAdmin: false,
       isAuthenticated: false,
-      Email: null,
     });
 
     this.itemsAuthAdmin = this._setItems({
       isAdmin: true,
       isAuthenticated: true,
-      Email: null,
     });
   }
 
@@ -148,5 +144,24 @@ private _setItems(authState: AuthState) {
     this.itemsAuth = this._setItems(authState);
     this.itemsNotAuth = this._setItems(authState);
     this.itemsAuthAdmin = this._setItems(authState);
+
+    if (authState.isAuthenticated) {
+      const sub = this._authService.getAccountInfo().subscribe({
+        next: (accountInfo) => {
+          authState.Email = accountInfo.email;
+          this.itemsAuth = this._setItems(authState);
+          this.itemsNotAuth = this._setItems(authState);
+          this.itemsAuthAdmin = this._setItems(authState);
+          sub.unsubscribe();
+        },
+        error: (err) => {
+          this._messengerService.showError(
+            'Erro ao buscar informações da conta',
+            err
+          );
+          sub.unsubscribe();
+        },
+      });
+    }
   }
 }

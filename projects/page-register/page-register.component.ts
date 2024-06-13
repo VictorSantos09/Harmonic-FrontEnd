@@ -93,7 +93,7 @@ export class PageRegisterComponent {
         },
         error: (err) => {
           this._messengerService.showError(
-            'Um erro ocorreu ao criar sua conta',
+            'Conta não criada, verifique os dados',
             err
           );
         },
