@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -44,6 +45,7 @@ import {
     InputTextModule,
     CardModule,
     ToastModule,
+    DialogModule,
   ],
   providers: [AuthService, Router, MessengerService, MessageService],
 })
@@ -58,6 +60,8 @@ export class PageRegisterComponent {
     },
     { validator: this.checkPasswords }
   );
+
+  visible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -96,7 +100,13 @@ export class PageRegisterComponent {
             'Conta não criada, verifique os dados',
             err
           );
+
+          this.showDialog();
         },
       });
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }
