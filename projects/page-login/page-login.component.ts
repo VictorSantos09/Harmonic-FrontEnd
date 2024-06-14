@@ -73,6 +73,7 @@ export class PageLoginComponent {
       .subscribe((data) => {
         if (data.isAuthenticated) {
           this._location.go(ROUTES_CNT.HOMEPAGE);
+          window.location.href = (ROUTES_CNT.HOMEPAGE);
         }
           else
           this._messengerService.showError(
@@ -84,4 +85,5 @@ export class PageLoginComponent {
   navigateToCadastro() {
     this._location.go(ROUTES_CNT.CADASTRO);
   }
+
 }
