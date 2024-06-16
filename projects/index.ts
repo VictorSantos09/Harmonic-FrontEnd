@@ -6,3 +6,4 @@ export * from './page-profile';
 export * from './page-register';
 export * from './page-tipo-conteudo';
 export * from './pages-primeng';
+export * from './page-moments';

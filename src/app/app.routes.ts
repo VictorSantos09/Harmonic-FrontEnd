@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomepageComponent } from '../../projects';
-import { AdminGuard, AuthGuard, AuthLoginGuard, RegisterGuard } from './guards';
+import { AdminGuard, AuthGuard, AuthLoginGuard } from './guards';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -20,7 +20,6 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () =>
       import('../../projects').then((m) => m.PageRegisterComponent),
-    canActivate: [RegisterGuard],
   },
   {
     path: 'login',
@@ -38,6 +37,12 @@ export const routes: Routes = [
     path: 'information/:id',
     loadComponent: () =>
       import('../../projects').then((m) => m.PageCardComponent),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'moments',
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageMomentsComponent),
     canActivate: [AuthGuard],
   },
 ];

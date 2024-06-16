@@ -5,7 +5,12 @@ import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
-import { ConteudoTopDto, MessengerService, RadioService } from '../../src';
+import {
+  ConteudoTopDto,
+  FooterComponent,
+  MessengerService,
+  RadioService,
+} from '../../src';
 import { BackgroundImageComponent } from '../../src/app/components/background-image';
 import { CarouselComponent } from '../../src/app/components/carousel';
 import { ROUTES_CNT } from '../../src/consts';
@@ -21,6 +26,7 @@ import { ROUTES_CNT } from '../../src/consts';
     ButtonModule,
     RouterLink,
     CarouselModule,
+    FooterComponent,
   ],
   providers: [MessageService, MessengerService],
   templateUrl: './homepage.component.html',

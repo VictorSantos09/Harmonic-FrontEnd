@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { lastValueFrom } from 'rxjs';
 import { ROUTES_CNT } from '../../../consts';
 import {
@@ -10,13 +11,14 @@ import {
   AuthService,
   AuthState,
 } from '../../../services';
+import { MessengerService } from '../../shared';
 import { NavbarComponent } from '../navbar';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
-  providers: [AuthService],
+  imports: [NavbarComponent, CommonModule, ToastModule],
+  providers: [AuthService, MessengerService, MessageService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -30,7 +32,8 @@ export class HeaderComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private eventService: AuthEventService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _messengerService: MessengerService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +62,7 @@ export class HeaderComponent implements OnInit {
   private _setItems(authState: AuthState) {
     return [
       {
-        label: 'Inicio',
+        label: 'Início',
         icon: 'pi pi-fw pi-home',
         command: () => {
           this._router.navigate([ROUTES_CNT.HOMEPAGE]);
@@ -75,13 +78,6 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-fw pi-pen-to-square',
             command: () => {
               this._router.navigate([ROUTES_CNT.CONTEUDO]);
-            },
-          },
-          {
-            label: 'Tipos Conteúdos',
-            icon: 'pi pi-fw pi-pen-to-square',
-            command: () => {
-              this._router.navigate([ROUTES_CNT.TIPO_CONTEUDO]);
             },
           },
         ],
@@ -115,8 +111,14 @@ export class HeaderComponent implements OnInit {
             visible: authState.isAuthenticated,
             label: 'Meus Momentos',
             icon: 'pi pi-fw pi-users',
+            routerLink: [ROUTES_CNT.MOMENTS],
           },
         ],
+      },
+      {
+        visible: authState.isAuthenticated && authState.Email !== undefined,
+        label: `Olá, ${authState.Email}`,
+        icon: 'pi pi-fw pi-user',
       },
     ];
   }
@@ -142,5 +144,24 @@ export class HeaderComponent implements OnInit {
     this.itemsAuth = this._setItems(authState);
     this.itemsNotAuth = this._setItems(authState);
     this.itemsAuthAdmin = this._setItems(authState);
+
+    if (authState.isAuthenticated) {
+      const sub = this._authService.getAccountInfo().subscribe({
+        next: (accountInfo) => {
+          authState.Email = accountInfo.email;
+          this.itemsAuth = this._setItems(authState);
+          this.itemsNotAuth = this._setItems(authState);
+          this.itemsAuthAdmin = this._setItems(authState);
+          sub.unsubscribe();
+        },
+        error: (err) => {
+          this._messengerService.showError(
+            'Erro ao buscar informações da conta',
+            err
+          );
+          sub.unsubscribe();
+        },
+      });
+    }
   }
 }

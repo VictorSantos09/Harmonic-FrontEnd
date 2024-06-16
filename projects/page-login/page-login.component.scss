@@ -1,4 +1,6 @@
 .container {
+  display: flex;
+  flex-direction: column;
   margin: 2rem;
   background-color: #242424;
   color: #fff;
@@ -11,6 +13,7 @@ button {
   font-weight: bold;
   background-color: #96099b;
   color: #fff;
+  margin-bottom: 5px;
 }
 
 button:hover {

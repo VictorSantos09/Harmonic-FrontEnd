@@ -97,3 +97,19 @@
     </div>
   </form>
 </div>
+
+<p-dialog
+  header="Atenção, a senha deve ter"
+  [(visible)]="visible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p>Pelo menos um número</p>
+  <p>Pelo menos 8 caracteres</p>
+  <p>Pelo menos um caracter especial</p>
+  <p>Uma letra em caixa alta</p>
+  <p>Uma letra em caixa baixa</p>
+</p-dialog>
