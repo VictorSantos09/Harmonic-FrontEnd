@@ -57,13 +57,16 @@ export class PageConteudoComponent implements OnInit {
     private _radioService: RadioService,
     private _messengerService: MessengerService,
     private _paisService: PaisService,
-    private _tipoConteudoService: TipoConteudoService,
-    private _plataformaService: PlataformaService
+    private _tipoConteudoService: TipoConteudoService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this._buscarDados();
+  async ngOnInit() {
+    await this._buscarDados().then(() => {
+      this._setFormOptions();
+    });
+  }
 
+  private _setFormOptions() {
     this.formOptions = {
       title: 'Conteúdo',
       cancelText: 'Cancelar',
@@ -297,11 +300,10 @@ export class PageConteudoComponent implements OnInit {
   }
 
   private async _buscarDados(): Promise<void> {
-    this.buscarPaises();
-    this.buscarTiposConteudos();
-    this.buscarPlataformas();
+    await this.buscarPaises();
+    await this.buscarTiposConteudos();
 
-    return lastValueFrom(this._radioService.getAll())
+    lastValueFrom(this._radioService.getAll())
       .then((data) => {
         this.data = data.data.map((item) => {
           const obj: ConteudoDtoConsulta = {
@@ -324,8 +326,8 @@ export class PageConteudoComponent implements OnInit {
       });
   }
 
-  buscarPaises(): void {
-    lastValueFrom(this._paisService.getAll())
+  async buscarPaises() {
+    await lastValueFrom(this._paisService.getAll())
       .then((data) => {
         this.paises = data.data;
       })
@@ -334,28 +336,14 @@ export class PageConteudoComponent implements OnInit {
       });
   }
 
-  buscarTiposConteudos(): void {
-    lastValueFrom(this._tipoConteudoService.getAll())
+  async buscarTiposConteudos() {
+    await lastValueFrom(this._tipoConteudoService.getAll())
       .then((data) => {
         this.tiposConteudos = data.data;
       })
       .catch((error) => {
         this._messengerService.showError(
           'Erro ao buscar tipos de conteúdos',
-          error,
-          true
-        );
-      });
-  }
-
-  buscarPlataformas(): void {
-    lastValueFrom(this._plataformaService.getAll())
-      .then((data) => {
-        this.plataformas = data.data;
-      })
-      .catch((error) => {
-        this._messengerService.showError(
-          'Erro ao buscar plataformas',
           error,
           true
         );
