@@ -18,7 +18,7 @@ import {
   RadioService,
   TipoConteudoService,
 } from '../../src/services';
-import { ConteudoDto, ConteudoDtoConsulta } from './dto';
+import { ConteudoDto, ConteudoDtoConsulta, ConteudoPlataformaDTO } from './dto';
 
 @Component({
   selector: 'app-pageCrudRadio',
@@ -117,16 +117,39 @@ export class PageConteudoComponent implements OnInit {
         },
         {
           disabled: false,
-          label: 'Plataforma',
-          name: 'plataforma',
+          label: 'Spotify',
+          name: 'linkspotify',
           type: 'number',
           required: true,
           placeholder: 'Informe a plataforma do conteudo',
           errorMessage: 'Informe a plataforma do conteudo',
-          typeElement: 'DROPDOWN',
+          typeElement: 'CHECKBOX',
           optionLabel: 'nome',
           optionValue: 'nome',
-          options: this.plataformas,
+        },
+        {
+          disabled: false,
+          label: 'Youtube',
+          name: 'linkyoutube',
+          type: 'number',
+          required: true,
+          placeholder: 'Informe a plataforma do conteudo',
+          errorMessage: 'Informe a plataforma do conteudo',
+          typeElement: 'CHECKBOX',
+          optionLabel: 'nome',
+          optionValue: 'nome',
+        },
+        {
+          disabled: false,
+          label: 'Deezer',
+          name: 'linkdeezer',
+          type: 'number',
+          required: true,
+          placeholder: 'Informe a plataforma do conteudo',
+          errorMessage: 'Informe a plataforma do conteudo',
+          typeElement: 'CHECKBOX',
+          optionLabel: 'nome',
+          optionValue: 'nome',
         },
       ],
     };
@@ -367,16 +390,10 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onSaveButtonClick(event: any) {
-    const obj: ConteudoDto = {
-      titulo: event.titulo,
-      descricao: event.descricao,
-      idPais: event.pais.id,
-      idTipoConteudo: event.tipoconteudo.id,
-      idPlataforma: 0,
-    };
+  onSaveButtonClick(event: ConteudoPlataformaDTO) {
+    const dto = this._createDto(event);
 
-    const sub = this._radioService.insert(obj).subscribe({
+    const sub = this._radioService.insert(dto).subscribe({
       next: (value) => {
         this._messengerService.showSuccess('registro gravado');
         this._buscarDados();
@@ -389,16 +406,8 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onEditButtonClick(event: any) {
-    const dto = {
-      descricao: event.descricao,
-      idPais: this.paises.find((p) => p.nome === event.pais)?.id || 0,
-      idPlataforma: 1,
-      idTipoConteudo:
-        this.tiposConteudos.find((t) => t.nome === event.tipoConteudo)?.id || 0,
-      titulo: event.titulo,
-      id: event.id,
-    };
+  onEditButtonClick(event: ConteudoPlataformaDTO) {
+    const dto = this._createDto(event);
 
     const sub = this._radioService.update(dto).subscribe({
       next: (value) => {
@@ -434,5 +443,29 @@ export class PageConteudoComponent implements OnInit {
           error
         );
       });
+  }
+
+  private _createDto(event: ConteudoPlataformaDTO) {
+    const obj: ConteudoDto = {
+      titulo: event.titulo,
+      descricao: event.descricao,
+      idPais: event.pais.id,
+      idTipoConteudo: event.tipoconteudo.id,
+      plataformas: [],
+    };
+
+    if (event.linkdeezer) {
+      obj.plataformas.push(event.linkdeezer);
+    }
+
+    if (event.linkspotify) {
+      obj.plataformas.push(event.linkspotify);
+    }
+
+    if (event.linkyoutube) {
+      obj.plataformas.push(event.linkyoutube);
+    }
+
+    return obj;
   }
 }

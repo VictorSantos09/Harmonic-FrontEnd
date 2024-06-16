@@ -21,6 +21,10 @@ export class FieldHelper {
     return field.typeElement === 'INPUT-TEXT';
   }
 
+  isCheckBoxType(field: FormField): boolean {
+    return field.typeElement === 'CHECKBOX';
+  }
+
   isElementType(field: FormField, type: FormFieldType): boolean {
     return field.typeElement === type;
   }
