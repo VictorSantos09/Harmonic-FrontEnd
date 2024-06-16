@@ -143,8 +143,6 @@ export class TableExpandableComponent<T> implements OnInit {
   onChange(event: any, label: string | undefined) {
     if (event.checked) this._checkboxCheckeds.push(label?.toLowerCase());
     else this._checkboxCheckeds.splice(this._checkboxCheckeds.indexOf(label));
-
-    console.log(event, this._checkboxCheckeds);
   }
 
   save() {
@@ -162,7 +160,6 @@ export class TableExpandableComponent<T> implements OnInit {
           let temp = document.getElementById(
             item.name.concat('text')
           ) as HTMLInputElement;
-          console.log(temp);
           obj[item.name] = temp.value;
         }
         return obj;
@@ -171,7 +168,6 @@ export class TableExpandableComponent<T> implements OnInit {
     );
 
     const t = objetoUnico as T;
-    console.log(t);
     this._formFields.forEach((f) => (f.value = null));
 
     this.onSave.emit(t);

@@ -65,7 +65,7 @@ export class PageConteudoComponent implements OnInit {
     await this._buscarDados();
 
     this.formOptions = {
-      title: 'Rádio',
+      title: 'Conteúdo',
       cancelText: 'Cancelar',
       submitText: 'Salvar',
       formFields: [
@@ -282,11 +282,6 @@ export class PageConteudoComponent implements OnInit {
         sortableColumn: true,
       },
       {
-        name: 'pais',
-        title: 'País',
-        sortableColumn: true,
-      },
-      {
         name: 'link',
         title: 'Link',
         sortableColumn: true,
@@ -451,19 +446,19 @@ export class PageConteudoComponent implements OnInit {
       descricao: event.descricao,
       idPais: event.pais.id,
       idTipoConteudo: event.tipoconteudo.id,
-      plataformas: [],
+      urls: [],
     };
 
     if (event.linkdeezer) {
-      obj.plataformas.push(event.linkdeezer);
+      obj.urls.push(event.linkdeezer);
     }
 
     if (event.linkspotify) {
-      obj.plataformas.push(event.linkspotify);
+      obj.urls.push(event.linkspotify);
     }
 
     if (event.linkyoutube) {
-      obj.plataformas.push(event.linkyoutube);
+      obj.urls.push(event.linkyoutube);
     }
 
     return obj;

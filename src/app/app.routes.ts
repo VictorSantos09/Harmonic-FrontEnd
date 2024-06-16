@@ -11,12 +11,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'tipo-conteudo',
-    loadComponent: () =>
-      import('../../projects').then((m) => m.PageTipoConteudoComponent),
-    canActivate: [AuthGuard, AdminGuard],
-  },
-  {
     path: 'register',
     loadComponent: () =>
       import('../../projects').then((m) => m.PageRegisterComponent),
