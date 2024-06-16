@@ -38,7 +38,7 @@
 
     <div class="col">
       <p-card header="Disponível Em">
-        <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :</p>
+        <p *ngIf="conteudoNaoTemPlataforma">Conteúdo Indisponível :(</p>
         <div class="flex" *ngFor="let cp of conteudoPlataformasURLs">
           <a [href]="cp" target="_blank">
             <div
@@ -47,21 +47,21 @@
             >
               <img
                 *ngSwitchCase="'Youtube'"
-                src="https://1000logos.net/wp-content/uploads/2021/04/YouTube-logo-768x432.png"
+                src="https://static.vecteezy.com/system/resources/previews/023/986/704/non_2x/youtube-logo-youtube-logo-transparent-youtube-icon-transparent-free-free-png.png"
                 alt="logo do Youtube"
-                height="30px"
+                width="30rem"
               />
               <img
                 *ngSwitchCase="'Deezer'"
                 src="https://www.anavaz.com.br/wp-content/uploads/2020/03/Deezer-Logo-300x300.png"
                 alt="logo do Deezer"
-                height="30px"
+                width="30rem"
               />
               <img
                 *ngSwitchCase="'Spotify'"
                 src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"
                 alt="logo do Spotify"
-                height="30px"
+                width="30rem"
               />
               <p>
                 {{ extrairNomePlataforma(cp) }}

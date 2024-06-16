@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
   private _setItems(authState: AuthState) {
     return [
       {
-        label: 'Inicio',
+        label: 'Início',
         icon: 'pi pi-fw pi-home',
         command: () => {
           this._router.navigate([ROUTES_CNT.HOMEPAGE]);
@@ -116,7 +116,7 @@ export class HeaderComponent implements OnInit {
         ],
       },
       {
-        visible: authState.isAuthenticated,
+        visible: authState.isAuthenticated && authState.Email !== undefined,
         label: `Olá, ${authState.Email}`,
         icon: 'pi pi-fw pi-user',
       },
