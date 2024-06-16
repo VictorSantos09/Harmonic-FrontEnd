@@ -39,4 +39,9 @@ export const routes: Routes = [
       import('../../projects').then((m) => m.PageMomentsComponent),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'explorar',
+    loadComponent: () =>
+      import('../../projects').then((m) => m.PageExplorarComponent),
+  },
 ];

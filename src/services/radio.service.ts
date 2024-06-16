@@ -26,6 +26,15 @@ export class RadioService {
     );
   }
 
+  getAllDetalhes(): Observable<ResponseData<ConteudoDetalhesDto>> {
+    return this._http.get<ResponseData<ConteudoDetalhesDto>>(
+      `${API_URL.URL}Conteudo/allDetalhes`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
   delete(id: number): Observable<ResponseData<ConteudoModel>> {
     return this._http.delete<ResponseData<any>>(
       `${API_URL.URL}Conteudo/delete?id=${id}`,
