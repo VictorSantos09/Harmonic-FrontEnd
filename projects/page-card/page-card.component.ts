@@ -86,10 +86,11 @@ export class PageCardComponent implements OnInit {
       .like(this.conteudo.id)
       .then((x) => {
         this.getLiked();
+        this._buscarConteudo(this.conteudo.id);
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao curtir', err);
-        this._router.navigate([ROUTES_CNT.LOGIN])
+        this._router.navigate([ROUTES_CNT.LOGIN]);
       });
   }
 
@@ -98,10 +99,11 @@ export class PageCardComponent implements OnInit {
       .dislike(this.conteudo.id)
       .then((x) => {
         this.getLiked();
+        this._buscarConteudo(this.conteudo.id);
       })
       .catch((err) => {
         this._messengerService.showError('Erro ao descurtir', err);
-        this._router.navigate([ROUTES_CNT.LOGIN])
+        this._router.navigate([ROUTES_CNT.LOGIN]);
       });
   }
 
