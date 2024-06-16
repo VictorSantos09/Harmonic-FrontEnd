@@ -33,6 +33,7 @@ export class CardComponent {
   @Input() icon!: string | undefined;
   @Input() pais!: string | undefined;
   @Input() liked!: boolean;
+  @Input() width?: string | undefined;
 
   @Input() primaryButtonLabel!: string | undefined;
   @Input() secondaryButtonLabel?: string | undefined;

@@ -1,5 +1,9 @@
 <div class="card flex justify-content-center">
-  <p-card [header]="title" [subheader]="subTitle" [style]="{ width: '550px' }">
+  <p-card
+    [header]="title"
+    [subheader]="subTitle"
+    [style]="{ width: width ?? '550px' }"
+  >
     <ng-template pTemplate="header">
       <img [src]="image" />
     </ng-template>
@@ -30,6 +34,7 @@
           (onClick)="onPrimaryButtonClicked()"
         />
         <p-button
+          *ngIf="secondaryButtonLabel"
           [label]="secondaryButtonLabel"
           [icon]="secondaryButtonIcon"
           class="w-full"

@@ -69,6 +69,13 @@ export class HeaderComponent implements OnInit {
         },
       },
       {
+        label: 'Explorar',
+        icon: 'pi pi-fw pi-globe',
+        command: () => {
+          this._router.navigate([ROUTES_CNT.EXPLORAR]);
+        },
+      },
+      {
         visible: authState.isAdmin,
         label: 'Gerenciar',
         icon: 'pi pi-fw pi-th-large',
