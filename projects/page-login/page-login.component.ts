@@ -84,6 +84,7 @@ export class PageLoginComponent {
 
   navigateToCadastro() {
     this._location.go(ROUTES_CNT.CADASTRO);
+    window.location.href = (ROUTES_CNT.CADASTRO);
   }
 
 }

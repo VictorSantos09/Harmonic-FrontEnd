@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -47,7 +47,7 @@ import {
     ToastModule,
     DialogModule,
   ],
-  providers: [AuthService, Router, MessengerService, MessageService],
+  providers: [AuthService, Router, MessengerService, MessageService, Location],
 })
 export class PageRegisterComponent {
   registerForm = this.fb.group(
@@ -66,8 +66,7 @@ export class PageRegisterComponent {
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
-    private _router: Router,
-    private _authEventService: AuthEventService,
+    private _location: Location,
     private _messengerService: MessengerService
   ) {}
 
@@ -92,7 +91,8 @@ export class PageRegisterComponent {
         next: () => {
           this._messengerService.showSuccess('Conta criada com sucesso');
           setTimeout(() => {
-            this._router.navigate([ROUTES_CNT.LOGIN]);
+            this._location.go(ROUTES_CNT.CADASTRO);
+          window.location.href = (ROUTES_CNT.CADASTRO);
           }, 1500);
         },
         error: (err) => {
