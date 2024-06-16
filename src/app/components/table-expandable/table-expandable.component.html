@@ -330,6 +330,27 @@
             <label for="float-input">{{ f.label }}</label>
           </p-floatLabel>
         </div>
+
+        <div class="field" *ngIf="fieldHelper.isCheckBoxType(f)">
+          <p-floatLabel style="margin-right: 10px">
+            <!--CHECKBOX-->
+            <label [htmlFor]="f.name" style="margin-left: 10px">{{
+              f.label
+            }}</label>
+            <p-checkbox
+              (onChange)="onChange($event, f.label)"
+              [binary]="true"
+              [id]="f.name"
+              [value]="'teste'"
+            >
+            </p-checkbox>
+          </p-floatLabel>
+
+          <p-floatLabel>
+            <input type="text" pInputText [id]="f.name.concat('text')" />
+            <label for="{{ f.name.concat('text') }}">URL {{ f.label }}</label>
+          </p-floatLabel>
+        </div>
       </div>
     </ng-template>
 

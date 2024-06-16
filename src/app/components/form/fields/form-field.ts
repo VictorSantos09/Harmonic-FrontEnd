@@ -22,4 +22,5 @@ export type FormFieldType =
   | `COMBOBOX`
   | `TEXT-AREA`
   | `INPUT-NUMBER`
-  | `INPUT-TEXT`;
+  | `INPUT-TEXT`
+  | `CHECKBOX`;

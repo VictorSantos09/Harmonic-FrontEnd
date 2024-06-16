@@ -3,7 +3,7 @@ export class ConteudoDto {
   descricao!: string;
   idPais!: number;
   idTipoConteudo!: number;
-  idPlataforma!: number;
+  urls!: string[];
 }
 
 export class ConteudoDtoConsulta {

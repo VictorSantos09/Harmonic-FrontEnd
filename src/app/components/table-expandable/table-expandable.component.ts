@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -22,7 +23,6 @@ import { TableColumn, TableOptions } from '../..';
 import { FormField } from '../form';
 import { FieldHelper } from '../form/fields/field.helper';
 import { FormOptions } from '../form/options';
-
 @Component({
   selector: 'app-table-expandable',
   templateUrl: 'table-expandable.component.html',
@@ -46,6 +46,8 @@ import { FormOptions } from '../form/options';
     FormsModule,
     InputNumberModule,
     FloatLabelModule,
+    CheckboxModule,
+    InputTextModule,
   ],
   animations: [trigger('fadeInOut', [])],
   providers: [MessageService, ConfirmationService],
@@ -84,6 +86,7 @@ export class TableExpandableComponent<T> implements OnInit {
   expandedRows = {};
 
   private _formFields!: FormField[];
+  private _checkboxCheckeds: any[] = [];
 
   constructor(private confirmationService: ConfirmationService) {}
 
@@ -137,6 +140,11 @@ export class TableExpandableComponent<T> implements OnInit {
     //this.item = {};
   }
 
+  onChange(event: any, label: string | undefined) {
+    if (event.checked) this._checkboxCheckeds.push(label?.toLowerCase());
+    else this._checkboxCheckeds.splice(this._checkboxCheckeds.indexOf(label));
+  }
+
   save() {
     this.submitted = true;
 
@@ -146,13 +154,20 @@ export class TableExpandableComponent<T> implements OnInit {
 
     const objetoUnico: { [key: string]: any } = this._formFields.reduce(
       (obj: any, item) => {
-        obj[item.name] = item.value;
+        if (item.typeElement !== 'CHECKBOX') {
+          obj[item.name] = item.value;
+        } else if (this._checkboxCheckeds.includes(item.label?.toLowerCase())) {
+          let temp = document.getElementById(
+            item.name.concat('text')
+          ) as HTMLInputElement;
+          obj[item.name] = temp.value;
+        }
         return obj;
       },
       {}
     );
-    const t = objetoUnico as T;
 
+    const t = objetoUnico as T;
     this._formFields.forEach((f) => (f.value = null));
 
     this.onSave.emit(t);
