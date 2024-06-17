@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -43,7 +43,7 @@ import {
     CardModule,
     ToastModule,
   ],
-  providers: [AuthService, Router, MessengerService, MessageService, Location],
+  providers: [AuthService, MessengerService, MessageService],
   templateUrl: './page-login.component.html',
   styleUrl: './page-login.component.scss',
 })
@@ -56,9 +56,9 @@ export class PageLoginComponent {
   constructor(
     private fb: FormBuilder,
     private _authService: AuthService,
-    private _location: Location,
     private _authEventService: AuthEventService,
-    private _messengerService: MessengerService
+    private _messengerService: MessengerService,
+    private _router: Router
   ) {}
 
   login() {
@@ -72,10 +72,8 @@ export class PageLoginComponent {
       .pipe(take(1))
       .subscribe((data) => {
         if (data.isAuthenticated) {
-          this._location.go(ROUTES_CNT.HOMEPAGE);
-          window.location.href = (ROUTES_CNT.HOMEPAGE);
-        }
-          else
+          this._router.navigate([ROUTES_CNT.HOMEPAGE]);
+        } else
           this._messengerService.showError(
             'usuário ou senha invalidos. Tente novamente.'
           );
@@ -83,8 +81,6 @@ export class PageLoginComponent {
   }
 
   navigateToCadastro() {
-    this._location.go(ROUTES_CNT.CADASTRO);
-    window.location.href = (ROUTES_CNT.CADASTRO);
+    this._router.navigate([ROUTES_CNT.CADASTRO]);
   }
-
 }

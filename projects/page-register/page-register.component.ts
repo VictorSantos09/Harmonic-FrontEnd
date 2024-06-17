@@ -19,12 +19,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import {
-  AuthEventService,
-  AuthService,
-  MessengerService,
-  ROUTES_CNT,
-} from '../../src';
+import { AuthService, MessengerService, ROUTES_CNT } from '../../src';
 
 @Component({
   selector: 'app-page-register',
@@ -47,7 +42,7 @@ import {
     ToastModule,
     DialogModule,
   ],
-  providers: [AuthService, Router, MessengerService, MessageService, Location],
+  providers: [AuthService, MessengerService, MessageService],
 })
 export class PageRegisterComponent {
   registerForm = this.fb.group(
@@ -67,7 +62,8 @@ export class PageRegisterComponent {
     private fb: FormBuilder,
     private _authService: AuthService,
     private _location: Location,
-    private _messengerService: MessengerService
+    private _messengerService: MessengerService,
+    private _router: Router
   ) {}
 
   checkPasswords(group: FormGroup) {
@@ -91,8 +87,7 @@ export class PageRegisterComponent {
         next: () => {
           this._messengerService.showSuccess('Conta criada com sucesso');
           setTimeout(() => {
-            this._location.go(ROUTES_CNT.CADASTRO);
-          window.location.href = (ROUTES_CNT.CADASTRO);
+            this._router.navigate([ROUTES_CNT.CADASTRO]);
           }, 1500);
         },
         error: (err) => {

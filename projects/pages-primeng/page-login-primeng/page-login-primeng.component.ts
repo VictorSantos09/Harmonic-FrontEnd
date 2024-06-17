@@ -10,7 +10,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { AuthEventService, AuthService, MessengerService } from '../../../src';
+import {
+  AuthEventService,
+  AuthService,
+  MessengerService,
+  ROUTES_CNT,
+} from '../../../src';
 
 @Component({
   selector: 'app-page-login-primeng',
@@ -26,7 +31,7 @@ import { AuthEventService, AuthService, MessengerService } from '../../../src';
     ButtonModule,
     ToastModule,
   ],
-  providers: [AuthService, Router, MessengerService, MessageService],
+  providers: [AuthService, MessengerService, MessageService],
   templateUrl: './page-login-primeng.component.html',
   styleUrl: './page-login-primeng.component.scss',
 })
@@ -48,8 +53,7 @@ export class PageLoginPrimengComponent {
     });
 
     this._authEventService.getEventIsAuthenticated().subscribe((data) => {
-      if (data)
-        window.location.reload(); //window.location.href = '/'; //this._router.navigate(['/']);
+      if (data) this._router.navigate([ROUTES_CNT.HOMEPAGE]);
       else
         this._messengerService.showInfo(
           'usuário ou senha invalidos. Tente novamente.'
