@@ -1,6 +1,7 @@
-import { PaisModel, TipoConteudoModel } from "../../../src";
+import { PaisModel, TipoConteudoModel } from '../../../src';
 
 export class ConteudoPlataformaDTO {
+  id!: number;
   titulo!: string;
   descricao!: string;
   pais!: PaisModel;

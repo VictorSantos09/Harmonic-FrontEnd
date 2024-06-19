@@ -429,11 +429,23 @@ export class PageConteudoComponent implements OnInit {
   }
 
   private _createDto(event: ConteudoPlataformaDTO) {
-    const obj: ConteudoDto = {
+    /*const obj: ConteudoDto = {
       titulo: event.titulo,
       descricao: event.descricao,
       idPais: event.pais.id,
       idTipoConteudo: event.tipoconteudo.id,
+      urls: [],
+    };*/
+
+    const obj: ConteudoDto = {
+      id: event.id,
+      descricao: event.descricao,
+      idPais: this.paises.find((p) => p.nome === event.pais.nome)?.id || 0,
+      idPlataforma: 1,
+      idTipoConteudo:
+        this.tiposConteudos.find((t) => t.nome === event.tipoconteudo.nome)
+          ?.id || 0,
+      titulo: event.titulo,
       urls: [],
     };
 

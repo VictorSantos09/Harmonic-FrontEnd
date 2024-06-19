@@ -1,4 +1,5 @@
 export class ConteudoDto {
+  id!: number;
   titulo!: string;
   descricao!: string;
   idPais!: number;
