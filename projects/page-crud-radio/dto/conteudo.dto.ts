@@ -1,5 +1,6 @@
 export class ConteudoDto {
   titulo!: string;
+  imagem?: string;
   descricao!: string;
   idPais!: number;
   idTipoConteudo!: number;
@@ -8,6 +9,7 @@ export class ConteudoDto {
 
 export class ConteudoDtoConsulta {
   titulo!: string;
+  iamgem?: string;
   descricao!: string;
   pais!: string;
   tipoConteudo!: string;

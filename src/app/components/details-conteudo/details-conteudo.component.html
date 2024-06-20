@@ -1,0 +1,118 @@
+<div class="card">
+  <p-splitter [style]="{ height: '300px' }" styleClass="mb-5">
+    <ng-template pTemplate>
+      <div class="col flex align-items-center justify-content-center">
+        <span class="col flex align-items-center">
+          <p-avatar
+            image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            size="large"
+            shape="circle"
+          />
+          <h2>Radio</h2>
+        </span>
+
+        <p class="block">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+          accusantium cum, distinctio vitae maxime reiciendis veritatis dolore
+          mollitia quisquam ea? Quia, eaque? Qui itaque vel, repellat adipisci
+          culpa, temporibus tenetur nulla quam neque provident voluptatum
+        </p>
+
+        <div class="flex gap-3 mt-1">
+          <p-button
+            icon="pi-thumbs-down-fill"
+            label="Deslike"
+            severity="secondary"
+            class="w-full"
+            styleClass="w-full"
+          />
+          <p-button
+            label="Like"
+            icon="pi-thumbs-up-fill"
+            class="w-full"
+            styleClass="w-full"
+          />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate>
+      <div class="col flex align-items-center justify-content-center">
+        <div class="card">
+          <p-panel [toggleable]="true">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2">
+                <p-avatar
+                  image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                  size="large"
+                  shape="circle"
+                />
+                <span class="font-bold">Rádio Menina</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <div
+                class="flex flex-wrap align-items-center justify-content-between gap-3"
+              >
+                <div class="flex align-items-center gap-2">
+                  <p-button icon="pi pi-user" rounded="true" text="true" />
+                  <p-button
+                    icon="pi pi-bookmark"
+                    severity="secondary"
+                    rounded="true"
+                    text="true"
+                  />
+                </div>
+                <span class="p-text-secondary"> Cadastrado em ZXXXX </span>
+              </div>
+            </ng-template>
+            <p class="m-0">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </p-panel>
+        </div>
+      </div>
+    </ng-template>
+  </p-splitter>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-card
+    header="Radio Menina"
+    subheader="Pais de origem"
+    [style]="{ width: '550px' }"
+  >
+    <ng-template pTemplate="header">
+      <img
+        alt="Card"
+        src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+      />
+    </ng-template>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
+      consequuntur error repudiandae numquam deserunt quisquam repellat libero
+      asperiores earum nam nobis, culpa ratione quam perferendis esse,
+      cupiditate neque quas!
+    </p>
+    <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+        <i class="pi-thumbs-down-fill"></i>
+        <p-button
+          label="Deslike"
+          severity="secondary"
+          class="w-full"
+          styleClass="w-full"
+        />
+        <i class="pi-thumbs-up-fill"></i>
+        <p-button label="Like" class="w-full" styleClass="w-full" />
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
+<!--manter nesse componente apenas o p-card, o contexto todo de apresentação do conteúdo será outro componente-->

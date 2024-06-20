@@ -84,6 +84,16 @@ export class PageConteudoComponent implements OnInit {
         },
         {
           disabled: false,
+          label: 'Imagem',
+          name: 'imagem',
+          type: 'text',
+          required: true,
+          placeholder: 'Informe a url da imagem',
+          errorMessage: 'Campo obrigatório',
+          typeElement: 'INPUT-TEXT',
+        },
+        {
+          disabled: false,
           label: 'Descrição',
           name: 'descricao',
           type: 'text',
@@ -169,6 +179,20 @@ export class PageConteudoComponent implements OnInit {
           required: false,
           hidden: true,
           canEdit: false,
+        },
+      },
+      {
+        title: 'Imagem',
+        name: 'imagem',
+        sortableColumn: true,
+        fieldConfig: {
+          name: 'imagem',
+          type: 'text',
+          required: true,
+          placeholder: 'Informe a url da imagem',
+          errorMessage: 'Campo obrigatório',
+          typeElement: 'INPUT-TEXT',
+          canEdit: true,
         },
       },
       {
@@ -431,6 +455,7 @@ export class PageConteudoComponent implements OnInit {
   private _createDto(event: ConteudoPlataformaDTO) {
     const obj: ConteudoDto = {
       titulo: event.titulo,
+      imagem: event!.imagem,
       descricao: event.descricao,
       idPais: event.pais.id,
       idTipoConteudo: event.tipoconteudo.id,
