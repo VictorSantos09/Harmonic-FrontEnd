@@ -182,7 +182,8 @@ export class TableExpandableComponent<T> implements OnInit {
   }
 
   onRowEditSave(item: any) {
-    this.onEdit.emit(this.item);
+    console.log(item)
+    this.onEdit.emit(item);
   }
 
   onRowEditCancel(item: any, index: number) {

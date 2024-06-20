@@ -34,7 +34,6 @@ import { TableColumn, TableOptions } from './options';
     ButtonModule,
     ToastModule,
     ToolbarModule,
-    ToastModule,
     ConfirmDialogModule,
     InputTextareaModule,
     CommonModule,
@@ -162,7 +161,7 @@ export class TableComponent<T> implements OnInit {
   }
 
   onRowEditSave(item: any) {
-    this.onEdit.emit(this.item);
+    this.onEdit.emit(item);
   }
 
   onRowEditCancel(item: any, index: number) {
