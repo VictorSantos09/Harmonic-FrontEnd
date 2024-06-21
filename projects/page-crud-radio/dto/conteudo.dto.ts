@@ -1,8 +1,10 @@
 export class ConteudoDto {
+  id!: number;
   titulo!: string;
   imagem?: string;
   descricao!: string;
   idPais!: number;
+  idPlataforma?: number;
   idTipoConteudo!: number;
   urls!: string[];
 }
