@@ -18,7 +18,12 @@ import {
   RadioService,
   TipoConteudoService,
 } from '../../src/services';
-import { ConteudoDto, ConteudoDtoConsulta, ConteudoPlataformaDTO } from './dto';
+import {
+  ConteudoDto,
+  ConteudoDtoConsulta,
+  ConteudoPlataformaDTO,
+  ConteudoPlataformaSaveDTO,
+} from './dto';
 
 @Component({
   selector: 'app-pageCrudRadio',
@@ -373,8 +378,8 @@ export class PageConteudoComponent implements OnInit {
     });
   }
 
-  onSaveButtonClick(event: ConteudoPlataformaDTO) {
-    const dto = this._createDto(event);
+  onSaveButtonClick(event: ConteudoPlataformaSaveDTO) {
+    const dto = this._createDtoSave(event);
 
     const sub = this._radioService.insert(dto).subscribe({
       next: (value) => {
@@ -390,6 +395,7 @@ export class PageConteudoComponent implements OnInit {
   }
 
   onEditButtonClick(event: ConteudoPlataformaDTO) {
+    console.log(event);
     const dto = this._createDto(event);
 
     const sub = this._radioService.update(dto).subscribe({
@@ -428,6 +434,39 @@ export class PageConteudoComponent implements OnInit {
       });
   }
 
+  private _createDtoSave(event: ConteudoPlataformaSaveDTO) {
+    const x = event.pais as PaisModel;
+    const y = event.tipoconteudo as TipoConteudoModel;
+
+    const obj: ConteudoDto = {
+      id: event.id,
+
+      descricao: event.descricao,
+
+      idPais: x.id,
+
+      idTipoConteudo: y.id,
+
+      titulo: event.titulo,
+
+      urls: [],
+    };
+
+    if (event.linkdeezer) {
+      obj.urls.push(event.linkdeezer);
+    }
+
+    if (event.linkspotify) {
+      obj.urls.push(event.linkspotify);
+    }
+
+    if (event.linkyoutube) {
+      obj.urls.push(event.linkyoutube);
+    }
+
+    return obj;
+  }
+
   private _createDto(event: ConteudoPlataformaDTO) {
     /*const obj: ConteudoDto = {
       titulo: event.titulo,
@@ -436,15 +475,15 @@ export class PageConteudoComponent implements OnInit {
       idTipoConteudo: event.tipoconteudo.id,
       urls: [],
     };*/
+    testnome: this.tiposConteudos.find((t) => t.nome === event.tipoConteudo);
 
     const obj: ConteudoDto = {
       id: event.id,
       descricao: event.descricao,
-      idPais: this.paises.find((p) => p.nome === event.pais.nome)?.id || 0,
-      idPlataforma: 1,
+      idPais: this.paises.find((p) => p.nome === event.pais)?.id || 0,
+
       idTipoConteudo:
-        this.tiposConteudos.find((t) => t.nome === event.tipoconteudo.nome)
-          ?.id || 0,
+        this.tiposConteudos.find((t) => t.nome === event.tipoConteudo)?.id || 0,
       titulo: event.titulo,
       urls: [],
     };
