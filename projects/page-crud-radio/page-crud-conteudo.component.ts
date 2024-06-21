@@ -506,7 +506,7 @@ export class PageConteudoComponent implements OnInit {
       id: event.id,
       descricao: event.descricao,
       idPais: this.paises.find((p) => p.nome === event.pais)?.id || 0,
-
+      imagem: event.imagem,
       idTipoConteudo:
         this.tiposConteudos.find((t) => t.nome === event.tipoConteudo)?.id || 0,
       titulo: event.titulo,
