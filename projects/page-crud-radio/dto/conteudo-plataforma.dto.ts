@@ -3,6 +3,7 @@ import { PaisModel, TipoConteudoModel } from '../../../src';
 export class ConteudoPlataformaDTO {
   id!: number;
   titulo!: string;
+  imagem?: string; 
   descricao!: string;
   pais!: string | PaisModel;
   tipoConteudo!: string | TipoConteudoModel;
