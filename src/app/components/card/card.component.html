@@ -27,7 +27,7 @@
         <p-button
           [label]="primaryButtonLabel"
           [icon]="primaryButtonIcon"
-          severity="secondary"
+          [severity]="primaryButtonSeverity ?? 'secondary'"
           class="w-full"
           [disabled]="liked"
           styleClass="w-full"
@@ -38,6 +38,7 @@
           [label]="secondaryButtonLabel"
           [icon]="secondaryButtonIcon"
           class="w-full"
+          [severity]="secondaryButtonSeverity ?? 'secondary'"
           styleClass="w-full"
           [disabled]="!liked"
           (onClick)="onSecondaryButtonClicked()"

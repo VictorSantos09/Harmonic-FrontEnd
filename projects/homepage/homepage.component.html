@@ -1,63 +1,63 @@
 <app-background-image></app-background-image>
 
-<h3 class="ml-7">Rádios mais ouvidas</h3>
+<h2 class="ml-7">Rádios mais ouvidas</h2>
 <p-carousel
   [value]="topRadios"
-  [numVisible]="3"
-  [numScroll]="3"
+  [numVisible]="5"
+  [numScroll]="5"
   [circular]="true"
   [responsiveOptions]="responsiveOptions"
 >
   <ng-template let-avatar pTemplate="item">
-    <a (click)="onAvatarClick(avatar.id)" style="cursor: pointer">
-      <div class="border-1 surface-border border-round m-2 p-3">
-        <div class="m-2">
-          <div class="relative mx-auto">
-            <div [ngClass]="'flex justify-content-center'">
-              <div [ngClass]="'flex align-items-center flex-column'">
-                <p-avatar
-                  [image]="avatar.imagem"
-                  [size]="'xlarge'"
-                  [shape]="'circle'"
-                  [className]="'p-2'"
-                ></p-avatar>
-                <p>{{ avatar.titulo }}</p>
-              </div>
-            </div>
-          </div>
+    <div [ngClass]="'flex justify-content-center'">
+      <div
+        (click)="onAvatarClick(avatar.id)"
+        style="cursor: pointer"
+        [ngClass]="'flex align-items-center flex-column'"
+      >
+        <div
+          class="border-3 border-circle border-purple-800 bg-purple-900 hover:surface-50 shadow-2 hover:shadow-8 m-2 p-3"
+        >
+          <p-avatar
+            [image]="avatar.imagem"
+            [size]="'xlarge'"
+            [shape]="'circle'"
+            [className]="'p-2'"
+          ></p-avatar>
         </div>
+        <b>{{ avatar.titulo }}</b>
       </div>
-    </a>
+    </div>
   </ng-template>
 </p-carousel>
 
-<h3 class="ml-7">Podcasts mais ouvidos</h3>
+<h2 class="ml-7">Podcasts mais ouvidos</h2>
 <p-carousel
   [value]="topPodcasts"
-  [numVisible]="3"
-  [numScroll]="3"
+  [numVisible]="5"
+  [numScroll]="5"
   [circular]="true"
   [responsiveOptions]="responsiveOptions"
 >
   <ng-template let-avatar pTemplate="item">
-    <a (click)="onAvatarClick(avatar.id)" style="cursor: pointer">
-      <div class="border-1 surface-border border-round m-2 p-3">
-        <div class="mb-2">
-          <div class="relative mx-auto">
-            <div [ngClass]="'flex justify-content-center'">
-              <div [ngClass]="'flex align-items-center flex-column'">
-                <p-avatar
-                  [image]="avatar.imagem"
-                  [size]="'xlarge'"
-                  [shape]="'circle'"
-                  [className]="'p-2'"
-                ></p-avatar>
-                <p>{{ avatar.titulo }}</p>
-              </div>
-            </div>
-          </div>
+    <div [ngClass]="'flex justify-content-center'">
+      <div
+        (click)="onAvatarClick(avatar.id)"
+        style="cursor: pointer"
+        [ngClass]="'flex align-items-center flex-column'"
+      >
+        <div
+          class="border-3 border-circle border-purple-800 bg-purple-900 hover:surface-50 shadow-2 hover:shadow-8 m-2 p-3"
+        >
+          <p-avatar
+            [image]="avatar.imagem"
+            [size]="'xlarge'"
+            [shape]="'circle'"
+            [className]="'p-2'"
+          ></p-avatar>
         </div>
+        <b>{{ avatar.titulo }}</b>
       </div>
-    </a>
+    </div>
   </ng-template>
 </p-carousel>

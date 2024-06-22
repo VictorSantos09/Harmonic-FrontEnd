@@ -37,9 +37,11 @@ export class CardComponent {
   @Input() applySplitter?: boolean;
 
   @Input() primaryButtonLabel!: string | undefined;
+  @Input() primaryButtonSeverity!: string | undefined;
   @Input() secondaryButtonLabel?: string | undefined;
   @Input() primaryButtonIcon!: string | undefined;
   @Input() secondaryButtonIcon?: string | undefined;
+  @Input() secondaryButtonSeverity?: string | undefined;
 
   @Output() onPrimaryButtonClick: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSecondaryButtonClick: EventEmitter<void> =
