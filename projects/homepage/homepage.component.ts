@@ -77,11 +77,11 @@ export class HomepageComponent implements OnInit {
     const sub = this._radioService.getTopRadios().subscribe({
       next: (value) => {
         this.topRadios = value.data;
-        sub.unsubscribe();
+        sub?.unsubscribe();
       },
       error: (err) => {
         this._messengerService.showError('Erro ao buscar top radios', err);
-        sub.unsubscribe();
+        sub?.unsubscribe();
       },
     });
   }
@@ -90,11 +90,11 @@ export class HomepageComponent implements OnInit {
     const sub = this._radioService.getTopPodcasts().subscribe({
       next: (value) => {
         this.topPodcasts = value.data;
-        sub.unsubscribe();
+        sub?.unsubscribe();
       },
       error: (err) => {
         this._messengerService.showError('Erro ao buscar top podcasts', err);
-        sub.unsubscribe();
+        sub?.unsubscribe();
       },
     });
   }

@@ -15,20 +15,10 @@
       <div class="pais">
         <div class="flex" style="font-size: 1rem">
           <i [className]="icon"></i>
-          <h3 class="mx-2" style="text-transform: uppercase">{{ pais }}</h3>
+          <h3 class="mx-2 uppercase">{{ pais }}</h3>
         </div>
       </div>
-      <p
-        style="
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          word-break: break-word;
-          height: 3.375rem;
-        "
-      >
+      <p [ngClass]="{ 'text-splitter': applySplitter }">
         {{ description }}
       </p>
     </ng-template>

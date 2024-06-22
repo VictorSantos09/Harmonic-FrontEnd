@@ -34,6 +34,7 @@ export class CardComponent {
   @Input() pais!: string | undefined;
   @Input() liked!: boolean;
   @Input() width?: string | undefined;
+  @Input() applySplitter?: boolean;
 
   @Input() primaryButtonLabel!: string | undefined;
   @Input() secondaryButtonLabel?: string | undefined;

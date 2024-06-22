@@ -1,15 +1,12 @@
 <div class="flex justify-content-center">
-  <div class="flex flex-column align-items-center m-2">
-    <h1 class="m-0">Suas músicas</h1>
-    <h3 class="m-0 text-center">
-      Confira todas as músicas coracionadas e curtidas por você
+  <div class="align-items-center text-center">
+    <h2>Suas músicas Curtidas</h2>
+    <h3 class="align-items-center text-center">
+      Confira todas as músicas curtidas por você
     </h3>
-    <div class="flex-row mt-3 mb-3">
-      <h2>CURTIDAS</h2>
-    </div>
   </div>
 </div>
-<div class="flex flex-row justify-content-center grid m-0">
+<div class="justify-content-center grid">
   <div
     *ngFor="let item of conteudosCurtidos"
     class="bg-gray-800 m-3 pb-3"
@@ -21,21 +18,21 @@
       height="300px"
       [src]="item.imagem"
     />
-    <div style="width: 300px; padding-left: 1rem">
+    <div class="p-3">
       <h2>{{ item.titulo }}</h2>
       <h3>{{ item.tipoConteudo }}</h3>
-      <span class="flex">
+      <div class="flex gap-2">
         <i [className]="item.icon"></i>
-        <p>
-          <b>{{ item.pais }}</b>
-        </p>
-      </span>
-      <p-button
-        label="Visualizar"
-        icon="pi pi-eye"
-        severity="secondary"
-        (onClick)="onAvatarClick(item.id)"
-      />
+        <b class="uppercase">{{ item.pais }}</b>
+      </div>
+      <div class="mt-3">
+        <p-button
+          label="Visualizar"
+          icon="pi pi-eye"
+          severity="secondary"
+          (onClick)="onAvatarClick(item.id)"
+        />
+      </div>
     </div>
   </div>
 </div>
