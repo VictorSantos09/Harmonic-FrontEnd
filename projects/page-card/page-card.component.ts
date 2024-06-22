@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { SplitterModule } from 'primeng/splitter';
 import { ToastModule } from 'primeng/toast';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom } from 'rxjs';
 import {
   AuthService,
   ConteudoDetalhesDto,
@@ -64,6 +64,24 @@ export class PageCardComponent implements OnInit {
     });
   }
 
+  private _Get() {
+    forkJoin({
+      liked: this._radioService.getConteudoLiked(this.conteudo.id),
+      conteudo: this._radioService.getDetalhes(this.conteudo.id),
+      conteudoPlataformasURLs: this._radioService.getConteudoPlataformasURL(
+        this.conteudo.id
+      ),
+    }).subscribe({
+      next: (value) => {
+        this.conteudoLiked = value.liked.data;
+        this.conteudo = value.conteudo.data;
+        this.conteudoPlataformasURLs = value.conteudoPlataformasURLs.data;
+      },
+      error: (err: HttpErrorResponse) => {
+        this._messengerService.showError('Erro ao buscar os dados do conteúdo');
+      },
+    });
+  }
   getLiked() {
     const conteudoLiked = this._radioService
       .getConteudoLiked(this.conteudo.id)
@@ -84,7 +102,7 @@ export class PageCardComponent implements OnInit {
   onLike() {
     this._radioService
       .like(this.conteudo.id)
-      .then((x) => {
+      .then(() => {
         this.getLiked();
         this._buscarConteudo(this.conteudo.id);
       })
@@ -97,7 +115,7 @@ export class PageCardComponent implements OnInit {
   onDislike() {
     this._radioService
       .dislike(this.conteudo.id)
-      .then((x) => {
+      .then(() => {
         this.getLiked();
         this._buscarConteudo(this.conteudo.id);
       })

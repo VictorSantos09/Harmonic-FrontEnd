@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
+import { forkJoin } from 'rxjs';
 import {
   ConteudoTopDto,
   FooterComponent,
@@ -44,22 +45,20 @@ export class HomepageComponent implements OnInit {
     private _router: Router,
     private _radioService: RadioService,
     private _messengerService: MessengerService
-  ) {
-    this._buscarTopRadios();
-    this.buscarTopPodcasts();
-  }
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this._buscarTopConteudos();
     this.responsiveOptions = [
       {
         breakpoint: '1199px',
-        numVisible: 1,
-        numScroll: 1,
+        numVisible: 5,
+        numScroll: 5,
       },
       {
         breakpoint: '991px',
-        numVisible: 1,
-        numScroll: 1,
+        numVisible: 4,
+        numScroll: 4,
       },
       {
         breakpoint: '767px',
@@ -73,28 +72,20 @@ export class HomepageComponent implements OnInit {
     this._router.navigate([this.informationRoute, id]);
   }
 
-  private _buscarTopRadios() {
-    const sub = this._radioService.getTopRadios().subscribe({
-      next: (value) => {
-        this.topRadios = value.data;
-        sub?.unsubscribe();
+  private _buscarTopConteudos() {
+    forkJoin({
+      topRadios: this._radioService.getTopRadios(),
+      topPodcasts: this._radioService.getTopPodcasts(),
+    }).subscribe({
+      next: (result) => {
+        this.topRadios = result.topRadios.data;
+        this.topPodcasts = result.topPodcasts.data;
       },
       error: (err) => {
-        this._messengerService.showError('Erro ao buscar top radios', err);
-        sub?.unsubscribe();
-      },
-    });
-  }
-
-  private buscarTopPodcasts() {
-    const sub = this._radioService.getTopPodcasts().subscribe({
-      next: (value) => {
-        this.topPodcasts = value.data;
-        sub?.unsubscribe();
-      },
-      error: (err) => {
-        this._messengerService.showError('Erro ao buscar top podcasts', err);
-        sub?.unsubscribe();
+        this._messengerService.showError(
+          'Erro ao buscar os top conteúdos',
+          err
+        );
       },
     });
   }
