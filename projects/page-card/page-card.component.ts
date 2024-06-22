@@ -50,10 +50,8 @@ export class PageCardComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
-      this._buscarConteudo(this.conteudo.id);
+      this._buscarConteudoDetalhes();
     });
-
-    this._buscarConteudo(this.conteudo.id);
 
     lastValueFrom(this._authService.isAuthenticated).then((value) => {
       this._authState = value;
@@ -64,16 +62,14 @@ export class PageCardComponent implements OnInit {
     });
   }
 
-  private _Get() {
+  private _buscarConteudoDetalhes() {
     forkJoin({
-      liked: this._radioService.getConteudoLiked(this.conteudo.id),
       conteudo: this._radioService.getDetalhes(this.conteudo.id),
       conteudoPlataformasURLs: this._radioService.getConteudoPlataformasURL(
         this.conteudo.id
       ),
     }).subscribe({
       next: (value) => {
-        this.conteudoLiked = value.liked.data;
         this.conteudo = value.conteudo.data;
         this.conteudoPlataformasURLs = value.conteudoPlataformasURLs.data;
       },
@@ -147,21 +143,6 @@ export class PageCardComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         this._messengerService.showError('Erro ao buscar conteúdo', err);
         sub.unsubscribe();
-      },
-    });
-
-    const sub2 = this._radioService.getConteudoPlataformasURL(id).subscribe({
-      next: (value) => {
-        this.conteudoPlataformasURLs = value.data;
-        sub2.unsubscribe();
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          this.conteudoNaoTemPlataforma = true;
-        } else {
-          this._messengerService.showError(err.error.error.message);
-        }
-        sub2.unsubscribe();
       },
     });
   }
