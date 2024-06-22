@@ -3,7 +3,7 @@ import { PaisModel, TipoConteudoModel } from '../../../src';
 export class ConteudoPlataformaDTO {
   id!: number;
   titulo!: string;
-  imagem?: string; 
+  imagem?: string;
   descricao!: string;
   pais!: string | PaisModel;
   tipoConteudo!: string | TipoConteudoModel;
@@ -21,4 +21,5 @@ export class ConteudoPlataformaSaveDTO {
   linkspotify?: string;
   linkyoutube?: string;
   linkdeezer?: string;
+  imagem?: string;
 }

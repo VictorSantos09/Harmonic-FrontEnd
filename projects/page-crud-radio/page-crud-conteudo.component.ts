@@ -405,6 +405,7 @@ export class PageConteudoComponent implements OnInit {
 
   onSaveButtonClick(event: ConteudoPlataformaSaveDTO) {
     const dto = this._createDtoSave(event);
+    console.log(event);
 
     const sub = this._radioService.insert(dto).subscribe({
       next: (value) => {
@@ -465,16 +466,12 @@ export class PageConteudoComponent implements OnInit {
 
     const obj: ConteudoDto = {
       id: event.id,
-
       descricao: event.descricao,
-
       idPais: x.id,
-
       idTipoConteudo: y.id,
-
       titulo: event.titulo,
-
       urls: [],
+      imagem: event.imagem,
     };
 
     if (event.linkdeezer) {
