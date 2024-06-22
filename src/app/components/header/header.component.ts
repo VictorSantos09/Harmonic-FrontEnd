@@ -112,6 +112,7 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-fw pi-power-off',
             command: () => {
               this._authService.logout();
+              this._router.navigate([ROUTES_CNT.HOMEPAGE])
             },
           },
           {

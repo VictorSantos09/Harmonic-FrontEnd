@@ -2,10 +2,10 @@
   <p-card
     [header]="title"
     [subheader]="subTitle"
-    [style]="{ width: width ?? '100%' }"
+    [style]="{ width: width ?? '300px' }"
   >
     <ng-template pTemplate="header">
-      <img [src]="image" width="300px" height="300px"/>
+      <img [src]="image" width="300px" height="300px" />
     </ng-template>
     <ng-template pTemplate="main">
       <div class="flex align-items-center py-2 gap-2" *ngIf="liked">
@@ -18,7 +18,17 @@
           <h3 class="mx-2" style="text-transform: uppercase">{{ pais }}</h3>
         </div>
       </div>
-      <p>
+      <p
+        style="
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          word-break: break-word;
+          height: 3.375rem;
+        "
+      >
         {{ description }}
       </p>
     </ng-template>

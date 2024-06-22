@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ConteudoCurtidosService } from '../../src/services/conteudoCurtidos.service';
-import { ConteudosCurtidosDto, MessengerService } from '../../src';
+import { ConteudosCurtidosDto, MessengerService, ROUTES_CNT } from '../../src';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-page-moments',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonModule],
   providers: [MessageService, MessengerService],
   templateUrl: './page-moments.component.html',
   styleUrl: './page-moments.component.scss'
@@ -18,6 +20,7 @@ export class PageMomentsComponent{
   conteudosCurtidos: ConteudosCurtidosDto[] = [];
 
   constructor(
+    private _router: Router,
     private _conteudoCurtidosService: ConteudoCurtidosService,
     private _messengerService: MessengerService
   ) {
@@ -35,5 +38,9 @@ export class PageMomentsComponent{
         sub.unsubscribe();
       },
     });
+  }
+
+  onAvatarClick(id: number) {
+    this._router.navigate([ROUTES_CNT.CONTEUDO_INFORMACAO, id]);
   }
 }
