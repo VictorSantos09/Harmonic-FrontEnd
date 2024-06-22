@@ -4,7 +4,7 @@ import { PaisModel } from './PaisModel';
 import { TipoConteudoModel } from './TipoConteudoModel';
 
 export class ConteudoModel {
-  public image!: ImageModel;
+  public imagem!: string;
   public titulo!: string;
   public dataCadastro!: Date;
   public descricao!: string;

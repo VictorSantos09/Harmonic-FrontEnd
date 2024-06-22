@@ -11,7 +11,7 @@ export class ConteudoDto {
 
 export class ConteudoDtoConsulta {
   titulo!: string;
-  iamgem?: string;
+  imagem?: string;
   descricao!: string;
   pais!: string;
   tipoConteudo!: string;

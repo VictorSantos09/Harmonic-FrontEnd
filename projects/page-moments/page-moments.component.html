@@ -1,41 +1,41 @@
-<div class="container flex-column mt-3">
-  <div class="flex flex-column align-items-center">
-    <div class="flex flex-column align-items-center gap-1">
-      <h1 class="m-0">Suas músicas</h1>
-      <h3 class="m-0">
-        Confira todas as músicas coracionadas e curtidas por você
-      </h3>
-    </div>
-    <div class="flex flex-row align-items-center mt-3 mb-3">
-      <h3>CURTIDAS</h3>
+<div class="flex justify-content-center">
+  <div class="flex flex-column align-items-center m-2">
+    <h1 class="m-0">Suas músicas</h1>
+    <h3 class="m-0 text-center">
+      Confira todas as músicas coracionadas e curtidas por você
+    </h3>
+    <div class="flex-row mt-3 mb-3">
+      <h2>CURTIDAS</h2>
     </div>
   </div>
-  <div class="grid justify-content-center m-0">
-    <div
-      *ngFor="let item of conteudosCurtidos"
-      class="col-3 md-6 p-3 bg-gray-800 mb-3 mr-3"
-      style="border-radius: 10px"
-      id="{{ item.id }}"
-    >
-      <div
-        class="flex flex-row gap-2"
-        id="{{ item.idConteudo }}"
-        style="width: 100%; height: 6rem; padding: 0"
-      >
-        <div class="h-auto w-auto flex flex-row col-3 p-0" style="width: 100%">
-          <img class="border-round-lg" src="{{ item.imagem }}" alt="" />
-        </div>
-        <div
-          class="flex flex-column ml-2 col-8 p-0 h-auto justify-content-center gap-2"
-        >
-          <h2 class="m-0">{{ item.titulo }}</h2>
-          <h3 class="m-0">{{ item.tipoConteudo }}</h3>
-          <div class="flex flex-row h-auto">
-            <img src="{{ item.icon }}" alt="" class="m-0" />
-            <p class="m-0">{{ item.pais }}</p>
-          </div>
-        </div>
-      </div>
+</div>
+<div class="flex flex-row justify-content-center grid m-0">
+  <div
+    *ngFor="let item of conteudosCurtidos"
+    class="bg-gray-800 m-3 pb-3"
+    [id]="item.id"
+  >
+    <img
+      class="border-round-lg"
+      width="300px"
+      height="300px"
+      [src]="item.imagem"
+    />
+    <div style="width: 300px; padding-left: 1rem">
+      <h2>{{ item.titulo }}</h2>
+      <h3>{{ item.tipoConteudo }}</h3>
+      <span class="flex">
+        <i [className]="item.icon"></i>
+        <p>
+          <b>{{ item.pais }}</b>
+        </p>
+      </span>
+      <p-button
+        label="Visualizar"
+        icon="pi pi-eye"
+        severity="secondary"
+        (onClick)="onAvatarClick(item.id)"
+      />
     </div>
   </div>
 </div>

@@ -337,6 +337,7 @@ export class PageConteudoComponent implements OnInit {
         this.data = data.data.map((item) => {
           const obj: ConteudoDtoConsulta = {
             titulo: item.titulo,
+            imagem: item.imagem,
             descricao: item.descricao,
             pais: item.pais.nome,
             tipoConteudo: item.tipoConteudo.nome,
@@ -500,7 +501,6 @@ export class PageConteudoComponent implements OnInit {
       idTipoConteudo: event.tipoconteudo.id,
       urls: [],
     };*/
-    testnome: this.tiposConteudos.find((t) => t.nome === event.tipoConteudo);
 
     const obj: ConteudoDto = {
       id: event.id,
