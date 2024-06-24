@@ -74,7 +74,9 @@ export class PageCardComponent implements OnInit {
         this.conteudoPlataformasURLs = value.conteudoPlataformasURLs.data;
       },
       error: (err: HttpErrorResponse) => {
-        this._messengerService.showError('Erro ao buscar os dados do conteúdo');
+        if (err.status !== 404){
+         this._messengerService.showError('Erro ao buscar os dados do conteúdo'); 
+        }
       },
     });
   }
