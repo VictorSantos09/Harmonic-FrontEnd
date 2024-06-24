@@ -51,6 +51,7 @@ export class PageCardComponent implements OnInit {
     this._route.paramMap.subscribe((params) => {
       this.conteudo.id = Number(params.get('id'));
       this._buscarConteudoDetalhes();
+      this._buscarConteudoPlataformas();
     });
 
     lastValueFrom(this._authService.isAuthenticated).then((value) => {
@@ -65,20 +66,31 @@ export class PageCardComponent implements OnInit {
   private _buscarConteudoDetalhes() {
     forkJoin({
       conteudo: this._radioService.getDetalhes(this.conteudo.id),
-      conteudoPlataformasURLs: this._radioService.getConteudoPlataformasURL(
-        this.conteudo.id
-      ),
     }).subscribe({
       next: (value) => {
         this.conteudo = value.conteudo.data;
-        this.conteudoPlataformasURLs = value.conteudoPlataformasURLs.data;
       },
       error: (err: HttpErrorResponse) => {
-        if (err.status !== 404){
-         this._messengerService.showError('Erro ao buscar os dados do conteúdo'); 
+        if (err.status !== 404) {
+          this._messengerService.showError(
+            'Erro ao buscar os dados do conteúdo'
+          );
         }
       },
     });
+  }
+
+  private _buscarConteudoPlataformas() {
+    const sub = this._radioService
+      .getConteudoPlataformasURL(this.conteudo.id)
+      .subscribe({
+        next: (value) => {
+          this.conteudoPlataformasURLs = value.data;
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.status === 404) this.conteudoNaoTemPlataforma = true;
+        },
+      });
   }
   getLiked() {
     const conteudoLiked = this._radioService
