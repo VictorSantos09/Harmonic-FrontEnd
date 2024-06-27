@@ -87,7 +87,7 @@ export class PageRegisterComponent {
         next: () => {
           this._messengerService.showSuccess('Conta criada com sucesso');
           setTimeout(() => {
-            this._router.navigate([ROUTES_CNT.CADASTRO]);
+            this._router.navigate([ROUTES_CNT.LOGIN]);
           }, 1500);
         },
         error: (err) => {
